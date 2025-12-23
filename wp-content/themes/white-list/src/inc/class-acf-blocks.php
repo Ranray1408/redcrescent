@@ -18,53 +18,8 @@ class WP_Rock_Blocks {
      * @var array[]
      */
     public $blocks = array(
-        'block-hero-banner' => array(
-            'title'      => 'Block - Hero banner',
-        ),
-        'block-advantages' => array(
-            'title'      => 'Block - Advantages',
-        ),
-        'block-category' => array(
-            'title'      => 'Block - Category',
-        ),
-        'block-horizontal-banner' => array(
-            'title'      => 'Block - Horizontal banner',
-        ),
-        'block-solutions' => array(
-            'title'      => 'Block - Solutions',
-        ),
-        'block-contact-us' => array(
-            'title'      => 'Block - Contact us',
-        ),
-        'block-our-clients' => array(
-            'title'      => 'Block - Our clients',
-        ),
-        'block-reviews' => array(
-            'title'      => 'Block - Reviews',
-        ),
-        'block-about-us' => array(
-            'title'      => 'Block - About us',
-        ),
-        'block-our-history' => array(
-            'title'      => 'Block - Our history',
-        ),
-        'block-numbers-facts' => array(
-            'title'      => 'Block - Numbers & Facts',
-        ),
-        'block-big-about-us' => array(
-            'title'      => 'Block - Big About us',
-        ),
-        'block-category-slider' => array(
-            'title'      => 'Block - Category slider',
-        ),
-        'block-thank-you' => array(
-            'title'      => 'Block - Thank you',
-        ),
-        'block-sitemap' => array(
-            'title'      => 'Block - Sitemap',
-        ),
-        'block-content' => array(
-            'title'      => 'Block - Content',
+        'block-donat-section' => array(
+            'title'      => 'Block - Donat section',
         ),
     );
 

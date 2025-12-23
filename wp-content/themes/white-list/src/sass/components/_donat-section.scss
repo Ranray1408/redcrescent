@@ -1,0 +1,258 @@
+.donat-block {
+	border-radius: 48px;
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	padding: 64px;
+	display: flex;
+	gap: 20px;
+	background-color: rgba(0, 0, 0, 0.60);
+
+	@media screen and (max-width: 1024px) {
+		flex-direction: column;
+		padding: 30px;
+	}
+
+	&__left-wrapper {
+		flex: 1;
+		padding-top: 30px;
+
+		@media screen and (max-width: 1024px) {
+			padding-top: 0;
+		}
+	}
+
+	&__right-wrapper {
+		max-width: 634px;
+		width: 100%;
+		flex-shrink: 0;
+
+		@media screen and (max-width: 1024px) {
+			margin: 0 auto;
+		}
+
+		@media screen and (max-width: 991px) {
+			max-width: 100%;
+		}
+	}
+
+	&__title {
+		margin-bottom: 24px;
+
+		@media screen and (max-width: 991px) {}
+	}
+
+	&__description {
+		margin-bottom: 153px;
+
+		@media screen and (max-width: 1024px) {}
+
+		p {
+			font-family: $primary-font;
+			font-size: 32px;
+			line-height: 1.2;
+			color: #f2f2f2;
+		}
+	}
+
+	&__icons-wrapper {
+		display: grid;
+		grid-template-columns: 1fr 1fr 1fr;
+		gap: 24px;
+
+		@media screen and (max-width: 1200px) {}
+	}
+
+	&__icon-item {
+		display: flex;
+		flex-direction: column;
+		align-items: flex-start;
+	}
+
+	&__icon-img {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background-color: $white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 12px;
+	}
+
+	&__icon-item-sum {
+		font-family: $primary-font;
+		font-size: 48px;
+		font-weight: 700;
+		line-height: 1;
+		color: $white;
+	}
+
+	&__icon-item-text {
+		font-family: $primary-font;
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 1.1;
+		color: $white;
+	}
+
+	&__form {
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+		padding: 24px;
+		border-radius: 24px;
+		background-color: $white;
+	}
+
+	&__form-title {
+		font-family: $primary-font;
+		font-size: 48px;
+		font-weight: 700;
+		color: $text_color1;
+	}
+
+	&__form-radio-period-wrapper {
+		display: flex;
+		padding: 8px;
+		gap: 8px;
+		border-radius: 8px;
+		background-color: rgba(242, 242, 242, 0.5);
+	}
+
+	&__form-radio-period-item {
+		position: relative;
+		flex: 1;
+
+		input {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			opacity: 0;
+		}
+
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: $primary-font;
+			font-size: 24px;
+			font-weight: 700;
+			line-height: 1;
+			color: #1a1a18;
+			background-color: $white;
+			padding: 12px 16px;
+			border-radius: 16px;
+		}
+
+		input:checked+span {
+			font-weight: 700;
+			background-color: #ffe5e7;
+		}
+	}
+
+	&__form-fields-wrapper {
+		border-radius: 16px;
+		background-color: $grey;
+		padding: 16px;
+	}
+
+	&__form-fields-title {
+		font-size: 16px;
+		line-height: 1.4;
+		font-family: $second-font;
+		color: $text_color1;
+		margin-bottom: 8px;
+	}
+
+	&__form-radio-sum-wrapper {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 8px;
+	}
+
+	&__form-radio-sum-item {
+		flex: 1;
+		position: relative;
+
+		input {
+			position: absolute;
+			cursor: pointer;
+			top: 0;
+			left: 0;
+			opacity: 0;
+			width: 100%;
+			height: 100%;
+		}
+
+		span {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			font-family: $primary-font;
+			font-size: 24px;
+			font-weight: 700;
+			line-height: 1;
+			color: $text_color1;
+			padding: 12px 16px;
+			border-radius: 16px;
+			border: 1px solid $text_color1;
+			cursor: pointer;
+		}
+
+		input:checked+span {
+			color: $white;
+			background: $red;
+			border: 1px solid $red;
+		}
+	}
+
+	&__form-radio-custom-sum-item {
+		width: 100%;
+	}
+
+	&__form-personal-info {
+		display: flex;
+		flex-direction: column;
+		gap: 14px;
+		margin-bottom: 26px;
+	}
+
+	&__input-wrapper {
+		color: #28282D;
+		font-family: $primary_font;
+		font-size: 16px;
+		font-weight: 400;
+		line-height: 110%;
+		display: flex;
+		flex-direction: column;
+		gap: 3px;
+	}
+
+	&__checkbox {
+		font-size: 14px;
+		display: flex;
+		align-items: center;
+		gap: 12px;
+
+		p {
+			font-size: 14px;
+		}
+
+		a {
+			font-size: 14px;
+			color: #ff8562;
+			text-decoration: none;
+		}
+	}
+
+	&__submit-btn {
+		margin-left: auto;
+		margin-right: auto;
+		margin-top: 24px;
+		height: 56px;
+	}
+}

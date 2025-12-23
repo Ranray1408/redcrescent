@@ -16,6 +16,43 @@ const onLoad = () => {
 
 	primaryMenu();
 
+	const donationForm = document.querySelector('.js-donation-form');
+	const paymentWidget = new TipTopPaymentWidget();
+
+	donationForm?.addEventListener('submit', (e) => {
+		e.preventDefault();
+
+		const form = e.target;
+		const formData = new FormData(form);
+
+		const fields = Object.fromEntries(formData.entries());
+
+		const amount = parseFloat(
+			(typeof fields['pay-sum'] === 'string' ? fields['pay-sum'] : '0')
+				.replace(/\s+/g, '')
+				.replace(/[^0-9.]/g, '')
+		);
+
+		const paymentData = {
+			amount: amount,
+			// description: 'Donat',
+			isSubscription: fields['pay-period'] === 'monthly',
+			accountId: fields.email || '',
+			email: fields.email || '',
+			userInfo: {
+				accountId: fields.email,
+				firstName: fields['first-name'] || '',
+				lastName: fields['last-name'] || '',
+				birth: fields['birth-date'] || '',
+				email: fields.email || '',
+				fullName: `${fields['first-name'] || ''} ${fields['last-name'] || ''}`,
+			}
+		};
+
+		paymentWidget.launch(paymentData, paymentData.isSubscription);
+	});
+
+	new FormValidator('.js-donation-form');
 
 	document.addEventListener('wpcf7mailsent', function (event) {
 		setTimeout(() => {
