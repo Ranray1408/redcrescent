@@ -1,2 +1,43 @@
-// _fonts.scss
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;500;700&family=Fira+Sans:wght@400;500;700&display=swap');
+@font-face {
+  font-family: 'Muller';
+  src: url('../fonts/Muller-Regular.woff2') format('woff2'),
+       url('../fonts/Muller-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Muller';
+  src: url('../fonts/Muller-Medium.woff2') format('woff2'),
+       url('../fonts/Muller-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Muller';
+  src: url('../fonts/Muller-Bold.woff2') format('woff2'),
+       url('../fonts/Muller-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../fonts/Gilroy-Regular.woff2') format('woff2'),
+       url('../fonts/Gilroy-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Gilroy';
+  src: url('../fonts/Gilroy-Bold.woff2') format('woff2'),
+       url('../fonts/Gilroy-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
