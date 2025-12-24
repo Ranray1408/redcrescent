@@ -27,11 +27,14 @@ const onLoad = () => {
 
 		const fields = Object.fromEntries(formData.entries());
 
-		const amount = parseFloat(
-			(typeof fields['pay-sum'] === 'string' ? fields['pay-sum'] : '0')
-				.replace(/\s+/g, '')
-				.replace(/[^0-9.]/g, '')
-		);
+		let amount = 0;
+
+
+		if (fields['custom-pay-sum']) {
+			amount = parseFloat(fields['custom-pay-sum'].replace(/[^0-9]/g, ''));
+		} else {
+			amount = parseFloat(fields['pay-sum'].replace(/[^0-9]/g, ''));
+		}
 
 		const paymentData = {
 			amount: amount,
@@ -48,6 +51,8 @@ const onLoad = () => {
 				fullName: `${fields['first-name'] || ''} ${fields['last-name'] || ''}`,
 			}
 		};
+
+		console.log('paymentData', paymentData);
 
 		paymentWidget.launch(paymentData, paymentData.isSubscription);
 	});

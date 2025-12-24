@@ -1,33 +1,103 @@
+.donat-section {
+	padding: 24px 0 32px;
+
+	@media screen and (max-width: 1280px) {
+		padding: 32px 0;
+	}
+
+	@media screen and (max-width: 768px) {
+		padding: 16px 0 24px;
+	}
+}
+
 .donat-block {
+	position: relative;
 	border-radius: 48px;
 	background-repeat: no-repeat;
 	background-position: center center;
 	background-size: cover;
 	padding: 64px;
 	display: flex;
-	gap: 20px;
-	background-color: rgba(0, 0, 0, 0.60);
+	gap: 24px;
+	overflow: hidden;
+
+	@media screen and (max-width: 1280px) {
+		padding: 0;
+		border-radius: 0;
+		background-image: none !important;
+		flex-direction: column;
+	}
 
 	@media screen and (max-width: 1024px) {
 		flex-direction: column;
-		padding: 30px;
+	}
+
+	&:after {
+		content: '';
+		display: block;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.6);
+
+		@media screen and (max-width: 1280px) {
+			display: none;
+		}
 	}
 
 	&__left-wrapper {
+		position: relative;
+		z-index: 1;
 		flex: 1;
-		padding-top: 30px;
+		padding-top: 50px;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-start;
+		background-repeat: no-repeat;
+		background-position: center center;
+		background-size: cover;
+		border-radius: 24px;
+		overflow: hidden;
 
-		@media screen and (max-width: 1024px) {
-			padding-top: 0;
+		@media screen and (min-width: 1280px) {
+			background-image: none !important;
+		}
+
+		@media screen and (max-width: 1280px) {
+			padding: 32px;
+		}
+
+		@media screen and (max-width: 768px) {
+			padding: 32px 16px;
+		}
+
+		&:after {
+			content: '';
+			display: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.6);
+
+			@media screen and (max-width: 1280px) {
+				display: block;
+			}
 		}
 	}
 
 	&__right-wrapper {
+		position: relative;
+		z-index: 1;
 		max-width: 634px;
 		width: 100%;
 		flex-shrink: 0;
 
-		@media screen and (max-width: 1024px) {
+		@media screen and (max-width: 1280px) {
+			max-width: 680px;
 			margin: 0 auto;
 		}
 
@@ -37,36 +107,69 @@
 	}
 
 	&__title {
+		position: relative;
+		z-index: 1;
 		margin-bottom: 24px;
 
-		@media screen and (max-width: 991px) {}
+		@media screen and (max-width: 768px) {
+			margin-bottom: 16px;
+		}
 	}
 
 	&__description {
-		margin-bottom: 153px;
-
-		@media screen and (max-width: 1024px) {}
+		margin-bottom: 50px;
+		position: relative;
+		z-index: 1;
 
 		p {
 			font-family: $primary-font;
 			font-size: 32px;
 			line-height: 1.2;
 			color: #f2f2f2;
+
+			@media screen and (max-width: 1200px) {
+				font-size: 24px;
+			}
+
+			@media screen and (max-width: 991px) {
+				font-size: 20px;
+			}
 		}
 	}
 
 	&__icons-wrapper {
+		position: relative;
+		z-index: 1;
 		display: grid;
 		grid-template-columns: 1fr 1fr 1fr;
 		gap: 24px;
+		margin-top: auto;
 
-		@media screen and (max-width: 1200px) {}
+		@media screen and (max-width: 1470px) {
+			grid-template-columns: 1fr 1fr;
+			gap: 8px;
+		}
+
+		@media screen and (max-width: 1280px) {
+			grid-template-columns: 1fr 1fr 1fr;
+		}
+
+		@media screen and (max-width: 670px) {
+			display: flex;
+			flex-direction: column;
+		}
 	}
 
 	&__icon-item {
 		display: flex;
 		flex-direction: column;
 		align-items: flex-start;
+		padding: 8px;
+
+		@media screen and (max-width: 1280px) {
+			flex-direction: row;
+			gap: 12px;
+		}
 	}
 
 	&__icon-img {
@@ -78,6 +181,28 @@
 		align-items: center;
 		justify-content: center;
 		margin-bottom: 12px;
+		flex-shrink: 0;
+
+		@media screen and (max-width: 1470px) {
+			width: 60px;
+			height: 60px;
+		}
+
+		@media screen and (max-width: 991px) {
+			width: 48px;
+			height: 48px;
+		}
+
+		img {
+			width: 60%;
+			height: 60%;
+		}
+	}
+
+	&__icon-item-sum-inner {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
 	}
 
 	&__icon-item-sum {
@@ -86,6 +211,14 @@
 		font-weight: 700;
 		line-height: 1;
 		color: $white;
+
+		@media screen and (max-width: 1570px) {
+			font-size: 36px;
+		}
+
+		@media screen and (max-width: 1280px) {
+			font-size: 20px;
+		}
 	}
 
 	&__icon-item-text {
@@ -94,6 +227,15 @@
 		font-weight: 700;
 		line-height: 1.1;
 		color: $white;
+
+
+		@media screen and (max-width: 1570px) {
+			font-size: 20px;
+		}
+
+		@media screen and (max-width: 1280px) {
+			font-size: 14px;
+		}
 	}
 
 	&__form {
@@ -103,13 +245,14 @@
 		padding: 24px;
 		border-radius: 24px;
 		background-color: $white;
-	}
 
-	&__form-title {
-		font-family: $primary-font;
-		font-size: 48px;
-		font-weight: 700;
-		color: $text_color1;
+		@media screen and (max-width: 1280px) {
+			padding: 16px;
+		}
+
+		@media screen and (max-width: 768px) {
+			gap: 8px;
+		}
 	}
 
 	&__form-radio-period-wrapper {
@@ -123,6 +266,7 @@
 	&__form-radio-period-item {
 		position: relative;
 		flex: 1;
+		border-radius: 16px;
 
 		input {
 			position: absolute;
@@ -146,6 +290,10 @@
 			background-color: $white;
 			padding: 12px 16px;
 			border-radius: 16px;
+
+			@media screen and (max-width: 768px) {
+				font-size: 20px;
+			}
 		}
 
 		input:checked+span {
@@ -158,6 +306,10 @@
 		border-radius: 16px;
 		background-color: $grey;
 		padding: 16px;
+
+		@media screen and (max-width: 768px) {
+			padding: 14px;
+		}
 	}
 
 	&__form-fields-title {
@@ -172,6 +324,7 @@
 		display: flex;
 		flex-wrap: wrap;
 		gap: 8px;
+		margin-bottom: 24px;
 	}
 
 	&__form-radio-sum-item {
@@ -195,12 +348,17 @@
 			font-family: $primary-font;
 			font-size: 24px;
 			font-weight: 700;
-			line-height: 1;
+			line-height: 1.2;
 			color: $text_color1;
 			padding: 12px 16px;
 			border-radius: 16px;
 			border: 1px solid $text_color1;
 			cursor: pointer;
+
+			@media screen and (max-width: 768px) {
+				font-size: 14px;
+				padding: 14px;
+			}
 		}
 
 		input:checked+span {
@@ -215,10 +373,16 @@
 	}
 
 	&__form-personal-info {
-		display: flex;
-		flex-direction: column;
+		display: grid;
+		grid-template-columns: 1fr 1fr;
 		gap: 14px;
-		margin-bottom: 26px;
+		margin-bottom: 24px;
+
+		@media screen and (max-width: 470px) {
+			display: flex;
+			flex-direction: column;
+			gap: 8px;
+		}
 	}
 
 	&__input-wrapper {
@@ -230,29 +394,28 @@
 		display: flex;
 		flex-direction: column;
 		gap: 3px;
+
+		&:not(:nth-child(-n+2)) {
+			grid-column: span 2;
+		}
 	}
 
 	&__checkbox {
-		font-size: 14px;
-		display: flex;
-		align-items: center;
-		gap: 12px;
+		display: block;
 
 		p {
 			font-size: 14px;
 		}
 
 		a {
+			display: inline;
 			font-size: 14px;
-			color: #ff8562;
-			text-decoration: none;
+			color: $red;
+			text-decoration: underline;
+			font-family: $second-font;
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1.2;
 		}
-	}
-
-	&__submit-btn {
-		margin-left: auto;
-		margin-right: auto;
-		margin-top: 24px;
-		height: 56px;
 	}
 }

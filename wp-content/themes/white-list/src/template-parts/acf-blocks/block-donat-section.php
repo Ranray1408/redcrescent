@@ -12,7 +12,7 @@ $form_title = get_field_value($fields, 'form_title');
 	<div class="container">
 		<div class="donat-block" style="background-image: url(<?php echo $block_bg; ?>);">
 
-			<div class="donat-block__left-wrapper white-text">
+			<div class="donat-block__left-wrapper white-text" style="background-image: url(<?php echo $block_bg; ?>);">
 				<?php
 				if (!empty($title)) {
 					echo '<h1 class="donat-block__title">' . $title . '</h1>';
@@ -31,8 +31,12 @@ $form_title = get_field_value($fields, 'form_title');
 								<div class="donat-block__icon-img">
 									<img src="' . $icon['icon'] . '" alt="icon">
 								</div>
-								<p class="donat-block__icon-item-sum">' . $icon['sum'] . '</p>
-								<p class="donat-block__icon-item-text">' . $icon['text'] . '</p>
+								<div class="donat-block__icon-item-sum-inner">
+
+									<p class="donat-block__icon-item-sum">' . $icon['sum'] . '</p>
+									<p class="donat-block__icon-item-text">' . $icon['text'] . '</p>
+
+								</div>
 							</div>';
 					}
 					echo '</div>';
@@ -46,11 +50,11 @@ $form_title = get_field_value($fields, 'form_title');
 					<h3 class="donat-block__form-title">Сделать пожертвование</h3>
 
 					<div class="donat-block__form-radio-period-wrapper">
-						<label class="donat-block__form-radio-period-item">
+						<label class="donat-block__form-radio-period-item border-hover-effect-pink">
 							<input checked type="radio" name="pay-period" value="monthly">
 							<span>Ежемесячно</span>
 						</label>
-						<label class="donat-block__form-radio-period-item">
+						<label class="donat-block__form-radio-period-item border-hover-effect-pink">
 							<input type="radio" name="pay-period" value="one-time">
 							<span>Разово</span>
 						</label>
@@ -68,16 +72,16 @@ $form_title = get_field_value($fields, 'form_title');
 
 							foreach ($donat_array as $key => $val) {
 								$checked = ($key === 0) ? 'checked' : '';
-								$clear_price = preg_replace('/[^0-9]/', '' ,$val);
+								$clear_price = preg_replace('/[^0-9]/', '', $val);
 
 								echo '<label class="donat-block__form-radio-sum-item">
 										<input type="radio" name="pay-sum" ' . $checked . ' value="' . trim($clear_price) . '">
-										<span>' . $val . '</span>
+										<span class="border-hover-effect-dark">' . $val . '</span>
 									</label>';
 							}
 							?>
 							<label class="donat-block__form-radio-custom-sum-item">
-								<input name="custom-pay-sum" type="text" placeholder="Другая сумма ₸">
+								<input name="custom-pay-sum" type="number" placeholder="Другая сумма ₸">
 							</label>
 						</div>
 
@@ -97,29 +101,32 @@ $form_title = get_field_value($fields, 'form_title');
 							],
 							[
 								'validate' => 'js-validate-email',
-								'placeholder' => 'E-mail *',
+								'placeholder' => 'e-mail *',
 								'name' => 'email',
+								'required' => 'required'
+							],
+							[
+								'validate' => 'js-validate-phone',
+								'placeholder' => 'Телефон *',
+								'name' => 'phone',
 								'required' => 'required'
 							],
 						];
 						?>
 						<div class="donat-block__form-personal-info">
 							<?php
-							foreach ($form_fields as $field) {
+							foreach ($form_fields as $key => $field) {
 								echo '<label class="donat-block__input-wrapper" for="id-' . $field['name'] . '">
-								<span>' . $field['placeholder'] . '
 
-								<input class="' . $field['validate'] . '"
-									id="id-' . $field['name'] . '"
-									type="text"
-									name="' . $field['name'] . '"
-									placeholder="' . $field['placeholder'] . '">
-									' . $field['required'] . '
-								</label>';
+										<input class="' . $field['validate'] . '"
+											id="id-' . $field['name'] . '"
+											type="text"
+											name="' . $field['name'] . '"
+											placeholder="' . $field['placeholder'] . '" ' . $field['required'] . '>
+										</label>';
 							}
 							?>
 							<label class="donat-block__input-wrapper" for="id-birth-date">
-								<span>Дата рождения</span>
 								<input
 									type="date"
 									id="id-birth-date"
@@ -130,19 +137,35 @@ $form_title = get_field_value($fields, 'form_title');
 
 						<label class="donat-block__checkbox checkbox">
 							<input checked type="checkbox" name="offer">
-							<span></span>
-							<p>Я согласен(а) с условиями <a class="js-open-popup-activator" href="#oferta-popup">Публичной Оферты</a></p>
+							<span class="checkbox-box"></span>
+							Я согласен(а) с условиями
+							<a class="js-open-popup-activator" href="#oferta-popup">
+								Публичной Оферты
+							</a>
+							и
+							<a class="js-open-popup-activator" href="#oferta-popup">
+								Соглашение о сборе и обработке персональных данных
+							</a>
 						</label>
 					</div>
-					<button type="submit" class="donat-block__submit-btn primary-btn">
-						<span>Помочь сейчас</span>
-						<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-							<path d="M12 19.7625L10.9125 18.7725C7.05 15.27 4.5 12.9525 4.5 10.125C4.5 7.8075 6.315 6 8.625 6C9.93 6 11.1825 6.6075 12 7.56C12.8175 6.6075 14.07 6 15.375 6C17.685 6 19.5 7.8075 19.5 10.125C19.5 12.9525 16.95 15.27 13.0875 18.7725L12 19.7625Z" stroke="white" stroke-width="2" stroke-linejoin="round" />
+					<button id="payButton" type="submit" class="donat-block__submit-btn icon-slide-hover-btn">
+						<span class="btn-inner"></span>
+						<span class="btn-text">Помочь сейчас</span>
+						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+							<g clip-path="url(#clip0_86582_72)">
+								<path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M13 18L19 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+								<path d="M13 6L19 12" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+							</g>
+							<defs>
+								<clipPath id="clip0_86582_72">
+									<rect width="24" height="24" fill="white" />
+								</clipPath>
+							</defs>
 						</svg>
 					</button>
 				</form>
 			</div>
 		</div>
 	</div>
-	<button id="payButton">payButton</button>
 </section>

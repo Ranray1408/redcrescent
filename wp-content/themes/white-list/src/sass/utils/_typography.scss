@@ -4,7 +4,7 @@ h3,
 h4,
 h5,
 h6 {
-	font-family: $primary_font;
+	font-family: $primary-font;
 	font-weight: 700;
 	line-height: 1;
 
@@ -15,45 +15,58 @@ h6 {
 
 }
 
-h2 ,
 h1 {
-	font-family: $primary-font;
 	font-size: 88px;
-	font-weight: 700;
-	line-height: 0.9;
 	color: #f2f2f2;
+
+	@media screen and (max-width: 1570px) {
+		font-size: 76px;
+	}
+
+	@media screen and (max-width: 1470px) {
+		font-size: 66px;
+	}
 
 	@media screen and (max-width: 1200px) {
 		font-size: 56px;
 	}
 
-	@media screen and (max-width: 991px) {
-		font-size: 42px;
-	}
-
-	@media screen and (max-width: 470px) {
-		font-size: 32px;
+	@media screen and (max-width: 670px) {
+		font-size: 48px;
 	}
 }
 
 h2 {
-	font-size: 56px;
+	font-size: 88px;
+	color: $text_color1;
+
+	@media screen and (max-width: 1570px) {
+		font-size: 76px;
+	}
+
+	@media screen and (max-width: 1470px) {
+		font-size: 66px;
+	}
 
 	@media screen and (max-width: 1200px) {
-		font-size: 46px;
+		font-size: 56px;
 	}
 
-	@media screen and (max-width: 991px) {
-		font-size: 38px;
-	}
-
-	@media screen and (max-width: 470px) {
-		font-size: 32px;
+	@media screen and (max-width: 670px) {
+		font-size: 48px;
 	}
 }
 
 h3 {
-	font-size: 32px;
+	font-size: 48px;
+
+	@media screen and (max-width: 768px) {
+		font-size: 40px;
+	}
+
+	@media screen and (max-width: 670px) {
+		font-size: 24px;
+	}
 }
 
 h4 {
@@ -62,11 +75,14 @@ h4 {
 }
 
 p {
-	font-size: 16px;
 	font-family: $primary_font;
+	color: $text_color2;
+	font-size: 20px;
+	font-weight: 500;
+	line-height: 1.4;
 
-	@media screen and (max-width: 991px) {
-		font-size: 18px;
+	@media screen and (max-width: 670px) {
+		font-size: 14px;
 	}
 }
 

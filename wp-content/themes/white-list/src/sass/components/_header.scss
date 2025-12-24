@@ -133,6 +133,10 @@
 				padding: 14px;
 			}
 
+			@media screen and (max-width: 1440px) {
+				padding: 12px 10px;
+			}
+
 			@media screen and (max-width: 470px) {
 				width: 150px;
 				margin-left: 8px;
