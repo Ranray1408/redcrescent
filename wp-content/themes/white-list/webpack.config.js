@@ -1,5 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = (env) => {
     const isDevelopment = env.NODE_ENV === 'development';
@@ -62,7 +64,8 @@ module.exports = (env) => {
                     test: /\.(woff|woff2|eot|ttf|otf)$/i,
                     type: 'asset/resource',
                     generator: {
-                        filename: 'fonts/[name][ext][query]'
+                        filename: 'fonts/[name][ext][query]',
+                        publicPath: '../'
                     }
                 }
             ],
@@ -75,6 +78,13 @@ module.exports = (env) => {
         resolve: {
             extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
             modules: [path.resolve(__dirname, 'src'), 'node_modules'],
+        },
+        optimization: {
+            minimize: true,
+            minimizer: [
+                new CssMinimizerPlugin(),
+                new TerserPlugin(),
+            ],
         },
     };
 };

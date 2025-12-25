@@ -398,6 +398,26 @@
 		&:not(:nth-child(-n+2)) {
 			grid-column: span 2;
 		}
+
+		&.date {
+			position: relative;
+			overflow: hidden;
+
+			.date-placeholder {
+				position: absolute;
+				top: 50%;
+				left: 2px;
+				display: block;
+				z-index: 1;
+				background-color: #fff;
+				padding: 16px 20px;
+				transform: translateY(-50%);
+
+				@media screen and (max-width: 768px) {
+					padding: 17px 16px;
+				}
+			}
+		}
 	}
 
 	&__checkbox {

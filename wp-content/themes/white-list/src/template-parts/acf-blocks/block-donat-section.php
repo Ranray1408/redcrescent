@@ -7,6 +7,44 @@ $block_bg = get_field_value($fields, 'block_bg');
 
 $form_title = get_field_value($fields, 'form_title');
 
+$form_fields = $fields['form_fields'] ?? null;
+
+$period_monthly = get_field_value($form_fields, 'period_monthly');
+$period_one_time = get_field_value($form_fields, 'period_one_time');
+
+$sum_text_title = get_field_value($form_fields, 'sum_text_title');
+
+$price1 = get_field_value($form_fields, 'price1');
+$price2 = get_field_value($form_fields, 'price2');
+$price3 = get_field_value($form_fields, 'price3');
+
+$custom_price_text = get_field_value($form_fields, 'custom_price_text');
+$name_text = get_field_value($form_fields, 'name_text');
+$second_name_text = get_field_value($form_fields, 'second_name_text');
+$email_text = get_field_value($form_fields, 'email_text');
+$phone_text = get_field_value($form_fields, 'phone_text');
+$date_text = get_field_value($form_fields, 'date_text');
+
+$checkbox_text = get_field_value($form_fields, 'checkbox_text');
+$submit_text = get_field_value($form_fields, 'submit_text');
+
+$form_text = [
+	'form_title' => $form_title ?? '',
+	'period_monthly' => $period_monthly ?? '',
+	'period_one_time' => $period_one_time ?? '',
+	'sum_text_title' => $sum_text_title ?? '',
+	'price1' => $price1 ?? '',
+	'price2' => $price2 ?? '',
+	'price3' => $price3 ?? '',
+	'custom_price_text' => $custom_price_text ?? '',
+	'name_text' => $name_text ?? '',
+	'second_name_text' => $second_name_text ?? '',
+	'email_text' => $email_text ?? '',
+	'phone_text' => $phone_text ?? '',
+	'date_text' => $date_text ?? '',
+	'checkbox_text' => $checkbox_text ?? '',
+	'submit_text' => $submit_text ?? '',
+]
 ?>
 <section class="donat-section">
 	<div class="container">
@@ -47,27 +85,27 @@ $form_title = get_field_value($fields, 'form_title');
 			<div class="donat-block__right-wrapper">
 
 				<form class="donat-block__form js-donation-form" method="POST">
-					<h3 class="donat-block__form-title">Сделать пожертвование</h3>
+					<h3 class="donat-block__form-title"><?php echo $form_text['form_title']; ?></h3>
 
 					<div class="donat-block__form-radio-period-wrapper">
 						<label class="donat-block__form-radio-period-item border-hover-effect-pink">
 							<input checked type="radio" name="pay-period" value="monthly">
-							<span>Ежемесячно</span>
+							<span><?php echo $form_text['period_monthly']; ?></span>
 						</label>
 						<label class="donat-block__form-radio-period-item border-hover-effect-pink">
 							<input type="radio" name="pay-period" value="one-time">
-							<span>Разово</span>
+							<span><?php echo $form_text['period_one_time']; ?></span>
 						</label>
 					</div>
 
 					<div class="donat-block__form-fields-wrapper">
-						<p class="donat-block__form-fields-title">Сумма пожертвования:</p>
+						<p class="donat-block__form-fields-title"><?php echo $form_text['sum_text_title']; ?></p>
 						<div class="donat-block__form-radio-sum-wrapper">
 							<?php
 							$donat_array = [
-								'12 000 ₸',
-								'7 000 ₸',
-								'5 000 ₸',
+								$form_text['price1'] . ' ₸',
+								$form_text['price2'] . ' ₸',
+								$form_text['price3'] . ' ₸',
 							];
 
 							foreach ($donat_array as $key => $val) {
@@ -81,7 +119,8 @@ $form_title = get_field_value($fields, 'form_title');
 							}
 							?>
 							<label class="donat-block__form-radio-custom-sum-item">
-								<input name="custom-pay-sum" type="number" placeholder="Другая сумма ₸">
+								<input name="custom-pay-sum" type="number"
+									placeholder="<?php echo $form_text['custom_price_text']; ?> ₸">
 							</label>
 						</div>
 
@@ -89,25 +128,25 @@ $form_title = get_field_value($fields, 'form_title');
 						$form_fields = [
 							[
 								'validate' => 'js-validate-name',
-								'placeholder' => 'Имя *',
+								'placeholder' => $form_text['name_text'],
 								'name' => 'first-name',
 								'required' => 'required'
 							],
 							[
 								'validate' => 'js-validate-name',
-								'placeholder' => 'Фамилия *',
+								'placeholder' => $form_text['second_name_text'],
 								'name' => 'last-name',
 								'required' => 'required'
 							],
 							[
 								'validate' => 'js-validate-email',
-								'placeholder' => 'e-mail *',
+								'placeholder' => $form_text['email_text'],
 								'name' => 'email',
 								'required' => 'required'
 							],
 							[
 								'validate' => 'js-validate-phone',
-								'placeholder' => 'Телефон *',
+								'placeholder' => $form_text['phone_text'],
 								'name' => 'phone',
 								'required' => 'required'
 							],
@@ -126,31 +165,25 @@ $form_title = get_field_value($fields, 'form_title');
 										</label>';
 							}
 							?>
-							<label class="donat-block__input-wrapper" for="id-birth-date">
+							<label class="donat-block__input-wrapper date" for="id-birth-date">
+								<span class="js-date-placeholder date-placeholder"><?php echo $form_text['date_text']; ?></span>
 								<input
 									type="date"
 									id="id-birth-date"
 									name="birth-date"
-									placeholder="Дата рождения" />
+									/>
 							</label>
 						</div>
 
 						<label class="donat-block__checkbox checkbox">
 							<input checked type="checkbox" name="offer">
 							<span class="checkbox-box"></span>
-							Я согласен(а) с условиями
-							<a class="js-open-popup-activator" href="#oferta-popup">
-								Публичной Оферты
-							</a>
-							и
-							<a class="js-open-popup-activator" href="#oferta-popup">
-								Соглашение о сборе и обработке персональных данных
-							</a>
+							<?php echo $form_text['checkbox_text']; ?>
 						</label>
 					</div>
 					<button id="payButton" type="submit" class="donat-block__submit-btn icon-slide-hover-btn">
 						<span class="btn-inner"></span>
-						<span class="btn-text">Помочь сейчас</span>
+						<span class="btn-text"><?php echo $form_text['submit_text']; ?></span>
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
 							<g clip-path="url(#clip0_86582_72)">
 								<path d="M5 12H19" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />

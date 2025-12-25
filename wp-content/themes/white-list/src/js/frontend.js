@@ -65,6 +65,23 @@ const onLoad = () => {
 		}, 2000)
 	}, false);
 
+	const input = document.getElementById('id-birth-date');
+	const placeholder = document.querySelector('.js-date-placeholder');
+
+	function togglePlaceholder() {
+		if (input.value) {
+			placeholder.style.display = 'none';
+		} else {
+			placeholder.style.display = 'block';
+		}
+	}
+
+	togglePlaceholder();
+
+	input.addEventListener('input', togglePlaceholder);
+	input.addEventListener('change', togglePlaceholder);
+
+
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);
