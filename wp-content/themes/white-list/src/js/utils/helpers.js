@@ -302,7 +302,7 @@ export function closestPolyfill() {
             do {
                 i = matches.length;
                 // eslint-disable-next-line no-empty
-                while (--i >= 0 && matches.item(i) !== el) {}
+                while (--i >= 0 && matches.item(i) !== el) { }
             } while (i < 0 && (el = el.parentElement));
             return el;
         };
@@ -431,4 +431,26 @@ export const primaryMenu = () => {
             })
         });
     })
+}
+
+export const arrowUpBtn = () => {
+    const arrowUp = document.querySelector('.arrow-up');
+
+    function toggleArrowUp() {
+        if (window.scrollY > 300) {
+            arrowUp.classList.add('show');
+        } else {
+            arrowUp.classList.remove('show');
+        }
+    }
+
+    window.addEventListener('scroll', toggleArrowUp);
+
+    arrowUp.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
 }

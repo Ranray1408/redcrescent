@@ -7,6 +7,7 @@ $hover_red: #CC000E;
 $light_hover_red: #ffe5e7;
 $white: #fff;
 $grey: #f0f4f6;
+$dark_grey: #4f4f4f;
 
 $text_color1: #2f2f2f;
 $text_color2: #727272;
@@ -162,6 +163,20 @@ img {
     &:active {
         background-color: $red;
         color: $white;
+    }
+}
+
+.scale-hover-effect {
+    transition: 0.3s transform ease-in-out;
+
+    @media (hover: hover) {
+        &:hover {
+            transform: scale(1.3, 1.3);
+        }
+    }
+
+    &:active {
+        transform: scale(1.3, 1.3);
     }
 }
 

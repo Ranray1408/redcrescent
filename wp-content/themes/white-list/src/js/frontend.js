@@ -1,5 +1,5 @@
 import { FormValidator } from "./components/FormValidator";
-import { primaryMenu } from "./utils/helpers";
+import { arrowUpBtn, primaryMenu } from "./utils/helpers";
 import Popup from "./utils/popup-window";
 
 // Styles entry
@@ -81,7 +81,7 @@ const onLoad = () => {
 	input.addEventListener('input', togglePlaceholder);
 	input.addEventListener('change', togglePlaceholder);
 
-
+	arrowUpBtn();
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);

@@ -46,7 +46,7 @@ $form_text = [
 	'submit_text' => $submit_text ?? '',
 ]
 ?>
-<section class="donat-section">
+<section class="donat-section" id="donat-section">
 	<div class="container">
 		<div class="donat-block" style="background-image: url(<?php echo $block_bg; ?>);">
 

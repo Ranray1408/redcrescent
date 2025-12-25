@@ -1,5 +1,256 @@
 .footer {
+	background-color: $text_color1;
+	padding: 64px 0;
 
-	margin-top: auto;
+	@media screen and (max-width: 991px) {
+		padding: 32px 0;
+	}
 
+	@media screen and (max-width: 768px) {
+		padding: 24px 0;
+	}
+
+	&__container {
+		position: relative;
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+
+		@media screen and (max-width: 991px) {
+			display: grid;
+			grid-template-columns: 1fr 1fr;
+		}
+
+		@media screen and (max-width: 768px) {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			gap: 24px;
+		}
+	}
+
+	&__logo-block {
+		max-width: 332px;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 24px;
+
+		@media screen and (max-width: 768px) {
+			max-width: 340px;
+			text-align: center;
+		}
+	}
+
+	&__text-content {
+		a {
+			text-decoration: underline;
+			font-family: $second-font;
+			font-size: 16px;
+			font-weight: 700;
+			line-height: 1.2;
+			color: $red;
+			margin-bottom: 8px;
+
+			&:hover {
+				color: $white;
+			}
+		}
+	}
+
+	&__upper-text {
+		font-family: $second-font;
+		font-size: 14px;
+		line-height: 1.3;
+		color: #f2f2f2;
+		margin-bottom: 24px;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+
+		@media screen and (max-width: 991px) {
+			display: none;
+		}
+
+		@media screen and (max-width: 768px) {
+			display: block;
+		}
+
+		&.mob {
+			display: none;
+
+			@media screen and (max-width: 991px) {
+				display: block;
+			}
+
+			@media screen and (max-width: 768px) {
+				display: none;
+			}
+		}
+	}
+
+	&__contacts-block {
+		@media screen and (max-width: 768px) {
+			text-align: center;
+		}
+	}
+
+	&__contacts-block-title {
+		font-family: $primary-font;
+		font-size: 16px;
+		font-weight: 700;
+		line-height: 1.25;
+		color: #f2f2f2;
+		margin-bottom: 32px;
+
+		@media screen and (max-width: 768px) {
+			font-size: 14px;
+			margin-bottom: 20px;
+		}
+	}
+
+	&__contacts-block-email {
+		font-family: $primary-font;
+		font-size: 20px;
+		font-weight: 500;
+		line-height: 1.4;
+		color: #f2f2f2;
+		margin-bottom: 16px;
+
+		@media screen and (max-width: 768px) {
+			font-size: 14px;
+			margin-bottom: 14px;
+		}
+	}
+
+	&__contacts-block-phone {
+		display: inline-block;
+		font-family: $primary-font;
+		font-size: 32px;
+		font-weight: 700;
+		line-height: 1;
+		color: #f2f2f2;
+		margin-bottom: 32px;
+
+		@media screen and (max-width: 768px) {
+			font-size: 20px;
+			margin-bottom: 20px;
+		}
+	}
+
+	&__socials {
+		display: flex;
+		gap: 8px;
+		margin-bottom: 32px;
+
+		@media screen and (max-width: 991px) {
+			position: absolute;
+			transform: translateX(-50%);
+			left: 50%;
+			z-index: 2;
+		}
+
+		@media screen and (max-width: 768px) {
+			position: relative;
+			transform: none;
+			margin-bottom: 0;
+			left: auto;
+		}
+	}
+
+	&__ps-text {
+		font-family: $second-font;
+		font-size: 14px;
+		line-height: 1.3;
+		color: #f2f2f2;
+
+		@media screen and (max-width: 991px) {
+			display: none;
+		}
+
+		&.mob {
+			display: none;
+			grid-column: span 2;
+			text-align: center;
+
+			@media screen and (max-width: 991px) {
+				display: block;
+			}
+		}
+	}
+
+	&__links-block {
+		max-width: 190px;
+		display: flex;
+		flex-direction: column;
+		gap: 16px;
+
+		@media screen and (max-width: 991px) {
+			grid-column: span 2;
+			max-width: 100%;
+			width: 100%;
+			flex-direction: row;
+			margin-bottom: 24px;
+			padding-top: 72px;
+		}
+
+		@media screen and (max-width: 768px) {
+			flex-direction: column;
+			gap: 8px;
+			max-width: 340px;
+			margin: 0 auto;
+			padding-top: 0;
+		}
+	}
+
+	&__footer-link {
+
+		@media screen and (max-width: 991px) {
+			flex: 1;
+		}
+
+
+		&:first-child {
+			background-color: $dark_grey;
+			font-size: 16px;
+			padding: 12px 16px;
+			gap: 8px;
+
+			@media screen and (max-width: 991px) {
+				justify-content: space-between;
+
+			}
+
+			@media screen and (max-width: 991px) {
+				svg {
+					margin-left: 0;
+				}
+			}
+		}
+	}
+}
+
+.arrow-up {
+	position: fixed;
+	bottom: 50px;
+	right: -100%;
+	width: 72px;
+	height: 72px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	padding: 24px;
+	border-radius: 50%;
+	background-color: #4f4f4f;
+	z-index: 99;
+
+	&:hover {
+		background-color: $red;
+	}
+
+	&.show {
+		right: 50px;
+	}
 }

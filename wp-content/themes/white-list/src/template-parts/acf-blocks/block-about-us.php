@@ -9,7 +9,7 @@ $description = get_field_value($fields, 'description');
 $block_repeater = get_field_value($fields, 'block_repeater');
 
 ?>
-<section class="about-us">
+<section class="about-us" id="block-about-us">
 	<div class="container">
 		<?php
 		if (!empty($title)) {

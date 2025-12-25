@@ -32,7 +32,7 @@ $arrow_icons = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmln
 				</svg>';
 
 ?>
-<div class="block-results">
+<section class="block-results" id="block-results">
 	<div class="container">
 		<div class="block-results__inner">
 
@@ -103,4 +103,4 @@ $arrow_icons = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmln
 			?>
 		</div>
 	</div>
-</div>
+</section>
