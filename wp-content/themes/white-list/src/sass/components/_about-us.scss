@@ -60,6 +60,7 @@
 		align-items: center;
 		background-color: $white;
 		border-radius: 32px;
+		transition: 0.3s background-color ease-in-out;
 
 		@media screen and (max-width: 1440px) {
 			flex-direction: column;
@@ -82,12 +83,30 @@
 				}
 			}
 		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: $light_hover_red;
+
+				.about-us__block-title {
+					color: $red;
+				}
+
+				.about-us__block-image img {
+					transform: scale(1.1, 1.1);
+				}
+			}
+		}
 	}
 
 	&__block-image {
 		flex: 1;
 		border-radius: 8px;
 		overflow: hidden;
+
+		img {
+			transition: 0.3s transform ease-in-out;
+		}
 	}
 
 	&__block-inner {
@@ -97,7 +116,7 @@
 	&__block-title {
 		color: $text_color1;
 		margin-bottom: 24px;
-
+		transition: 0.3s color ease-in-out;
 
 		@media screen and (max-width: 1470px) {
 			font-size: 40px;

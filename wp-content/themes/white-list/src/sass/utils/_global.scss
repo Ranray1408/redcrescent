@@ -4,6 +4,7 @@ $second-font: 'Gilroy', sans-serif;
 
 $red: #e3000f;
 $hover_red: #CC000E;
+$light_hover_red: #ffe5e7;
 $white: #fff;
 $grey: #f0f4f6;
 
@@ -193,7 +194,7 @@ img {
 }
 
 .icon-slide-hover-btn {
-    display: inline-flex;
+    display: flex;
     justify-content: flex-start;
     align-items: center;
     position: relative;
@@ -206,6 +207,23 @@ img {
     font-weight: 700;
     line-height: 1;
     color: $white;
+
+    &.grey-bg {
+        background-color: #dcdcdc;
+        color: $text_color1;
+
+        @media (hover: hover) {
+            &:hover {
+                color: $white;
+                background-color: $text_color2;
+            }
+        }
+
+        &:active {
+            color: $white;
+            background-color: $text_color2;
+        }
+    }
 
     @media screen and (max-width: 768px) {
         font-size: 20px;
