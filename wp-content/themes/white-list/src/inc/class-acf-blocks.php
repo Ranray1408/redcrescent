@@ -27,6 +27,9 @@ class WP_Rock_Blocks {
         'block-results' => array(
             'title'      => 'Block - Results',
         ),
+        'block-partnership' => array(
+            'title'      => 'Block - Partnership',
+        ),
     );
 
     /**

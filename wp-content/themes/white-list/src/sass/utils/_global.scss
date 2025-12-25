@@ -193,6 +193,41 @@ img {
     }
 }
 
+.transparent-btn {
+    color: #f2f2f2;
+    border: 1px solid #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 24px;
+    font-size: 24px;
+    border-radius: 16px;
+    font-family: $primary-font;
+    line-height: 1;
+    width: 100%;
+
+    @media screen and (max-width: 768px) {
+        font-size: 20px;
+        padding: 16px;
+    }
+
+    @media screen and (max-width: 470px) {
+        font-size: 14px;
+    }
+
+    @media (hover: hover) {
+        &:hover {
+            color: $white;
+            background-color: $text_color1;
+        }
+    }
+
+    &:active {
+        background-color: $text_color1;
+        color: $white;
+    }
+}
+
 .icon-slide-hover-btn {
     display: flex;
     justify-content: flex-start;
@@ -227,6 +262,11 @@ img {
 
     @media screen and (max-width: 768px) {
         font-size: 20px;
+        padding: 16px;
+    }
+
+    @media screen and (max-width: 470px) {
+        font-size: 14px;
     }
 
     .btn-inner {
