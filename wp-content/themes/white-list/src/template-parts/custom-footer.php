@@ -141,6 +141,9 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 </button>
 
 <?php
+ob_start();
+get_template_part('src/template-parts/modal-window');
+$html = ob_get_clean();
 
-echo do_shortcode('[popup_box box_id="popup-contact-us-form-shorcode"]' . do_shortcode($contact_us_shortcode) . '[/popup_box]');
+echo do_shortcode('[popup_box box_id="popup-contacts-modal"]'.$html.'[/popup_box]');
 ?>

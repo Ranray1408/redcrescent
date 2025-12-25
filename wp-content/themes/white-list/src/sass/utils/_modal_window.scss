@@ -70,19 +70,19 @@ html {
         justify-content: center;
         filter: none;
         border: none;
-        width: 56px;
-        height: 56px;
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
         flex-grow: 0;
         display: flex;
         justify-content: center;
         align-items: center;
         gap: 8px;
-        border-radius: 8px;
         background-color: #f2f2f2;
 
         position: absolute;
-        right: 10px;
-        top: 10px;
+        right: 16px;
+        top: 16px;
         padding: 0;
         z-index: 10;
         opacity: 0.9;
@@ -106,45 +106,114 @@ div.wpcf7 .ajax-loader {
     right: 0;
 }
 
-#popup-contact-us-form-shorcode ,
-#popup-form-shorcode {
+#popup-contacts-modal {
     .popup-wrapper {
-        background-image: linear-gradient(to left, #5cc17d, #469a9e);
+        max-width: 680px;
+        padding: 64px;
+        border-radius: 16px;
 
         @media screen and (max-width: 768px) {
-            padding: 32px 16px;
+            padding: 60px 16px 48px;
         }
     }
 
-    .submit-button-wrapper {
-        position: relative;
-        display: inline-flex;
-        justify-content: center;
-        align-items: center;
+    .contacts-popup {
+        display: flex;
+        flex-direction: column;
 
-        &:after {
-            pointer-events: none;
-            content: '';
-            display: block;
-            position: absolute;
-            top: 14px;
-            right: 14px;
-            width: 24px;
-            height: 24px;
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: contain;
-            background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzgyNzIxXzM3MjYpIj4KPHBhdGggZD0iTTEwIDE0TDIxIDMiIHN0cm9rZT0iIzJGMkYyRiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIxLjAwMDYgM0wxNC41MDA2IDIxQzE0LjQ1NjcgMjEuMDk1NyAxNC4zODYyIDIxLjE3NjkgMTQuMjk3NiAyMS4yMzM4QzE0LjIwOSAyMS4yOTA2IDE0LjEwNTkgMjEuMzIwOSAxNC4wMDA2IDIxLjMyMDlDMTMuODk1MiAyMS4zMjA5IDEzLjc5MjEgMjEuMjkwNiAxMy43MDM1IDIxLjIzMzhDMTMuNjE0OSAyMS4xNzY5IDEzLjU0NDQgMjEuMDk1NyAxMy41MDA2IDIxTDEwLjAwMDYgMTRMMy4wMDA1NiAxMC41QzIuOTA0ODIgMTAuNDU2MSAyLjgyMzY5IDEwLjM4NTcgMi43NjY4IDEwLjI5NzFDMi43MDk5MiAxMC4yMDg0IDIuNjc5NjkgMTAuMTA1MyAyLjY3OTY5IDEwQzIuNjc5NjkgOS44OTQ2OCAyLjcwOTkyIDkuNzkxNTggMi43NjY4IDkuNzAyOTVDMi44MjM2OSA5LjYxNDMxIDIuOTA0ODIgOS41NDM4NyAzLjAwMDU2IDkuNUwyMS4wMDA2IDNaIiBzdHJva2U9IiMyRjJGMkYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfODI3MjFfMzcyNiI+CjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K');
+        @media screen and (max-width: 768px) {
+            text-align: center;
+            align-items: center;
         }
 
-        .wpcf7-form-control {
-            padding: 16px 46px 16px 24px;
+        @media screen and (max-width: 470px) {
+            align-items: flex-start;
+            text-align: left;
         }
 
-        &:hover {
-            &:after {
-                background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzgyNzIxXzM3MjYpIj4KPHBhdGggZD0iTTEwIDE0TDIxIDMiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTIxLjAwMDYgM0wxNC41MDA2IDIxQzE0LjQ1NjcgMjEuMDk1NyAxNC4zODYyIDIxLjE3NjkgMTQuMjk3NiAyMS4yMzM4QzE0LjIwOSAyMS4yOTA2IDE0LjEwNTkgMjEuMzIwOSAxNC4wMDA2IDIxLjMyMDlDMTMuODk1MiAyMS4zMjA5IDEzLjc5MjEgMjEuMjkwNiAxMy43MDM1IDIxLjIzMzhDMTMuNjE0OSAyMS4xNzY5IDEzLjU0NDQgMjEuMDk1NyAxMy41MDA2IDIxTDEwLjAwMDYgMTRMMy4wMDA1NiAxMC41QzIuOTA0ODIgMTAuNDU2MSAyLjgyMzY5IDEwLjM4NTcgMi43NjY4IDEwLjI5NzFDMi43MDk5MiAxMC4yMDg0IDIuNjc5NjkgMTAuMTA1MyAyLjY3OTY5IDEwQzIuNjc5NjkgOS44OTQ2OCAyLjcwOTkyIDkuNzkxNTggMi43NjY4IDkuNzAyOTVDMi44MjM2OSA5LjYxNDMxIDIuOTA0ODIgOS41NDM4NyAzLjAwMDU2IDkuNUwyMS4wMDA2IDNaIiBzdHJva2U9IiNmZmYiIHN0cm9rZS13aWR0aD0iMiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfODI3MjFfMzcyNiI+CjxyZWN0IHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K');
+        &__phone,
+        &__note,
+        &__email,
+        &__title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: $primary-font;
+            font-weight: 700;
+            line-height: 1;
+            color: $text_color1;
+        }
+
+        &__title {
+            font-size: 32px;
+            margin-bottom: 32px;
+
+            @media screen and (max-width: 768px) {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+
+            @media screen and (max-width: 470px) {
+                font-size: 20px;
+                margin-bottom: 20px;
+            }
+        }
+
+        &__note {
+            font-size: 20px;
+            font-weight: 500;
+            line-height: 1.4;
+            margin-bottom: 16px;
+
+            @media screen and (max-width: 768px) {
+                font-size: 16px;
+            }
+
+            @media screen and (max-width: 470px) {
+                font-size: 14px;
+                margin-bottom: 14px;
+            }
+        }
+
+        &__email {
+            font-size: 32px;
+            line-height: 1.4;
+            margin-bottom: 16px;
+
+            @media screen and (max-width: 768px) {
+                font-size: 24px;
+                margin-bottom: 18px;
+            }
+
+            @media screen and (max-width: 470px) {
+                font-size: 20px;
+                margin-bottom: 24px;
+            }
+        }
+
+        &__phone {
+            font-size: 48px;
+            margin-bottom: 32px;
+
+            @media screen and (max-width: 768px) {
+                font-size: 24px;
+                margin-bottom: 24px;
+            }
+
+            @media screen and (max-width: 470px) {
+                font-size: 24px;
+                margin-bottom: 20px;
+            }
+        }
+
+        &__social-list {
+            display: flex;
+            gap: 8px;
+
+            @media screen and (max-width: 768px) {
+                justify-content: center;
             }
         }
     }
+
 }
