@@ -21,6 +21,9 @@ class WP_Rock_Blocks {
         'block-donat-section' => array(
             'title'      => 'Block - Donat section',
         ),
+        'block-about-us' => array(
+            'title'      => 'Block - About us',
+        ),
     );
 
     /**
