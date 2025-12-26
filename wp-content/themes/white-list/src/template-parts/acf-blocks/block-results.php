@@ -103,4 +103,5 @@ $arrow_icons = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmln
 			?>
 		</div>
 	</div>
+	<div class="animation-pulse"></div>
 </section>

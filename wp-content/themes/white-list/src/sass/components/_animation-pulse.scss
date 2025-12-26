@@ -1,0 +1,30 @@
+.animation-pulse {
+	background-image: url("data:image/svg+xml,%3Csvg width='179' height='81' viewBox='0 0 179 81' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M-12.2637 46.8858H19.0209L26.0247 35.5229L45.9473 67.1847L72.5625 0L101.512 80.4231L119.723 32.6547L134.665 60.4552L141.561 46.8858H197.421' stroke='%23E3000F' stroke-width='3.14161' fill='none'/%3E%3C/svg%3E");
+
+	background-repeat: repeat-x;
+	background-size: 180px 80px;
+	background-position: 0 center;
+	height: 80px;
+
+	-webkit-mask-image: linear-gradient(90deg,
+			transparent 0%,
+			rgba(0, 0, 0, 1) 45%,
+			rgba(0, 0, 0, 1) 55%,
+			transparent 100%);
+
+	-webkit-mask-size: 120px 100%;
+	-webkit-mask-repeat: no-repeat;
+
+	animation: pulseMove 2s linear infinite;
+	width: 100%;
+}
+
+@keyframes pulseMove {
+	from {
+		-webkit-mask-position: -300px 0;
+	}
+
+	to {
+		-webkit-mask-position: 100% 0;
+	}
+}
