@@ -3,13 +3,12 @@ export class CarAnimation {
 		this.rootElem = rootElem;
 		this.icons = rootElem.querySelectorAll('.js-icon');
 		this.car = rootElem.querySelector('.js-car');
-		this.state = null;
 
 		if (!this.icons.length || !this.car) return;
 
-		this.startTime = 3000;   // enter
-		this.dropTime = 400;    // drop-icons
-		this.moveAwayTime = 2500; // move-away
+		this.startTime = 3000;
+		this.dropTime = 2000;
+		this.moveAwayTime = 2500;
 
 		this.init();
 	}
@@ -20,98 +19,60 @@ export class CarAnimation {
 		this.rootElem.style.setProperty('--animation-move-away-time', `${this.moveAwayTime}ms`);
 
 		this.prepareIdleIcons();
-		this.rootElem.offsetHeight;
-		this.updateCenter();
 
-		this.setState('enter');
+		// Початкова позиція машини за екраном (ліворуч)
+		this.rootElem.style.setProperty('--car-move-x', '-100vw');
 
+		// Встановлюємо початкові позиції іконок (вони не рухаються з машиною до моменту падіння)
+		this.icons.forEach(icon => {
+			icon.style.setProperty('--icon-offset-x', '0px');
+			icon.style.setProperty('--icon-offset-y', '0px');
+		});
+
+		// Машина рухається в центр
+		requestAnimationFrame(() => {
+			const container = this.rootElem.getBoundingClientRect();
+			const carWidth = this.car.getBoundingClientRect().width;
+			const centerX = container.width / 2 - carWidth / 2;
+			this.rootElem.style.setProperty('--car-move-x', `${centerX}px`);
+		});
+
+		// Після того як машина доїхала до центру - іконки падають
 		setTimeout(() => {
 			this.dropIcons();
-
-			this.resetIconAnimation();
-
-			requestAnimationFrame(() => {
-				this.icons.forEach(icon => {
-					icon.style.animation = '';
-				});
-				this.setState('drop-icons');
-			});
 		}, this.startTime);
 
+		// Після падіння іконок - машина з іконками їде вправо
 		setTimeout(() => {
+			// Оновлюємо transition для машини перед рухом вправо
+			this.car.style.transition = `transform ${this.moveAwayTime}ms ease-in-out`;
 
-			this.resetIconAnimation();
-
-			requestAnimationFrame(() => {
-				this.icons.forEach(icon => {
-					icon.style.animation = '';
-				});
-
-				this.setState('move-away');
+			// Оновлюємо transition для іконок перед рухом вправо
+			this.icons.forEach(icon => {
+				icon.style.transition = `transform ${this.moveAwayTime}ms ease-in-out`;
 			});
 
+			// Примусовий рефлоу для застосування transitions
+			this.car.offsetHeight;
+			this.icons.forEach(icon => icon.offsetHeight);
+
+			// Машина і іконки разом рухаються вправо через --car-move-x
+			// offset-x/y залишаються незмінними, щоб іконки залишилися в кузові
+			requestAnimationFrame(() => {
+				this.rootElem.style.setProperty('--car-move-x', '120vw');
+			});
 		}, this.startTime + this.dropTime);
 	}
-
-	/* =========================
-	   STATE CONTROL
-	========================= */
-
-	setState(state) {
-		if (this.state === state) return;
-
-		this.state = state;
-		this.rootElem.dataset.animationState = state;
-	}
-
-	/* =========================
-	   IDLE ICONS
-	========================= */
 
 	prepareIdleIcons() {
 		this.icons.forEach(icon => {
 			const x = this.random(-12, 12);
 			const y = this.random(-12, 12);
 			const rotate = this.random(-6, 6);
-			const duration = this.random(5, 9);
-			const delay = this.random(0, 2);
-
 			icon.style.setProperty('--idle-x', `${x}px`);
 			icon.style.setProperty('--idle-y', `${y}px`);
 			icon.style.setProperty('--idle-rotate', `${rotate}deg`);
-
-			icon.style.animationDuration = `${duration}s`;
-			icon.style.animationDelay = `${delay}s`;
 		});
-	}
-
-	/* =========================
-	   UTILS
-	========================= */
-
-	random(min, max) {
-		return Math.random() * (max - min) + min;
-	}
-
-	resetIconAnimation() {
-		this.icons.forEach(icon => {
-			icon.style.animation = 'none';
-		});
-
-		this.rootElem.offsetHeight;
-	}
-
-	updateCenter() {
-		const container = this.rootElem;   // .js-car-animation
-		const car = this.car;              // .js-car
-
-		const containerRect = container.getBoundingClientRect();
-		const carRect = car.getBoundingClientRect();
-
-		const containerCenterX = containerRect.width / 2;
-		const carCenterOffset = containerCenterX - carRect.width / 2;
-
-		car.style.setProperty('--car-center-x', `${carCenterOffset}px`);
 	}
 
 	dropIcons() {
@@ -121,41 +82,35 @@ export class CarAnimation {
 		const bodyRect = carBody.getBoundingClientRect();
 		const totalIcons = this.icons.length;
 
-		const iconContainer = this.rootElem.querySelector('.js-icon-container');
-		const containerRect = iconContainer.getBoundingClientRect();
-
-
 		this.icons.forEach((icon, index) => {
 			const iconRect = icon.getBoundingClientRect();
-
-			// icon center
 			const iconCenterX = iconRect.left + iconRect.width / 2;
+			const iconCenterY = iconRect.top + iconRect.height / 2;
 
-			const iconCenterY =
-				containerRect.top +
-				icon.offsetTop +
-				icon.offsetHeight / 2;
+			const targetCenterX = bodyRect.left + (bodyRect.width / (totalIcons + 1)) * (index + 1);
+			const targetCenterY = bodyRect.top + bodyRect.height / 2;
 
-			// target center inside car body (even distribution by X)
-			const targetCenterX =
-				bodyRect.left +
-				(bodyRect.width / (totalIcons + 1)) * (index + 1);
-
-			const targetCenterY =
-				bodyRect.top + bodyRect.height / 2;
-
-			// delta for transform
 			const deltaX = targetCenterX - iconCenterX;
 			const deltaY = targetCenterY - iconCenterY;
 
-			icon.style.setProperty('--drop-x', `${deltaX}px`);
-			icon.style.setProperty('--drop-y', `${deltaY}px`);
+			// Встановлюємо початкові позиції (іконки ще не рухаються)
+			icon.style.setProperty('--icon-offset-x', '0px');
+			icon.style.setProperty('--icon-offset-y', '0px');
+			icon.style.transition = `transform ${this.dropTime}ms ease-out`;
+
+			// Примусовий рефлоу для застосування початкових значень
+			icon.offsetHeight;
+
+			// Встановлюємо фінальні координати для падіння
+			requestAnimationFrame(() => {
+				icon.style.setProperty('--icon-offset-x', `${deltaX}px`);
+				icon.style.setProperty('--icon-offset-y', `${deltaY}px`);
+			});
 		});
 	}
 
-
-	getAnimationTime(varName) {
-		const value = getComputedStyle(this.rootElem).getPropertyValue(varName).trim();
-		return parseFloat(value) * 1000;
+	random(min, max) {
+		return Math.random() * (max - min) + min;
 	}
 }
+
