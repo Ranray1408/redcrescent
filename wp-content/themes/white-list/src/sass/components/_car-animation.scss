@@ -1,0 +1,143 @@
+.car-animation {
+	--animation-start-time: 0;
+	--animation-drop-time: 0;
+	--animation-move-away-time: 0;
+
+	background-repeat: no-repeat;
+	background-position: center bottom;
+	background-size: cover;
+	//height: 940px;
+	height: 600px;
+	overflow: hidden;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	&__icon-container {
+		position: relative;
+		display: flex;
+		justify-content: center;
+		gap: 70px;
+	}
+
+	&__icon {
+		--idle-x: 0px;
+		--idle-y: 0px;
+		--idle-rotate: 0deg;
+		--drop-x: 0px;
+		--drop-y: 0px;
+
+		width: 94px;
+		height: 94px;
+		transform: translate3d(0, 0, 0) rotate(0deg);
+		will-change: transform;
+	}
+
+	&__car-wrapper {
+		display: inline-flex;
+		bottom: 10px;
+		position: relative;
+	}
+
+	&__car {
+		--block-center-x: 0px;
+		position: relative;
+	}
+
+	&__car-body {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 72%;
+		height: 30px;
+	}
+
+	&[data-animation-state="enter"] {
+		.car-animation__car {
+			animation: var(--animation-start-time) moveToCenter ease-in-out forwards;
+		}
+
+		.car-animation__icon {
+			animation-name: iconIdle;
+			animation-timing-function: ease-out;
+			animation-iteration-count: infinite;
+		}
+	}
+
+	&[data-animation-state="drop-icons"] {
+		.car-animation__car {
+			animation: none;
+			transform: translateX(var(--car-center-x, 0));
+		}
+
+		.car-animation__icon {
+			animation: var(--animation-drop-time) dropToCar ease forwards;
+		}
+	}
+
+	&[data-animation-state="move-away"] {
+		.car-animation__car {
+			animation: var(--animation-move-away-time) carMoveAway ease forwards;
+		}
+
+		.car-animation__icon {
+			animation: var(--animation-move-away-time) moveAwayWithIcons ease forwards;
+		}
+	}
+}
+
+@keyframes iconIdle {
+	0% {
+		transform: translate3d(0, 0, 0) rotate(0deg);
+	}
+
+	50% {
+		transform: translate3d(var(--idle-x),
+				var(--idle-y),
+				0) rotate(var(--idle-rotate));
+	}
+
+	100% {
+		transform: translate3d(0, 0, 0) rotate(0deg);
+	}
+}
+
+@keyframes moveToCenter {
+	from {
+		transform: translateX(-100vw);
+	}
+	to {
+		transform: translateX(var(--car-center-x, 0));
+	}
+}
+
+@keyframes dropToCar {
+	0% {
+		transform: translate3d(0, 0, 0);
+	}
+
+	100% {
+		transform: translate3d(var(--drop-x), var(--drop-y), 0);
+	}
+}
+
+@keyframes carMoveAway {
+	from {
+		transform: translateX(0);
+	}
+
+	to {
+		transform: translateX(120vw);
+	}
+}
+
+@keyframes moveAwayWithIcons {
+	from {
+		transform: translate3d(var(--drop-x), var(--drop-y), 0);
+	}
+
+	to {
+		transform: translate3d(calc(var(--drop-x) + 120vw), var(--drop-y), 0);
+	}
+}

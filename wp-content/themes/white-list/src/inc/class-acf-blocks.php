@@ -30,6 +30,9 @@ class WP_Rock_Blocks {
         'block-partnership' => array(
             'title'      => 'Block - Partnership',
         ),
+        'block-car-animation' => array(
+            'title'      => 'Block - Car animation',
+        ),
     );
 
     /**

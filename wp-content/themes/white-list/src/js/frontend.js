@@ -1,3 +1,4 @@
+import { CarAnimation } from "./components/CarAnimation";
 import { FormValidator } from "./components/FormValidator";
 import { arrowUpBtn, primaryMenu } from "./utils/helpers";
 import Popup from "./utils/popup-window";
@@ -82,6 +83,10 @@ const onLoad = () => {
 	input.addEventListener('change', togglePlaceholder);
 
 	arrowUpBtn();
+
+	document.querySelectorAll('.js-car-animation').forEach(el => {
+		new CarAnimation(el);
+	});
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);
