@@ -4,6 +4,10 @@
 	--animation-move-away-time: 2.5s;
 	--car-move-x: -100vw;
 
+
+	--icon-in-container-x: 0px;
+	--icon-in-container-y: 0px;
+
 	background-repeat: no-repeat;
 	background-position: center bottom;
 	background-size: cover;
@@ -14,27 +18,54 @@
 	flex-direction: column;
 	justify-content: space-between;
 
+	@media screen and (max-width:1200px) {
+		height: 774px;
+	}
+
+	@media screen and (max-width:991px) {
+		height: 600px;
+	}
+
+	@media screen and (max-width:670px) {
+		height: 500px;
+	}
+
+	@media screen and (max-width:470px) {
+		height: 350px;
+	}
+
+
 	&__icon-container {
 		position: relative;
-		display: flex;
+		display: inline-flex;
 		justify-content: center;
 		gap: 70px;
+		flex-wrap: wrap;
+
+		@media screen and (max-width:1470px) {
+			gap: 40px;
+		}
+
+		@media screen and (max-width:470px) {
+			gap: 20px;
+		}
 	}
 
 	&__icon {
-		--idle-x: 0px;
-		--idle-y: 0px;
-		--idle-rotate: 0deg;
-		--drop-x: 0px;
-		--drop-y: 0px;
-		--icon-offset-x: 0px;
-		--icon-offset-y: 0px;
-
 		position: relative;
 		width: 94px;
 		height: 94px;
-		transform: translateX(var(--car-move-x, 0)) translate3d(var(--icon-offset-x), var(--icon-offset-y), 0);
 		will-change: transform;
+
+		@media screen and (max-width:991px) {
+			width: 78px;
+			height: 78px;
+		}
+
+		@media screen and (max-width:470px) {
+			width: 48px;
+			height: 48px;
+		}
 	}
 
 	&__car-wrapper {
@@ -44,8 +75,22 @@
 	}
 
 	&__car {
+		max-width: 830px;
 		transform: translateX(var(--car-move-x, -100vw));
 		transition: transform var(--animation-start-time) ease-in-out;
+
+		@media screen and (max-width:991px) {
+			max-width: 500px;
+		}
+
+		@media screen and (max-width:470px) {
+			max-width: 180px;
+		}
+
+		svg {
+			height: 100%;
+			width: 100%;
+		}
 	}
 
 	&__car-body {
@@ -55,4 +100,47 @@
 		width: 72%;
 		height: 30px;
 	}
+
+	&[data-animation-state="enter"] {
+		.car-animation {
+			&__car {
+				transform: translateX(var(--car-move-x, -100vw));
+			}
+		}
+
+	}
+
+	&[data-animation-state="drop-icons"] {
+		.car-animation {
+			&__icon {
+				transition: transform var(--animation-drop-time) ease-out;
+				transform: translate(var(--icon-in-container-x), var(--icon-in-container-y));
+			}
+		}
+
+	}
+
+	&[data-animation-state="move-away"] {
+		.car-animation {
+			&__car {
+				transform: translateX(120vw);
+			}
+
+			&__icon {
+				transform: translate(var(--icon-in-container-x), var(--icon-in-container-y));
+			}
+		}
+
+	}
+}
+
+.debug-point {
+	position: fixed;
+	width: 8px;
+	height: 8px;
+	background: red;
+	border-radius: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 9999;
+	pointer-events: none;
 }
