@@ -1,14 +1,21 @@
+import { debounce, isInViewport } from '../utils/helpers';
+
 export class CarAnimation {
-	constructor(rootElem) {
-		this.rootElem = rootElem;
-		this.icons = rootElem.querySelectorAll('.js-icon');
-		this.car = rootElem.querySelector('.js-car');
+	constructor() {
+		this.rootElem = document.querySelector('.js-car-animation');
+		this.icons = this.rootElem.querySelectorAll('.js-icon');
+		this.car = this.rootElem.querySelector('.js-car');
+		this.carBody = this.rootElem.querySelector('.js-car-body');
 
 		if (!this.icons.length || !this.car) return;
 
 		this.startTime = 3000;
 		this.dropTime = 2000;
 		this.moveAwayTime = 2500;
+
+		this.initialIconPositions = [];
+
+		this.animationStarted = false;
 
 		this.init();
 	}
@@ -18,63 +25,86 @@ export class CarAnimation {
 		this.rootElem.style.setProperty('--animation-drop-time', `${this.dropTime}ms`);
 		this.rootElem.style.setProperty('--animation-move-away-time', `${this.moveAwayTime}ms`);
 
-		// Початкова позиція машини за екраном (ліворуч)
+		// Start car postion
 		this.rootElem.style.setProperty('--car-move-x', '-100vw');
 
-		// // Встановлюємо початкові позиції іконок (вони не рухаються з машиною до моменту падіння)
-		// this.icons.forEach(icon => {
-		// 	icon.style.setProperty('--icon-offset-x', '0px');
-		// 	icon.style.setProperty('--icon-offset-y', '0px');
-		// });
 
+		this.calcIconsDefaultPosition();
+
+		window.addEventListener('resize', debounce(() => { this.calcIconsDefaultPosition() }, 200));
+
+		// Add random dealys for icons
+		this.setupIconDelays();
+
+		this.checkVisibilityAndStart();
+
+		this.setupScrollListener();
+
+	}
+
+	calcIconsDefaultPosition() {
+		if (this.followRaf) {
+			cancelAnimationFrame(this.followRaf);
+			this.followRaf = null;
+		}
+
+		// Save start position of icons
+		const rootRect = this.rootElem.getBoundingClientRect();
+		this.initialIconPositions = Array.from(this.icons).map(icon => {
+			const rect = icon.getBoundingClientRect();
+			return {
+				x: rect.left - rootRect.left + rect.width / 2,
+				y: rect.top - rootRect.top + rect.height / 2
+			};
+		});
+
+		if (this.state === 'drop-icons' || this.state === 'move-away') {
+			this.setIconsPositionInContainer();
+		}
+	}
+
+	setupIconDelays() {
+		this.icons.forEach((icon, index) => {
+			const delay = this.random(0, 500);
+			icon.style.setProperty('--icon-delay', `${delay}ms`);
+		});
+	}
+
+	checkVisibilityAndStart() {
+		if (this.animationStarted) return;
+
+		if (this.rootElem && isInViewport(this.rootElem, 200)) {
+			this.startAnimation();
+		}
+	}
+
+	setupScrollListener() {
+		this.checkVisibilityHandler = () => {
+			this.checkVisibilityAndStart();
+		};
+
+		window.addEventListener('scroll', this.checkVisibilityHandler, { passive: true });
+		window.addEventListener('resize', this.checkVisibilityHandler, { passive: true });
+	}
+
+	startAnimation() {
+		if (this.animationStarted) return;
+
+		this.animationStarted = true;
 
 		this.setState('enter');
 
 		setTimeout(() => {
 			this.setState('drop-icons');
-
-			this.dropIcons();
 		}, this.startTime);
 
 		setTimeout(() => {
 			this.setState('move-away');
-
-			this.dropIcons();
 		}, this.startTime + this.dropTime);
 
-		// // Машина рухається в центр
-		// requestAnimationFrame(() => {
-		// 	const container = this.rootElem.getBoundingClientRect();
-		// 	const carWidth = this.car.getBoundingClientRect().width;
-		// 	const centerX = container.width / 2 - carWidth / 2;
-		// 	this.rootElem.style.setProperty('--car-move-x', `${centerX}px`);
-		// });
-
-		// // Після того як машина доїхала до центру - іконки падають
-		// setTimeout(() => {
-		// 	this.dropIcons();
-		// }, this.startTime);
-
-		// // Після падіння іконок - машина з іконками їде вправо
-		// setTimeout(() => {
-		// 	// Оновлюємо transition для машини перед рухом вправо
-		// 	this.car.style.transition = `transform ${this.moveAwayTime}ms ease-in-out`;
-
-		// 	// Оновлюємо transition для іконок перед рухом вправо
-		// 	this.icons.forEach(icon => {
-		// 		icon.style.transition = `transform ${this.moveAwayTime}ms ease-in-out`;
-		// 	});
-
-		// 	// Примусовий рефлоу для застосування transitions
-		// 	this.car.offsetHeight;
-		// 	this.icons.forEach(icon => icon.offsetHeight);
-
-		// 	// Машина і іконки разом рухаються вправо через --car-move-x
-		// 	// offset-x/y залишаються незмінними, щоб іконки залишилися в кузові
-		// 	requestAnimationFrame(() => {
-		// 		this.rootElem.style.setProperty('--car-move-x', '120vw');
-		// 	});
-		// }, this.startTime + this.dropTime);
+		setTimeout(() => {
+			this.setState('idle');
+		}, this.startTime + this.dropTime + this.moveAwayTime);
 	}
 
 	enterPhase() {
@@ -84,25 +114,31 @@ export class CarAnimation {
 		this.rootElem.style.setProperty('--car-move-x', `${centerX}px`);
 	}
 
-	dropIcons() {
+	setIconsPositionInContainer() {
 		const points = this.generateIconPoints();
-		if (!points.length) return;
+		if (!points.length || !this.initialIconPositions.length) return;
 
-		const rootRect = this.rootElem.getBoundingClientRect();
-
+		// Get default positions
 		this.icons.forEach((icon, index) => {
-			const rect = icon.getBoundingClientRect();
-
-			const centerX = rect.left - rootRect.left + rect.width / 2;
-			const centerY = rect.top - rootRect.top + rect.height / 2;
-
+			const initialPos = this.initialIconPositions[index];
 			const target = points[index];
 
-			const deltaX = target.x - centerX;
-			const deltaY = target.y - centerY;
+			// Delta depend on start position
+			const deltaX = target.x - initialPos.x;
+			const deltaY = target.y - initialPos.y;
 
 			icon.style.setProperty('--icon-in-container-x', `${deltaX}px`);
 			icon.style.setProperty('--icon-in-container-y', `${deltaY}px`);
+		});
+	}
+
+	setIconsPositionDefault() {
+		if (!this.initialIconPositions.length) return;
+
+		// Get default positions
+		this.icons.forEach((icon, index) => {
+			icon.style.setProperty('--icon-in-container-x', `0px`);
+			icon.style.setProperty('--icon-in-container-y', `0px`);
 		});
 	}
 
@@ -125,14 +161,25 @@ export class CarAnimation {
 				this.enterPhase();
 				break;
 			case 'drop-icons':
-				this.dropIcons();
+				this.setIconsPositionInContainer();
 				break;
 			case 'move-away':
 				this.iconsFollow();
 				break;
+			case 'idle':
+				this.stopFollowing();
+				break;
 			default:
-				'idle'
+				break;
+		}
+	}
 
+	stopFollowing() {
+		if (this.followRaf) {
+			cancelAnimationFrame(this.followRaf);
+			this.followRaf = null;
+			this.animationStarted = false;
+			this.setIconsPositionDefault();
 		}
 	}
 
@@ -140,39 +187,28 @@ export class CarAnimation {
 		if (this.followRaf) return;
 
 		const follow = () => {
+
 			if (this.state !== 'move-away') {
 				this.followRaf = null;
 				return;
 			}
 
-			const points = this.generateIconPoints();
+			this.setIconsPositionInContainer();
 
-			this.icons.forEach((icon, index) => {
-				const rect = icon.getBoundingClientRect();
-
-				const centerX = rect.left + rect.width / 2;
-				const centerY = rect.top + rect.height / 2;
-
-				const target = points[index];
-
-				const deltaX = target.x - centerX;
-				const deltaY = target.y - centerY;
-
-				icon.style.setProperty('--icon-in-container-x', `${deltaX}px`);
-				icon.style.setProperty('--icon-in-container-y', `${deltaY}px`);
-			});
-
-			this.followRaf = requestAnimationFrame(follow);
+			if (this.state === 'move-away') {
+				this.followRaf = requestAnimationFrame(follow);
+			} else {
+				this.followRaf = null;
+			}
 		};
 
 		this.followRaf = requestAnimationFrame(follow);
 	}
 
 	generateIconPoints() {
-		const carBody = this.rootElem.querySelector('.js-car-body');
-		if (!carBody || !this.icons.length) return [];
+		if (!this.carBody || !this.icons.length) return [];
 
-		const bodyRect = carBody.getBoundingClientRect();
+		const bodyRect = this.carBody.getBoundingClientRect();
 		const rootRect = this.rootElem.getBoundingClientRect();
 		const iconRect = this.icons[0].getBoundingClientRect();
 
@@ -206,10 +242,11 @@ export class CarAnimation {
 
 
 	renderDebugPoint(point) {
+		const rootRect = this.rootElem.getBoundingClientRect();
 		const el = document.createElement('div');
 		el.className = 'debug-point';
-		el.style.left = `${point.x}px`;
-		el.style.top = `${point.y}px`;
+		el.style.left = `${rootRect.left + point.x}px`;
+		el.style.top = `${rootRect.top + point.y}px`;
 
 		document.body.appendChild(el);
 	}

@@ -6,7 +6,7 @@ $icons = get_field_value($fields, 'icons');
 $background_image = get_field_value($fields, 'background_image')
 ?>
 
-<div class="car-animation js-car-animation" data-animation-state="" style="background-image: url(<?php echo $background_image; ?>)">
+<div class="car-animation js-car-animation" data-animation-state="idle" style="background-image: url(<?php echo $background_image; ?>)">
 
 	<div class="car-animation__icon-container js-icon-container">
 		<?php

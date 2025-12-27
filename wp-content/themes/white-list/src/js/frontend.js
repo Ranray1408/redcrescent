@@ -84,17 +84,7 @@ const onLoad = () => {
 
 	arrowUpBtn();
 
-	const initAimation = () => {
-		const animaContainer = document.querySelector('.js-car-animation');
-
-		if (animaContainer) {
-			new CarAnimation(animaContainer);
-		}
-	}
-
-	initAimation();
-
-	document.addEventListener('resize', initAimation);
+	new CarAnimation();
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);
