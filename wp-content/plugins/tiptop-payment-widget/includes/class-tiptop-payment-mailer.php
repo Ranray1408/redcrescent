@@ -28,7 +28,7 @@ class TipTopPaymentMailer {
         }
 
         // Admin email
-        $admin_email = 'diozx5@gmail.com'; //get_option('admin_email');
+        $admin_email = get_option('admin_email');
 
         // Build email subject
         $subject = "Новое поступление средств";
