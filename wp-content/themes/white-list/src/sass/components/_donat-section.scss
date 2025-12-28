@@ -444,6 +444,7 @@
 			overflow: hidden;
 
 			.date-placeholder {
+				pointer-events: none;
 				position: absolute;
 				top: 50%;
 				left: 2px;

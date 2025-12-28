@@ -48,15 +48,14 @@ window.TipTopPaymentWidget = class {
 				maxPeriods: 12,
 			};
 		}
-		console.log('intentParams', intentParams, isSubscription);
 
 		this.widget
 			.start(intentParams)
 			.then(result => {
 				console.log("Payment success:", result);
 
-				// const mailData = this.prepareMailData(intentParams);
-				// this.sendMail(mailData);
+				const mailData = this.prepareMailData(intentParams);
+				this.sendMail(mailData);
 			})
 			.catch(error => console.error("Payment error:", error));
 	}
@@ -73,7 +72,8 @@ window.TipTopPaymentWidget = class {
 			currency: intentParams.currency,
 			description: intentParams.description,
 			externalId: intentParams.externalId,
-			birth: intentParams.userInfo.birth || ''
+			birth: intentParams.userInfo.birth || '',
+			recurrent: intentParams.recurrent || false
 		};
 	}
 
