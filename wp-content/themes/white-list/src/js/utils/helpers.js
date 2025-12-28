@@ -454,3 +454,24 @@ export const arrowUpBtn = () => {
     });
 
 }
+
+
+export const dynamicHight = (selector) => {
+    const wrappers = document.querySelectorAll(selector);
+    let maxHeight = 0;
+
+    wrappers.forEach(wrapper => {
+        const mainText = wrapper.querySelector('.donat-block__icon-item-text');
+        const hoverText = wrapper.querySelector('.donat-block__icon-item-hover-text');
+
+        const totalHeight = mainText.offsetHeight + hoverText.offsetHeight;
+
+        if (totalHeight > maxHeight) {
+            maxHeight = totalHeight;
+        }
+    });
+
+    wrappers.forEach(wrapper => {
+        wrapper.style.height = maxHeight + 'px';
+    });
+}

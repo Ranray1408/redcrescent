@@ -72,8 +72,11 @@ $form_text = [
 								<div class="donat-block__icon-item-sum-inner">
 
 									<p class="donat-block__icon-item-sum">' . $icon['sum'] . '</p>
-									<p class="donat-block__icon-item-text">' . $icon['text'] . '</p>
 
+									<div class="donat-block__icon-item-text-wrapper js-icon-item-text-wrapper">
+										<p class="donat-block__icon-item-text">' . $icon['text'] . '</p>
+										<p class="donat-block__icon-item-hover-text">' . $icon['hover_text'] . '</p>
+									</div>
 								</div>
 							</div>';
 					}

@@ -1,6 +1,6 @@
 import { CarAnimation } from "./components/CarAnimation";
 import { FormValidator } from "./components/FormValidator";
-import { arrowUpBtn, primaryMenu } from "./utils/helpers";
+import { arrowUpBtn, dynamicHight, primaryMenu } from "./utils/helpers";
 import Popup from "./utils/popup-window";
 
 // Styles entry
@@ -16,6 +16,7 @@ const onLoad = () => {
 	popup.init();
 
 	primaryMenu();
+	dynamicHight('.js-icon-item-text-wrapper');
 
 	const donationForm = document.querySelector('.js-donation-form');
 	const paymentWidget = new TipTopPaymentWidget();
@@ -85,6 +86,7 @@ const onLoad = () => {
 	arrowUpBtn();
 
 	new CarAnimation();
+
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);

@@ -110,7 +110,9 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
             $footer_link2_url = get_field_value($footer_link2, 'url');
 
             if (!empty($footer_link2_title) && !empty($footer_link2_title)) {
-                echo '<a href="' . $footer_link2_url . '" class="footer__footer-link primary-btn">
+                echo '<a href="' . $footer_link2_url . '"
+                            class="footer__footer-link primary-btn ' . get_popup_class($footer_link2_url) . '">
+
                             ' . $footer_link2_title . '
                         </a>';
             }
@@ -145,5 +147,5 @@ ob_start();
 get_template_part('src/template-parts/modal-window');
 $html = ob_get_clean();
 
-echo do_shortcode('[popup_box box_id="popup-contacts-modal"]'.$html.'[/popup_box]');
+echo do_shortcode('[popup_box box_id="popup-contacts-modal"]' . $html . '[/popup_box]');
 ?>

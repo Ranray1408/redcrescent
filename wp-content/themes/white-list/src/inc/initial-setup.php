@@ -75,3 +75,20 @@ add_filter('widget_text', 'do_shortcode');
 
 // Set  Revisions Config to Zero.
 add_filter('wp_revisions_to_keep', '__return_zero');
+
+
+/**
+ * Returns JS popup class if href contains "popup"
+ *
+ * @param string $href Link href attribute
+ * @return string
+ */
+function get_popup_class($href) {
+    // Check if "popup" exists in href
+    if (strpos($href, 'popup') !== false) {
+        return 'js-open-popup-activator';
+    }
+
+    return '';
+}
+add_theme_support('widgets');

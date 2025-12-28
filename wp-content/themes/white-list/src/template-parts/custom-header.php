@@ -78,13 +78,14 @@ $support_button_url = get_field_value($support_button, 'url');
                             <path d="M21 12C18.6 16 15.6 18 12 18C8.4 18 5.4 16 3 12C5.4 8 8.4 6 12 6C15.6 6 18.6 8 21 12Z" stroke="#2F2F2F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </button>
-
                     <?php echo get_template_part('src/template-parts/lang-select'); ?>
                 </div>
 
                 <?php
                 if (!empty($support_button_title) && !empty($support_button_url)) {
-                    echo '<a href="' . $support_button_url . '" class="header__support-button primary-btn">
+                    echo '<a href="' . $support_button_url . '"
+                            class="header__support-button primary-btn ' . get_popup_class($support_button_url) . '">
+
                             ' . $support_button_title . '
                         </a>';
                 }
