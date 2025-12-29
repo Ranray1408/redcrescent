@@ -123,13 +123,14 @@ img {
     margin: 0 auto;
     position: relative;
 
-    @media (max-width: 1600px) {
-        --container-max: 1440px;
+    @media (max-width: 1680px) {
+        --container-max: 1480px;
     }
 
-    @media (max-width: 1440px) {
-        --container-max: 1280px;
+    @media (max-width: 1360px) {
+        --container-max: 1200px;
     }
+
 
     @media (max-width: 1280px) {
         --container-max: 1140px;

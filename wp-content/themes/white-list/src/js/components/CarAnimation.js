@@ -31,15 +31,28 @@ export class CarAnimation {
 
 		this.calcIconsDefaultPosition();
 
-		window.addEventListener('resize', debounce(() => { this.calcIconsDefaultPosition() }, 200));
-
 		// Add random dealys for icons
 		this.setupIconDelays();
 
 		this.checkVisibilityAndStart();
 
-		this.setupScrollListener();
+		// this.setupScrollListener();
 
+	}
+
+	restartAnimation() {
+		// Reset state
+		this.state = null;
+		this.rootElem.dataset.animationState = '';
+
+		// Reset icon transforms
+		this.setIconsPositionDefault();
+
+		// Recalculate positions (important!)
+		this.calcIconsDefaultPosition();
+
+		// Restart animation
+		this.startAnimation();
 	}
 
 	calcIconsDefaultPosition() {
@@ -91,6 +104,10 @@ export class CarAnimation {
 		if (this.animationStarted) return;
 
 		this.animationStarted = true;
+		const totalTime =
+			this.startTime +
+			this.dropTime +
+			this.moveAwayTime;
 
 		this.setState('enter');
 
@@ -104,7 +121,12 @@ export class CarAnimation {
 
 		setTimeout(() => {
 			this.setState('idle');
-		}, this.startTime + this.dropTime + this.moveAwayTime);
+
+			// Small pause before restart
+			setTimeout(() => {
+				this.restartAnimation();
+			}, 300);
+		}, totalTime);
 	}
 
 	enterPhase() {

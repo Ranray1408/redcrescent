@@ -1,7 +1,7 @@
 .donat-section {
 	padding: 24px 0 32px;
 
-	@media screen and (max-width: 1280px) {
+	@media screen and (max-width: 1670px) {
 		padding: 32px 0;
 	}
 
@@ -20,6 +20,10 @@
 	display: flex;
 	gap: 24px;
 	overflow: hidden;
+
+	@media screen and (max-width: 1680px) {
+		padding: 32px;
+	}
 
 	@media screen and (max-width: 1280px) {
 		padding: 0;
@@ -226,8 +230,8 @@
 		line-height: 1;
 		color: $white;
 
-		@media screen and (max-width: 1570px) {
-			font-size: 36px;
+		@media screen and (max-width: 1680px) {
+			font-size: 32px;
 		}
 
 		@media screen and (max-width: 1280px) {
@@ -255,7 +259,7 @@
 
 		will-change: transform, opacity;
 
-		@media screen and (max-width: 1570px) {
+		@media screen and (max-width: 1680px) {
 			font-size: 20px;
 		}
 
