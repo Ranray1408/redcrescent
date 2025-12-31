@@ -126,6 +126,34 @@
 	&__eye-btn {
 		width: 40px;
 		height: 40px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+
+		svg {
+			position: relative;
+			top: 1px;
+		}
+
+
+		@media (hover: hover) {
+			&:hover {
+				svg {
+					path {
+						transition: all 0.3s;
+						stroke: $red;
+					}
+				}
+			}
+		}
+
+		&:active {
+			svg {
+				path {
+					stroke: $red;
+				}
+			}
+		}
 	}
 
 	&__support-button {

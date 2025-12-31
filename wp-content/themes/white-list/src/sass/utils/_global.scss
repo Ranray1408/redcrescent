@@ -476,13 +476,26 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 }
 
 input[type="date"] {
+    background-color: #fff;
     position: relative;
     appearance: auto;
     background-repeat: no-repeat;
     background-position: 98% center;
     background-size: 24px;
     background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGcgY2xpcC1wYXRoPSJ1cmwoI2NsaXAwXzg2NTgyXzI3NSkiPgo8cGF0aCBkPSJNNiA5TDEyIDE1TDE4IDkiIHN0cm9rZT0iIzJGMkYyRiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPC9nPgo8ZGVmcz4KPGNsaXBQYXRoIGlkPSJjbGlwMF84NjU4Ml8yNzUiPgo8cmVjdCB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIGZpbGw9IndoaXRlIi8+CjwvY2xpcFBhdGg+CjwvZGVmcz4KPC9zdmc+Cg==');
+
+    -webkit-appearance: none;
+    /* Safari/Chrome */
+    -moz-appearance: none;
+    /* Firefox */
+    appearance: none;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    display: none;
+}
+
 
 input[type="submit"] {
     cursor: pointer;
@@ -641,7 +654,7 @@ input[type="submit"] {
 }
 
 /* Checkbox (touch / keyboard) */
-.lang-toggle:checked ~ .lang-options {
+.lang-toggle:checked~.lang-options {
     opacity: 1;
     visibility: visible;
     transform: translateY(0);
@@ -649,6 +662,11 @@ input[type="submit"] {
 
 /* Arrow rotate (both cases) */
 .lang-select:hover .lang-current svg,
-.lang-toggle:checked + .lang-current svg {
+.lang-toggle:checked+.lang-current svg {
     transform: rotate(180deg);
+}
+
+.onetap-container-toggle {
+    display: none !important;
+
 }

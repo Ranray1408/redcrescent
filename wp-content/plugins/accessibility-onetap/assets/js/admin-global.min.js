@@ -1,0 +1,1 @@
+(o=>{o(document).on("click",".notice-onetap .notice-dismiss, .notice-onetap .already-did",function(){o(".notice-onetap").slideUp(300),o.ajax({url:adminLocalize.ajaxUrl,type:"POST",data:{action:"onetap_action_dismiss_notice",mynonce:adminLocalize.ajaxNonce},success(o){console.log("Ajax success:",o)},error(o){console.error("Ajax error:",o)}})})})(jQuery);
