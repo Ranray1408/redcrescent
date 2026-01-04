@@ -31,7 +31,8 @@ $phone_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 			echo '<div class="section-partnership__button-wrapper">';
 
 			if (!empty($button1_title) && !empty($button1_url)) {
-				echo '<a href="' . $button1_url . '" class="section-partnership__button icon-slide-hover-btn">
+				echo '<a href="' . $button1_url . '"
+							class="section-partnership__button icon-slide-hover-btn '.get_popup_class($button1_url).'">
 							<span class="btn-inner"></span>
 							<span class="btn-text">' . $button1_title . '</span>
 							' . $phone_svg . '
@@ -39,7 +40,8 @@ $phone_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 			}
 
 			if (!empty($button2_title) && !empty($button2_url)) {
-				echo '<a href="' . $button2_url . '" class="section-partnership__button transparent-btn">
+				echo '<a href="' . $button2_url . '"
+						class="section-partnership__button transparent-btn '.get_popup_class($button2_url).'">
 							' . $button2_title . '
 						</a>';
 			}
