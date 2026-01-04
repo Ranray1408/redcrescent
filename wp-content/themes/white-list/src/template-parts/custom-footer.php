@@ -148,4 +148,10 @@ get_template_part('src/template-parts/modal-window');
 $html = ob_get_clean();
 
 echo do_shortcode('[popup_box box_id="popup-contacts-modal"]' . $html . '[/popup_box]');
+
+ob_start();
+get_template_part('src/template-parts/modal-window-privacy');
+$html2 = ob_get_clean();
+
+echo do_shortcode('[popup_box box_id="popup-privacy-modal"]' . $html2 . '[/popup_box]');
 ?>

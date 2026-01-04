@@ -15,6 +15,7 @@ export class CarAnimation {
 		this.startTime = 3000;
 		this.dropTime = 2000;
 		this.moveAwayTime = 2500;
+		this.waitBeforeEnter = 500;
 		this.totalTime = this.startTime + this.dropTime + this.moveAwayTime;
 
 		// Runtime
@@ -62,7 +63,7 @@ export class CarAnimation {
 			this.setIconsPositionInContainer();
 		}
 
-		if (elapsed >= this.totalTime) {
+		if (elapsed >= this.totalTime + this.waitBeforeEnter) {
 			this.reset();
 			this.start();
 			return;
@@ -87,6 +88,7 @@ export class CarAnimation {
 		if (elapsed < this.startTime) return 'enter';
 		if (elapsed < this.startTime + this.dropTime) return 'drop-icons';
 		if (elapsed < this.totalTime) return 'move-away';
+		if (elapsed < this.totalTime + this.waitBeforeEnter) return 'idle';
 		return 'idle';
 	}
 

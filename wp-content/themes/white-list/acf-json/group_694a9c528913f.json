@@ -372,7 +372,7 @@
             "name": "popup_title",
             "aria-label": "",
             "type": "text",
-            "instructions": "#popup-contacts-modal - popup id",
+            "instructions": "#popup-contacts-modal - popup id\r\n#popup-privacy-modal",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -515,6 +515,27 @@
                     "parent_repeater": "field_694d9b5d113f7"
                 }
             ]
+        },
+        {
+            "key": "field_695a7c7ea4ca4",
+            "label": "Popup privacy",
+            "name": "popup_privacy",
+            "aria-label": "",
+            "type": "wysiwyg",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "translate",
+            "tabs": "all",
+            "toolbar": "full",
+            "media_upload": 1,
+            "delay": 0
         }
     ],
     "location": [
@@ -535,5 +556,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1767007876
+    "modified": 1767538000
 }

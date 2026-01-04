@@ -106,6 +106,24 @@ div.wpcf7 .ajax-loader {
     right: 0;
 }
 
+#popup-privacy-modal {
+    .popup-wrapper {
+        position: relative;
+        width: 1200px;
+
+        @media screen and (max-width: 1200px) {
+            margin-top: 40px;
+            width: 90% !important;
+            padding: 45px 20px;
+        }
+
+        @media screen and (max-width: 470px) {
+            width: calc(100% - 20px) !important;
+            padding: 70px 20px;
+        }
+    }
+}
+
 #popup-contacts-modal {
     .popup-wrapper {
         max-width: 680px;

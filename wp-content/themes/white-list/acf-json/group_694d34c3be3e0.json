@@ -79,7 +79,7 @@
             "translations": "copy_once"
         },
         {
-            "key": "field_694d35b5fa152",
+            "key": "field_695a67bd76cca",
             "label": "Report list",
             "name": "report_list",
             "aria-label": "",
@@ -101,7 +101,7 @@
             "rows_per_page": 20,
             "sub_fields": [
                 {
-                    "key": "field_694d35c4fa153",
+                    "key": "field_695a716be70a3",
                     "label": "Text",
                     "name": "text",
                     "aria-label": "",
@@ -120,7 +120,26 @@
                     "placeholder": "",
                     "prepend": "",
                     "append": "",
-                    "parent_repeater": "field_694d35b5fa152"
+                    "parent_repeater": "field_695a67bd76cca"
+                },
+                {
+                    "key": "field_695a7175e70a4",
+                    "label": "Url",
+                    "name": "url",
+                    "aria-label": "",
+                    "type": "url",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "translations": "copy_once",
+                    "placeholder": "",
+                    "parent_repeater": "field_695a67bd76cca"
                 }
             ]
         },
@@ -211,5 +230,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1766670557
+    "modified": 1767534987
 }

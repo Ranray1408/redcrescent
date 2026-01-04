@@ -113,7 +113,14 @@
 		}
 
 		p {
+			color: inherit;
 			font-family: $second-font;
+		}
+
+		&:hover {
+			svg path {
+				stroke: $red;
+			}
 		}
 	}
 

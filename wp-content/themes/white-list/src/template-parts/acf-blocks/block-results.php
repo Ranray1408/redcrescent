@@ -6,8 +6,8 @@ $description = get_field_value($fields, 'description');
 
 $report_button1 = get_field_value($fields, 'report_button1');
 $report_button2 = get_field_value($fields, 'report_button2');
-
 $report_list = get_field_value($fields, 'report_list');
+
 $result_blocks = get_field_value($fields, 'result_blocks');
 
 $paper_clip = '<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -77,10 +77,15 @@ $arrow_icons = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmln
 					<?php
 					if (!empty($report_list)) {
 						foreach ($report_list as $item) {
-							echo '<div class="block-results__report-item">
+							$link_url = get_field_value($item, 'url');
+							$link_title = get_field_value($item, 'text');
+
+							if(empty($link_title) && empty($link_url)) continue;
+
+							echo '<a href="' . $link_url . '" class="block-results__report-item">
 									' . $paper_clip . '
-									<p>' . ($item['text'] ?? '') . '</p>
-								</div>';
+									<p>' . $link_title . '</p>
+								</a>';
 						}
 					}
 					?>
