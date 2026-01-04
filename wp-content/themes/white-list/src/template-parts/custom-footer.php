@@ -95,6 +95,8 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
         <div class="footer__links-block">
             <?php
 
+            echo '<div class="footer__links-block-inner">';
+
             $footer_link1_title = get_field_value($footer_link1, 'title');
             $footer_link1_url = get_field_value($footer_link1, 'url');
 
@@ -117,6 +119,14 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                         </a>';
             }
 
+            echo '</div>';
+
+            wp_nav_menu([
+                'menu' => 'Footer ' . pll_current_language(),
+                'echo' => true,
+                'container' => false,
+                'menu_class' => 'footer__menu',
+            ]);
             ?>
         </div>
         <?php
