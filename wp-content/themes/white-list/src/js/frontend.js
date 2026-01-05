@@ -87,6 +87,19 @@ const onLoad = () => {
 
 	new CarAnimation();
 
+	const customInput = document.querySelector('input[name="custom-pay-sum"]');
+	const radioInputs = document.querySelectorAll('input[name="pay-sum"]');
+
+	if (!customInput || !radioInputs.length) return;
+
+	customInput.addEventListener('focus', () => {
+		radioInputs.forEach(radio => {
+			if (radio.checked) {
+				radio.checked = false;
+			}
+		});
+	});
+
 };
 
 window.document.addEventListener('DOMContentLoaded', onLoad);

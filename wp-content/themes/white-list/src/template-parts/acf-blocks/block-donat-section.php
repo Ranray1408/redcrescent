@@ -122,7 +122,10 @@ $form_text = [
 							}
 							?>
 							<label class="donat-block__form-radio-custom-sum-item">
-								<input name="custom-pay-sum" type="number"
+								<input name="custom-pay-sum"
+									min="500"
+									step="1"
+									type="number"
 									placeholder="<?php echo $form_text['custom_price_text']; ?> ₸">
 							</label>
 						</div>
