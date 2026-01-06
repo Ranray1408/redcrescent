@@ -12,10 +12,10 @@
 			rgba(0, 0, 0, 1) 55%,
 			transparent 100%);
 
-	-webkit-mask-size: 90px 100%;
+	-webkit-mask-size: 50px 100%;
 	-webkit-mask-repeat: no-repeat;
 
-	animation: pulseMove 3s linear infinite;
+	animation: pulseMove 5s linear infinite;
 	width: 100%;
 }
 

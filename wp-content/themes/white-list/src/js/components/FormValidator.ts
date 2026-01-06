@@ -1,3 +1,5 @@
+import { debounce } from "../utils/helpers";
+
 export interface InputField {
 	name: string;
 	isValid: boolean;
@@ -15,7 +17,8 @@ export class FormValidator {
 	private validateRules: Record<string, RegExp> = {
 		'js-validate-phone': /^[0-9+]{6,13}$/,
 		'js-validate-name': /^[a-zA-Z\u0400-\u04FF]{2,30}$/,
-		'js-validate-email': /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/
+		'js-validate-email': /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
+		'js-validate-min-sum-500': /^(?:[5-9]\d{2}|[1-9]\d{3,})$/
 	};
 
 	constructor(formSelector: string) {
@@ -57,13 +60,18 @@ export class FormValidator {
 	}
 
 	private attachEvents(): void {
+		const debouncedValidate = debounce((input) => {
+			this.validateInput(input);
+			this.updateSubmitState();
+		}, 1000);
+
 		// Attach input and change listeners for each input
 		Object.values(this.inputs).forEach(input => {
 			// input event for live validation
 			input.element.addEventListener('input', () => {
-				this.validateInput(input);
-				this.updateSubmitState();
+				debouncedValidate(input);
 			});
+
 
 			// blur event to validate when user leaves field
 			input.element.addEventListener('blur', () => {

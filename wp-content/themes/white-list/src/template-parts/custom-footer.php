@@ -33,7 +33,7 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                 </svg>';
 ?>
 
-<footer class="footer">
+<footer class="footer" id="footer">
     <div class="container footer__container">
         <div class="footer__logo-block">
             <?php
