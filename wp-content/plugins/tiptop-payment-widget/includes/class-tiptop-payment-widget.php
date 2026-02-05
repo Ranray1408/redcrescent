@@ -51,7 +51,8 @@ class TipTopPaymentWidget {
 			$wpdb->insert($this->table_name, [
 				'currency' => 'KZT',
 				'terminal_id' => 'pk_XXXXXXXXXXXX',
-				'description' => 'Donation'
+				'description' => 'Donation',
+				'successRedirectUrl' => ''
 			]);
 		}
 	}

@@ -174,8 +174,7 @@ $form_text = [
 								<input
 									type="date"
 									id="id-birth-date"
-									name="birth-date"
-									/>
+									name="birth-date" />
 							</label>
 						</div>
 
@@ -205,4 +204,38 @@ $form_text = [
 			</div>
 		</div>
 	</div>
+	<button onclick="shareImage('http://localhost:8080/redcrescent/wp-content/uploads/2025/12/about-us1.png')">
+		Share image
+	</button>
+
+	<script>
+		async function shareImage(imageUrl) {
+			try {
+				// завантажуємо картинку як blob
+				const response = await fetch(imageUrl);
+				const blob = await response.blob();
+
+				// створюємо файл
+				const file = new File([blob], 'shared-image.jpg', {
+					type: blob.type
+				});
+
+				// перевірка підтримки
+				if (navigator.canShare && navigator.canShare({
+						files: [file]
+					})) {
+					await navigator.share({
+						files: [file],
+						title: 'Check this image',
+						text: 'Shared from website'
+					});
+				} else {
+					alert('Sharing files is not supported in this browser');
+				}
+
+			} catch (error) {
+				console.error('Error sharing image:', error);
+			}
+		};
+	</script>
 </section>

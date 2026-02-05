@@ -48,7 +48,7 @@ window.TipTopPaymentWidget = class {
 				maxPeriods: 12,
 			};
 		}
-
+		console.log('intentParams', intentParams);
 		this.widget
 			.start(intentParams)
 			.then(result => {
