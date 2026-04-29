@@ -221,6 +221,7 @@
 		flex-direction: column;
 		gap: 8px;
 		overflow: hidden;
+		width: 100%;
 	}
 
 	&__icon-item-sum {
@@ -417,8 +418,8 @@
 	}
 
 	&__form-personal-info {
-		display: grid;
-		grid-template-columns: 1fr 1fr;
+		display: flex;
+		flex-direction: column;
 		gap: 14px;
 		margin-bottom: 24px;
 
@@ -431,7 +432,7 @@
 
 	&__input-wrapper {
 		color: #28282D;
-		font-family: $primary_font;
+		font-family: $primary-font;
 		font-size: 16px;
 		font-weight: 400;
 		line-height: 110%;
@@ -470,12 +471,13 @@
 
 		p {
 			font-size: 14px;
+			color: $text_color1;
 		}
 
 		a {
 			display: inline;
 			font-size: 14px;
-			color: $red;
+			color: $text_color1;
 			text-decoration: underline;
 			font-family: $second-font;
 			font-size: 16px;

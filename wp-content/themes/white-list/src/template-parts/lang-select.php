@@ -20,8 +20,6 @@ $current_lang = pll_current_language();
     <ul class="lang-options">
         <?php foreach ($languages as $lang): ?>
             <?php if ($lang['slug'] === $current_lang) continue; ?>
-
-			<?php  if ($lang['slug'] === 'kk') continue; // hard exclude Temp decision ?>
             <li>
                 <a href="<?php echo esc_url($lang['url']); ?>">
                     <?php echo esc_html($lang['slug']); ?>

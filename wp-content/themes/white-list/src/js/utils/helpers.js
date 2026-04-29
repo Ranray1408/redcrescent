@@ -461,11 +461,7 @@ export const dynamicHight = (selector) => {
     let maxHeight = 0;
 
     wrappers.forEach(wrapper => {
-        const mainText = wrapper.querySelector('.donat-block__icon-item-text');
-        const hoverText = wrapper.querySelector('.donat-block__icon-item-hover-text');
-
-        const totalHeight = mainText.offsetHeight + hoverText.offsetHeight;
-
+        const totalHeight = wrapper.scrollHeight;
         if (totalHeight > maxHeight) {
             maxHeight = totalHeight;
         }
@@ -474,4 +470,4 @@ export const dynamicHight = (selector) => {
     wrappers.forEach(wrapper => {
         wrapper.style.height = maxHeight + 'px';
     });
-}
+};

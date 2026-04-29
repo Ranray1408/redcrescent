@@ -61,7 +61,7 @@ $support_button_url = get_field_value($support_button, 'url');
 
 
                 if (!empty($support_button_title) && !empty($support_button_url)) {
-                    echo '<a href="' . $support_button_url . '" class="header__support-button mob js-toggle-menu-btn primary-btn">
+                    echo '<a href="' . $support_button_url . '" class="header__support-button mob ' . get_popup_class($support_button_url) . ' primary-btn green-bg">
                             ' . $support_button_title . '
                         </a>';
                 }
@@ -84,7 +84,7 @@ $support_button_url = get_field_value($support_button, 'url');
                 <?php
                 if (!empty($support_button_title) && !empty($support_button_url)) {
                     echo '<a href="' . $support_button_url . '"
-                            class="header__support-button primary-btn ' . get_popup_class($support_button_url) . '">
+                            class="header__support-button primary-btn green-bg ' . get_popup_class($support_button_url) . '">
 
                             ' . $support_button_title . '
                         </a>';

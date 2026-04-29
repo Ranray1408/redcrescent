@@ -168,9 +168,14 @@
 		font-weight: 700;
 		line-height: 1;
 		color: $text_color2;
+		min-height: 150px;
 
 		@media screen and (max-width: 1670px) {
 			font-size: 28px;
+		}
+
+		@media screen and (max-width: 1270px) {
+			min-height: unset;
 		}
 
 		@media screen and (max-width: 670px) {

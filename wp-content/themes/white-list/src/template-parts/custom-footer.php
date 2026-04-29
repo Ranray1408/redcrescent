@@ -14,6 +14,10 @@ $footer_text_content = get_field_value($global_options, 'footer_text_content');
 $contacts_block = get_field_value($global_options, 'contacts_block');
 $ps_text = get_field_value($global_options, 'ps_text');
 
+$we_support = get_field_value($global_options, 'we_support');
+$payment_methods_icons = get_field_value($global_options, 'payment_methods_icons');
+
+
 $footer_link1 = get_field_value($global_options, 'footer_link1');
 $footer_link2 = get_field_value($global_options, 'footer_link2');
 
@@ -89,6 +93,19 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
             if (!empty($ps_text)) {
                 echo '<p class="footer__ps-text">' . $ps_text . '</p>';
             }
+
+            if (!empty($we_support) && !empty($payment_methods_icons)) {
+                echo '<p class="footer__we-accept-title">' . $we_support . '</p>';
+
+                echo '<div class="footer__we-accept-icons">';
+                foreach($payment_methods_icons as $icon) {
+                    echo '<img src="'.$icon['icon'].'" alt="icon">';
+                }
+
+                echo '</div>';
+            }
+
+
             ?>
         </div>
 
@@ -101,7 +118,7 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
             $footer_link1_url = get_field_value($footer_link1, 'url');
 
             if (!empty($footer_link1_title) && !empty($footer_link1_title)) {
-                echo '<a href="' . $footer_link1_url . '" class="footer__footer-link icon-slide-hover-btn dark-grey">
+                echo '<a href="' . $footer_link1_url . '" class="footer__footer-link icon-slide-hover-btn dark-grey '.get_popup_class($footer_link1_url).'">
                             <span class="btn-inner"></span>
                             <span class="btn-text">' . $footer_link1_title . '</span>
                             ' . $arrow_svg . '
@@ -113,7 +130,7 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 
             if (!empty($footer_link2_title) && !empty($footer_link2_title)) {
                 echo '<a href="' . $footer_link2_url . '"
-                            class="footer__footer-link primary-btn ' . get_popup_class($footer_link2_url) . '">
+                            class="footer__footer-link primary-btn green-bg ' . get_popup_class($footer_link2_url) . '">
 
                             ' . $footer_link2_title . '
                         </a>';

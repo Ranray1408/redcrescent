@@ -47,10 +47,9 @@ const onLoad = () => {
 			userInfo: {
 				accountId: fields.email,
 				firstName: fields['first-name'] || '',
-				lastName: fields['last-name'] || '',
 				birth: fields['birth-date'] || '',
 				email: fields.email || '',
-				fullName: `${fields['first-name'] || ''} ${fields['last-name'] || ''}`,
+				fullName: `${fields['first-name'] || ''}`,
 			}
 		};
 
@@ -67,21 +66,24 @@ const onLoad = () => {
 		}, 2000)
 	}, false);
 
-	const input = document.getElementById('id-birth-date');
-	const placeholder = document.querySelector('.js-date-placeholder');
 
 	function togglePlaceholder() {
+		const input = document.getElementById('id-birth-date');
+		const placeholder = document.querySelector('.js-date-placeholder');
+
+
+		if (!placeholder || !input) return;
 		if (input.value) {
 			placeholder.style.display = 'none';
 		} else {
 			placeholder.style.display = 'block';
 		}
+
+		input.addEventListener('input', togglePlaceholder);
+		input.addEventListener('change', togglePlaceholder);
 	}
 
 	togglePlaceholder();
-
-	input.addEventListener('input', togglePlaceholder);
-	input.addEventListener('change', togglePlaceholder);
 
 	arrowUpBtn();
 

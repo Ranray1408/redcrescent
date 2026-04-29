@@ -137,12 +137,6 @@ $form_text = [
 								'required' => 'required'
 							],
 							[
-								'validate' => 'js-validate-name',
-								'placeholder' => $form_text['second_name_text'],
-								'name' => 'last-name',
-								'required' => 'required'
-							],
-							[
 								'validate' => 'js-validate-email',
 								'placeholder' => $form_text['email_text'],
 								'name' => 'email',
@@ -169,13 +163,6 @@ $form_text = [
 										</label>';
 							}
 							?>
-							<label class="donat-block__input-wrapper date" for="id-birth-date">
-								<span class="js-date-placeholder date-placeholder"><?php echo $form_text['date_text']; ?></span>
-								<input
-									type="date"
-									id="id-birth-date"
-									name="birth-date" />
-							</label>
 						</div>
 
 						<label class="donat-block__checkbox checkbox">
@@ -184,7 +171,7 @@ $form_text = [
 							<?php echo $form_text['checkbox_text']; ?>
 						</label>
 					</div>
-					<button id="payButton" type="submit" class="donat-block__submit-btn icon-slide-hover-btn">
+					<button id="payButton" type="submit" class="donat-block__submit-btn icon-slide-hover-btn green-bg">
 						<span class="btn-inner"></span>
 						<span class="btn-text"><?php echo $form_text['submit_text']; ?></span>
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -204,38 +191,4 @@ $form_text = [
 			</div>
 		</div>
 	</div>
-	<button onclick="shareImage('http://localhost:8080/redcrescent/wp-content/uploads/2025/12/about-us1.png')">
-		Share image
-	</button>
-
-	<script>
-		async function shareImage(imageUrl) {
-			try {
-				// завантажуємо картинку як blob
-				const response = await fetch(imageUrl);
-				const blob = await response.blob();
-
-				// створюємо файл
-				const file = new File([blob], 'shared-image.jpg', {
-					type: blob.type
-				});
-
-				// перевірка підтримки
-				if (navigator.canShare && navigator.canShare({
-						files: [file]
-					})) {
-					await navigator.share({
-						files: [file],
-						title: 'Check this image',
-						text: 'Shared from website'
-					});
-				} else {
-					alert('Sharing files is not supported in this browser');
-				}
-
-			} catch (error) {
-				console.error('Error sharing image:', error);
-			}
-		};
-	</script>
 </section>

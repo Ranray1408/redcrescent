@@ -1,5 +1,5 @@
-$primary-font: 'Muller', sans-serif;
-$second-font: 'Gilroy', sans-serif;
+$primary-font: 'Muller', 'Noto Sans', sans-serif;
+$second-font: 'Gilroy', 'Noto Sans', sans-serif;
 
 
 $red: #e3000f;
@@ -8,6 +8,7 @@ $light_hover_red: #ffe5e7;
 $white: #fff;
 $grey: #f0f4f6;
 $dark_grey: #4f4f4f;
+$green: #4caf50;
 
 $text_color1: #2f2f2f;
 $text_color2: #727272;
@@ -15,7 +16,7 @@ $text_color2: #727272;
 body {
     padding: 0;
     margin: 0;
-    font-family: $primary_font;
+    font-family: $primary-font;
     font-size: 16px;
     background-color: $grey;
 
@@ -80,7 +81,13 @@ img {
 }
 
 .content {
-    h1,h2,h3 ,h4, h5 ,h6 {
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
         margin-bottom: 20px;
     }
 
@@ -216,9 +223,26 @@ img {
         }
     }
 
+    &.green-bg {
+        background-color: $green;
+        border: 1px solid $green;
+
+        @media (hover: hover) {
+            &:hover {
+                color: $green;
+                background-color: $white;
+            }
+        }
+
+        &:active {
+            background-color: $white;
+            color: $green;
+        }
+    }
+
     &:active {
         background-color: $white;
-        color: $red;
+        color: $green;
     }
 }
 
@@ -271,6 +295,10 @@ img {
     font-weight: 700;
     line-height: 1;
     color: $white;
+
+    &.green-bg {
+        background-color: #4caf50;
+    }
 
     &.grey-bg {
         background-color: #dcdcdc;
@@ -366,6 +394,10 @@ img {
         &:after {
             opacity: 1;
         }
+    }
+
+    * {
+        pointer-events: none;
     }
 }
 
@@ -466,14 +498,14 @@ input[type="text"] {
         background-color: #fcb4b4;
     }
 
-    &:hover {
-        border-color: $red;
-    }
+    // &:hover {
+    //     border-color: $red;
+    // }
 
-    &:focus {
-        border-color: $red;
-        outline: none;
-    }
+    // &:focus {
+    //     border-color: $red;
+    //     outline: none;
+    // }
 
     &::placeholder {
         font-family: $second_font;
@@ -559,7 +591,7 @@ input[type="submit"] {
         justify-content: center;
         width: 18px;
         height: 18px;
-        background-color: $red;
+        background-color: $green;
         border-radius: 4px;
 
         &:before {
