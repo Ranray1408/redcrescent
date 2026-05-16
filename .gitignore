@@ -35,3 +35,4 @@ vendor/
 wp-content/themes/white-list/node_modules
 .vscode
 wp-content/themes/white-list/build
+tasks.txt

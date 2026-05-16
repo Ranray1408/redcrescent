@@ -33,6 +33,9 @@ class WP_Rock_Blocks {
         'block-car-animation' => array(
             'title'      => 'Block - Car animation',
         ),
+        'block-how-it-works' => array(
+            'title'      => 'Block - How it works',
+        ),
     );
 
     /**
