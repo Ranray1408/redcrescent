@@ -8,5 +8,5 @@
     <?php wp_head(); ?>
 </head>
 
-<body <?php body_class(); ?>>
+<body <?php body_class(get_field('hide_primary_menu') ? 'header--menu-hidden' : ''); ?>>
     <?php echo esc_html(get_template_part('src/template-parts/custom', 'header')); ?>

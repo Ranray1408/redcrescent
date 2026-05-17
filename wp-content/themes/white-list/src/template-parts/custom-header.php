@@ -13,9 +13,15 @@ $support_button = get_field_value($global_options, 'support_button');
 
 $support_button_title = get_field_value($support_button, 'title');
 $support_button_url = get_field_value($support_button, 'url');
+
+$hide_primary_menu = get_field('hide_primary_menu');
+$header_class = 'header js-toggle-menu-elem';
+if (!empty($hide_primary_menu)) {
+    $header_class .= ' header--menu-hidden';
+}
 ?>
 
-<header class="header js-toggle-menu-elem">
+<header class="<?php echo esc_attr($header_class); ?>">
     <div class="container header__container">
         <div class="header__inner-container">
 

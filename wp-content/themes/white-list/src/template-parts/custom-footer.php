@@ -20,6 +20,7 @@ $payment_methods_icons = get_field_value($global_options, 'payment_methods_icons
 
 $footer_link1 = get_field_value($global_options, 'footer_link1');
 $footer_link2 = get_field_value($global_options, 'footer_link2');
+$footer_link3 = get_field_value($global_options, 'footer_link3');
 
 $contact_us_shortcode = get_field_value($global_options, 'contact_us_shortcode');
 
@@ -133,6 +134,15 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                             class="footer__footer-link primary-btn green-bg ' . get_popup_class($footer_link2_url) . '">
 
                             ' . $footer_link2_title . '
+                        </a>';
+            }
+
+            $footer_link3_title = get_field_value($footer_link3, 'title');
+            $footer_link3_url = get_field_value($footer_link3, 'url');
+
+            if (!empty($footer_link3_title) && !empty($footer_link3_title)) {
+                echo '<a href="' . $footer_link3_url . '" class="footer__footer-link primary-btn green-bg ' . get_popup_class($footer_link2_url) . '">
+                            ' . $footer_link3_title . '
                         </a>';
             }
 

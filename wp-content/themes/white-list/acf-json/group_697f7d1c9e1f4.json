@@ -1,0 +1,44 @@
+{
+    "key": "group_697f7d1c9e1f4",
+    "title": "Page fields",
+    "fields": [
+        {
+            "key": "field_697f7d1c9e1f5",
+            "label": "Hide primary menu",
+            "name": "hide_primary_menu",
+            "aria-label": "",
+            "type": "true_false",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Hide",
+            "ui_off_text": "Show"
+        }
+    ],
+    "location": [
+        [
+            {
+                "param": "post_type",
+                "operator": "==",
+                "value": "page"
+            }
+        ]
+    ],
+    "menu_order": 0,
+    "position": "normal",
+    "style": "default",
+    "label_placement": "top",
+    "instruction_placement": "label",
+    "hide_on_screen": "",
+    "active": true,
+    "description": "",
+    "show_in_rest": 0,
+    "modified": 1779024041
+}

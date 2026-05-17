@@ -220,4 +220,19 @@
 	&__eye-btn {
 		background-color: transparent;
 	}
+
+	&--menu-hidden {
+
+		.header__nav-wrapper,
+		.header__hamburger {
+			display: none;
+		}
+	}
+}
+
+
+.header--menu-hidden {
+	.hide-menu-item {
+		display: none;
+	}
 }
