@@ -36,6 +36,9 @@ class WP_Rock_Blocks {
         'block-how-it-works' => array(
             'title'      => 'Block - How it works',
         ),
+        'block-text-section' => array(
+            'title'      => 'Block - Text section',
+        ),
     );
 
     /**
