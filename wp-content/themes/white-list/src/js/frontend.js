@@ -1,6 +1,7 @@
 import { CarAnimation } from "./components/CarAnimation";
 import { FormValidator } from "./components/FormValidator";
 import { arrowUpBtn, dynamicHight, primaryMenu } from "./utils/helpers";
+import { initFaqAccordion } from "./utils/faq-accordion";
 import Popup from "./utils/popup-window";
 
 // Styles entry
@@ -88,6 +89,8 @@ const onLoad = () => {
 	arrowUpBtn();
 
 	new CarAnimation();
+
+	initFaqAccordion();
 
 	const customInput = document.querySelector('input[name="custom-pay-sum"]');
 	const radioInputs = document.querySelectorAll('input[name="pay-sum"]');

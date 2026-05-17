@@ -1,0 +1,132 @@
+.faq {
+	padding: 64px 0;
+
+	@media screen and (max-width: 768px) {
+		padding: 32px 0;
+	}
+
+	&__title {
+		margin-bottom: 48px;
+
+		@media screen and (max-width: 768px) {
+			margin-bottom: 32px;
+		}
+	}
+
+	&__list {
+		display: flex;
+		flex-direction: column;
+		gap: 8px;
+	}
+
+	&__item {
+		display: flex;
+		flex-direction: column;
+		overflow: hidden;
+
+		&.is-open {
+			gap: 10px;
+		}
+	}
+
+	&__question {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 16px;
+		padding: 24px;
+		background: none;
+		border: 1px solid $dark_grey;
+		border-radius: 16px;
+		cursor: pointer;
+		text-align: left;
+		transition: none;
+
+		@media screen and (max-width: 768px) {
+			padding: 16px;
+		}
+	}
+
+	&__item.is-open &__question {
+		border-radius: 16px;
+	}
+
+	&__question-text {
+		font-family: $primary-font;
+		font-size: 24px;
+		font-weight: 700;
+		line-height: 1.3;
+		color: $text_color1;
+
+		@media screen and (max-width: 768px) {
+			font-size: 18px;
+		}
+	}
+
+	&__icon {
+		flex-shrink: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 32px;
+		height: 32px;
+		position: relative;
+
+		svg {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			transition: opacity 0.3s ease;
+		}
+
+		svg:first-child {
+			opacity: 1;
+		}
+
+		svg:last-child {
+			opacity: 0;
+		}
+	}
+
+	&__item.is-open &__icon {
+		svg:first-child {
+			opacity: 0;
+		}
+
+		svg:last-child {
+			opacity: 1;
+		}
+	}
+
+	&__answer {
+		display: grid;
+		grid-template-rows: 0fr;
+		transition: grid-template-rows 0.35s ease, padding 0.35s ease, border 0.35s ease;
+		border: none;
+		border-radius: 16px;
+		padding: 0 24px;
+	}
+
+	&__item.is-open &__answer {
+		padding: 24px;
+		grid-template-rows: 1fr;
+		border: 1px solid $dark_grey;
+	}
+
+	&__answer-inner {
+		overflow: hidden;
+
+		p {
+			font-family: $primary-font;
+			font-size: 20px;
+			line-height: 1.5;
+			color: $text_color2;
+
+			@media screen and (max-width: 768px) {
+				font-size: 16px;
+			}
+		}
+	}
+}

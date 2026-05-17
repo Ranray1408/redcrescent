@@ -153,3 +153,4 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 [2026-05-16] Updated STYLE_NOTES with actual project patterns after auditing block-how-it-works.php. AGENTS.md now reflects real codebase style (BEM SCSS, ACF block flow, Vanilla JS).
 [2026-05-17] Created blocks: block-text-section (title + wysiwyg), block-our-representatives (repeater cards with icons). Generated white SVG icons. TipTopPay + Salesforce metadata integration planned.
 [2026-05-17] Created block-our-team (grid 4 col, round photos, placeholder icon). Added "Our team" tab to theme options ACF (repeater + popup WYSIWYG). Created modal-window-our-team popup.
+[2026-05-17] Created block-faq (accordion). Repeater: question + answer. Plus/minus SVG icons. JS accordion module + smooth CSS open/close via grid-template-rows + transition on padding/border.

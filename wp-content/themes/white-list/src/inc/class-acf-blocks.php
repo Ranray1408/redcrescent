@@ -45,6 +45,9 @@ class WP_Rock_Blocks {
         'block-our-team' => array(
             'title'      => 'Block - Our team',
         ),
+        'block-faq' => array(
+            'title'      => 'Block - FAQ',
+        ),
     );
 
     /**
