@@ -39,6 +39,9 @@ class WP_Rock_Blocks {
         'block-text-section' => array(
             'title'      => 'Block - Text section',
         ),
+        'block-our-representatives' => array(
+            'title'      => 'Block - Our representatives',
+        ),
     );
 
     /**

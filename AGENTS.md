@@ -151,3 +151,4 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 
 [2026-05-14] Analyzed wp-content/ (theme + 7 plugins). Filled IDENTITY and STYLE_NOTES in AGENTS.md.
 [2026-05-16] Updated STYLE_NOTES with actual project patterns after auditing block-how-it-works.php. AGENTS.md now reflects real codebase style (BEM SCSS, ACF block flow, Vanilla JS).
+[2026-05-17] Created blocks: block-text-section (title + wysiwyg), block-our-representatives (repeater cards with icons). Generated white SVG icons. TipTopPay + Salesforce metadata integration planned.
