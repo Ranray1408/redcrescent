@@ -485,4 +485,47 @@
 			line-height: 1.2;
 		}
 	}
+
+	&__select-wrapper {
+		margin-bottom: 24px;
+	}
+
+	&__select-label {
+		display: block;
+		font-size: 14px;
+		font-family: $second-font;
+		color: $text_color2;
+		margin-bottom: 4px;
+	}
+
+	&__select {
+		appearance: none;
+		width: 100%;
+		font-family: $second-font;
+		font-size: 16px;
+		padding: 20px 16px;
+		border-radius: 8px;
+		color: $text_color1;
+		border: 2px solid transparent;
+		transition: 0.3s border-color ease-in-out;
+		background-color: $white;
+		cursor: pointer;
+		background-repeat: no-repeat;
+		background-position: right 16px center;
+		background-size: 24px;
+		background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNiA5TDEyIDE1TDE4IDkiIHN0cm9rZT0iIzJGMkYyRiIgc3Ryb2tlLXdpZHRoPSIyIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48L3N2Zz4=');
+		line-height: 1.1;
+
+		&:hover,
+		&:focus {
+			border-color: $red;
+			outline: none;
+		}
+
+		option {
+			font-family: $second-font;
+			font-size: 16px;
+			color: $text_color1;
+		}
+	}
 }

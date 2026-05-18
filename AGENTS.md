@@ -154,3 +154,4 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 [2026-05-17] Created blocks: block-text-section (title + wysiwyg), block-our-representatives (repeater cards with icons). Generated white SVG icons. TipTopPay + Salesforce metadata integration planned.
 [2026-05-17] Created block-our-team (grid 4 col, round photos, placeholder icon). Added "Our team" tab to theme options ACF (repeater + popup WYSIWYG). Created modal-window-our-team popup.
 [2026-05-17] Created block-faq (accordion). Repeater: question + answer. Plus/minus SVG icons. JS accordion module + smooth CSS open/close via grid-template-rows + transition on padding/border.
+[2026-05-17] Cloned block-donat-subscription from donat-section. Removed period radio (only monthly via hidden input). Added team member select (populated from theme options repeater). Styled select to match inputs. Added footer_link3.

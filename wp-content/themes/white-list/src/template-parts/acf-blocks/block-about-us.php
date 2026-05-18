@@ -1,12 +1,14 @@
 <?php
-
-
-
 $fields = get_fields();
 
 $title = get_field_value($fields, 'title');
 $description = get_field_value($fields, 'description');
 $block_repeater = get_field_value($fields, 'block_repeater');
+
+$details_btn_text = get_field_value($fields, 'details_btn_text');
+$btn_texts = !empty($details_btn_text) ? explode('\\', $details_btn_text) : ['Еще...', 'Закрыть'];
+$btn_collapsed_text = $btn_texts[0] ?? 'Еще...';
+$btn_expanded_text = $btn_texts[1] ?? 'Закрыть';
 
 ?>
 <section class="about-us" id="block-about-us">
@@ -45,7 +47,10 @@ $block_repeater = get_field_value($fields, 'block_repeater');
 					}
 
 					if (!empty($block['text'])) {
-						echo '<p class="about-us__block-text">' . $block['text'] . '</p>';
+						echo '<div class="about-us__block-text-wrapper js-about-text-wrapper">
+								<p class="about-us__block-text">' . $block['text'] . '</p>
+								<button class="about-us__block-text-btn js-about-text-btn" type="button" data-text-collapsed="' . esc_attr($btn_collapsed_text) . '" data-text-expanded="' . esc_attr($btn_expanded_text) . '">' . $btn_collapsed_text . '</button>
+							</div>';
 					}
 
 					echo '</div>';

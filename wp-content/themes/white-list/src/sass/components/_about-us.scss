@@ -131,13 +131,46 @@
 		font-weight: 500;
 		line-height: 1.4;
 		color: $text_color2;
+	}
 
-		@media screen and (max-width: 991px) {
-			font-size: 16px;
+	&__block-text-wrapper {
+		position: relative;
+	}
+
+	&__block-text-btn {
+		display: none;
+		margin-top: 8px;
+		padding: 0;
+		border: none;
+		background: none;
+		color: $red;
+		font-family: $primary-font;
+		font-size: 16px;
+		font-weight: 700;
+		cursor: pointer;
+
+		@media (hover: hover) {
+			&:hover {
+				text-decoration: underline;
+			}
 		}
+	}
 
-		@media screen and (max-width: 470px) {
-			font-size: 14px;
+	@media screen and (max-width: 1360px) {
+		&__block-text-wrapper {
+			&.collapsed {
+				.about-us__block-text {
+					max-height: 84px;
+					overflow: hidden;
+				}
+			}
+
+			&.collapsed,
+			&.expanded {
+				.about-us__block-text-btn {
+					display: inline-block;
+				}
+			}
 		}
 	}
 }

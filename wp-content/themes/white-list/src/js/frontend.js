@@ -2,6 +2,7 @@ import { CarAnimation } from "./components/CarAnimation";
 import { FormValidator } from "./components/FormValidator";
 import { arrowUpBtn, dynamicHight, primaryMenu } from "./utils/helpers";
 import { initFaqAccordion } from "./utils/faq-accordion";
+import { initAboutTextToggle } from "./utils/about-text-toggle";
 import Popup from "./utils/popup-window";
 
 // Styles entry
@@ -19,47 +20,67 @@ const onLoad = () => {
 	primaryMenu();
 	dynamicHight('.js-icon-item-text-wrapper');
 
-	const donationForm = document.querySelector('.js-donation-form');
 	const paymentWidget = new TipTopPaymentWidget();
 
-	donationForm?.addEventListener('submit', (e) => {
-		e.preventDefault();
+	function donationFormSubmitHandler(formSelector, options = {}) {
+		const form = document.querySelector(formSelector);
+		if (!form) return;
 
-		const form = e.target;
-		const formData = new FormData(form);
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
 
-		const fields = Object.fromEntries(formData.entries());
+			const formData = new FormData(e.target);
+			const fields = Object.fromEntries(formData.entries());
 
-		let amount = 0;
+			let amount = 0;
 
-
-		if (fields['custom-pay-sum']) {
-			amount = parseFloat(fields['custom-pay-sum'].replace(/[^0-9]/g, ''));
-		} else {
-			amount = parseFloat(fields['pay-sum'].replace(/[^0-9]/g, ''));
-		}
-
-		const paymentData = {
-			amount: amount,
-			// description: 'Donat',
-			isSubscription: fields['pay-period'] === 'monthly',
-			accountId: fields.email || '',
-			email: fields.email || '',
-			userInfo: {
-				accountId: fields.email,
-				firstName: fields['first-name'] || '',
-				birth: fields['birth-date'] || '',
-				email: fields.email || '',
-				fullName: `${fields['first-name'] || ''}`,
+			if (fields['custom-pay-sum']) {
+				amount = parseFloat(fields['custom-pay-sum'].replace(/[^0-9]/g, ''));
+			} else {
+				amount = parseFloat(fields['pay-sum'].replace(/[^0-9]/g, ''));
 			}
-		};
 
-		console.log('paymentData', paymentData);
+			const paymentData = {
+				amount: amount,
+				isSubscription: options.isSubscription !== undefined ? options.isSubscription : fields['pay-period'] === 'monthly',
+				accountId: fields.email || '',
+				email: fields.email || '',
+				userInfo: {
+					accountId: fields.email,
+					firstName: fields['first-name'] || '',
+					birth: fields['birth-date'] || '',
+					email: fields.email || '',
+					fullName: `${fields['first-name'] || ''}`,
+				}
+			};
 
-		paymentWidget.launch(paymentData, paymentData.isSubscription);
+			if (options.metadata || fields.team_member_id) {
+				paymentData.metadata = { ...(options.metadata || {}) };
+				if (fields.team_member_id) {
+					paymentData.metadata.agent_id = fields.team_member_id;
+				}
+			}
+
+			console.log('paymentData', paymentData);
+
+			paymentWidget.launch(paymentData, paymentData.isSubscription);
+		});
+	}
+
+	donationFormSubmitHandler('.js-donation-form');
+
+	const urlParams = new URLSearchParams(window.location.search);
+	const metadata = { campaign_id: 'main' };
+	if (urlParams.get('source_code_id')) {
+		metadata.source_code_id = urlParams.get('source_code_id');
+	}
+	donationFormSubmitHandler('.js-donation-subscription-form', {
+		isSubscription: true,
+		metadata: metadata,
 	});
 
 	new FormValidator('.js-donation-form');
+	new FormValidator('.js-donation-subscription-form');
 
 	document.addEventListener('wpcf7mailsent', function (event) {
 		setTimeout(() => {
@@ -91,6 +112,7 @@ const onLoad = () => {
 	new CarAnimation();
 
 	initFaqAccordion();
+	initAboutTextToggle();
 
 	const customInput = document.querySelector('input[name="custom-pay-sum"]');
 	const radioInputs = document.querySelectorAll('input[name="pay-sum"]');

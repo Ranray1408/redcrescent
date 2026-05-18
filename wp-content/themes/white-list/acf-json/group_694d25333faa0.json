@@ -138,6 +138,27 @@
                     "parent_repeater": "field_694d255b2b333"
                 }
             ]
+        },
+        {
+            "key": "field_697f9d4c9e3f6",
+            "label": "Details button text",
+            "name": "details_btn_text",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "Enter two texts separated by a backslash: collapsed\\expanded (e.g. Еще...\\Закрыть)",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "translate",
+            "maxlength": "",
+            "placeholder": "Еще...\\Закрыть",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [

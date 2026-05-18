@@ -37,6 +37,11 @@ window.TipTopPaymentWidget = class {
 			tokenize: true,
 		};
 
+		// Pass metadata for Salesforce
+		if (paymentData.metadata) {
+			intentParams.metadata = paymentData.metadata;
+		}
+
 		// Add recurrent only for subscription
 		if (isSubscription) {
 			const startDate = new Date();

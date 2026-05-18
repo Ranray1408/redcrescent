@@ -48,6 +48,9 @@ class WP_Rock_Blocks {
         'block-faq' => array(
             'title'      => 'Block - FAQ',
         ),
+        'block-donat-subscription' => array(
+            'title'      => 'Block - Donat subscription',
+        ),
     );
 
     /**
