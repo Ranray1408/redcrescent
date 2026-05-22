@@ -65,19 +65,25 @@ export class FormValidator {
 			this.updateSubmitState();
 		}, 1000);
 
-		// Attach input and change listeners for each input
+		// Attach input, change and blur listeners for each input
 		Object.values(this.inputs).forEach(input => {
-			// input event for live validation
-			input.element.addEventListener('input', () => {
-				debouncedValidate(input);
-			});
+			const isCheckbox = input.element.type === 'checkbox';
 
+			if (isCheckbox) {
+				input.element.addEventListener('change', () => {
+					this.validateInput(input);
+					this.updateSubmitState();
+				});
+			} else {
+				input.element.addEventListener('input', () => {
+					debouncedValidate(input);
+				});
 
-			// blur event to validate when user leaves field
-			input.element.addEventListener('blur', () => {
-				this.validateInput(input);
-				this.updateSubmitState();
-			});
+				input.element.addEventListener('blur', () => {
+					this.validateInput(input);
+					this.updateSubmitState();
+				});
+			}
 		});
 	}
 
@@ -96,11 +102,18 @@ export class FormValidator {
 	}
 
 	public validateInput(input: InputField, markUI: boolean = true): void {
+		const isCheckbox = input.element.type === 'checkbox';
 		const value = input.element.value.trim();
 
 		// --- Required check ---
 		if (input.required) {
-			if (value.length === 0) {
+			if (isCheckbox) {
+				if (!input.element.checked) {
+					input.isValid = false;
+					if (markUI) this.markInvalid(input);
+					return;
+				}
+			} else if (value.length === 0) {
 				input.isValid = false;
 				if (markUI) this.markInvalid(input);
 				return;

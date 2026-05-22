@@ -182,7 +182,7 @@ $form_text = [
 						</div>
 
 						<label class="donat-block__checkbox checkbox">
-							<input type="checkbox" name="offer">
+							<input type="checkbox" name="offer" required>
 							<span class="checkbox-box"></span>
 							<?php echo $form_text['checkbox_text']; ?>
 						</label>

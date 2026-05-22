@@ -197,4 +197,10 @@ get_template_part('src/template-parts/modal-window-our-team');
 $html3 = ob_get_clean();
 
 echo do_shortcode('[popup_box box_id="popup-our-team-modal"]' . $html3 . '[/popup_box]');
+
+ob_start();
+get_template_part('src/template-parts/modal-window-donation-success');
+$html4 = ob_get_clean();
+
+echo do_shortcode('[popup_box box_id="popup-donation-success-modal"]' . $html4 . '[/popup_box]');
 ?>

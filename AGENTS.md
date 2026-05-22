@@ -155,3 +155,7 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 [2026-05-17] Created block-our-team (grid 4 col, round photos, placeholder icon). Added "Our team" tab to theme options ACF (repeater + popup WYSIWYG). Created modal-window-our-team popup.
 [2026-05-17] Created block-faq (accordion). Repeater: question + answer. Plus/minus SVG icons. JS accordion module + smooth CSS open/close via grid-template-rows + transition on padding/border.
 [2026-05-17] Cloned block-donat-subscription from donat-section. Removed period radio (only monthly via hidden input). Added team member select (populated from theme options repeater). Styled select to match inputs. Added footer_link3.
+[2026-05-17] Added hide_primary_menu ACF field (page settings) + body/header class toggling.
+[2026-05-17] Created block-donat-subscription JS handler: donationFormSubmitHandler() extracted. Salesforce metadata (campaign_id, source_code_id, agent_id) sent via TipTopPay. Added onSuccess callback + donation success popup (social share: FB, X, WhatsApp, Telegram).
+[2026-05-17] About-us text toggle: added Details button text ACF field (collapsed/expanded), JS toggle, SCSS truncation at 1360px.
+[2026-05-17] FormValidator: added checkbox required validation (checked check instead of value length).

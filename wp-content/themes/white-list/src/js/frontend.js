@@ -63,7 +63,11 @@ const onLoad = () => {
 
 			console.log('paymentData', paymentData);
 
-			paymentWidget.launch(paymentData, paymentData.isSubscription);
+			paymentWidget.launch(paymentData, paymentData.isSubscription, (result) => {
+				if (typeof options.onSuccess === 'function') {
+					options.onSuccess(result);
+				}
+			});
 		});
 	}
 
@@ -77,6 +81,9 @@ const onLoad = () => {
 	donationFormSubmitHandler('.js-donation-subscription-form', {
 		isSubscription: true,
 		metadata: metadata,
+		onSuccess: () => {
+			popup.openOnePopup('#popup-donation-success-modal');
+		},
 	});
 
 	new FormValidator('.js-donation-form');

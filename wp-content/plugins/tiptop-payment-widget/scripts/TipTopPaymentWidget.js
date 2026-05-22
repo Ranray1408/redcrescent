@@ -11,7 +11,7 @@ window.TipTopPaymentWidget = class {
 	 * @param {Boolean} isSubscription - true if subscription
 	 * @param {Object} paymentData - dynamic data from theme
 	 */
-	launch(paymentData = {}, isSubscription = false) {
+	launch(paymentData = {}, isSubscription = false, onSuccess = () => {}) {
 
 		if (!paymentData) {
 			console.error('Empty paymentData');
@@ -57,10 +57,12 @@ window.TipTopPaymentWidget = class {
 		this.widget
 			.start(intentParams)
 			.then(result => {
-				console.log("Payment success:", result);
+				//console.log("Payment success:", result);
 
 				const mailData = this.prepareMailData(intentParams);
 				this.sendMail(mailData);
+
+				onSuccess(result);
 			})
 			.catch(error => console.error("Payment error:", error));
 	}

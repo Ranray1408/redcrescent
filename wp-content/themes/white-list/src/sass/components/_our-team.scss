@@ -100,6 +100,90 @@
 	}
 }
 
+#popup-donation-success-modal {
+	.popup-wrapper {
+		max-width: 480px;
+		padding: 64px 32px;
+		border-radius: 16px;
+		text-align: center;
+
+		@media screen and (max-width: 768px) {
+			padding: 60px 16px 48px;
+		}
+	}
+}
+
+.donation-success-popup {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+
+	&__title {
+		font-family: $primary-font;
+		font-size: 32px;
+		font-weight: 700;
+		line-height: 1.2;
+		color: $text_color1;
+		margin-bottom: 8px;
+
+		@media screen and (max-width: 768px) {
+			font-size: 24px;
+		}
+	}
+
+	&__subtitle {
+		font-family: $second-font;
+		font-size: 16px;
+		line-height: 1.4;
+		color: $text_color2;
+		margin-bottom: 32px;
+	}
+
+	&__socials {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		width: 100%;
+		max-width: 320px;
+	}
+
+	&__social-link {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		padding: 14px 24px;
+		border-radius: 12px;
+		border: 1px solid $grey;
+		font-family: $primary-font;
+		font-size: 16px;
+		font-weight: 500;
+		color: $text_color1;
+		text-decoration: none;
+		transition: 0.2s background-color ease, 0.2s border-color ease;
+
+		svg {
+			width: 20px;
+			height: 20px;
+			flex-shrink: 0;
+		}
+
+		@media (hover: hover) {
+			&:hover {
+				background-color: $light_hover_red;
+				border-color: $light_hover_red;
+				color: $red;
+			}
+		}
+
+		&:active {
+			background-color: $light_hover_red;
+			border-color: $light_hover_red;
+			color: $red;
+		}
+	}
+}
+
 .team-popup {
 	padding: 16px;
 
