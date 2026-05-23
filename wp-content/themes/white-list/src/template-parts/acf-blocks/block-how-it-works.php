@@ -33,13 +33,12 @@ $block_image = get_field_value($fields, 'block_image');
                             <?php if (empty($card['card_title']) && empty($card['card_text'])) continue; ?>
 
                             <div class="how-it-works__card">
-                                <div class="how-it-works__card-icon-wrapper">
-                                    <span class="how-it-works__card-icon-circle">
-                                        <?php if (!empty($card['icon'])) : ?>
-                                            <img src="<?php echo esc_url($card['icon']); ?>" alt="<?php echo esc_attr($card['card_title']); ?>" class="how-it-works__card-icon-img">
-                                        <?php endif; ?>
-                                    </span>
+                                <div class="how-it-works__card-icon-circle">
+                                    <?php if (!empty($card['icon'])) : ?>
+                                        <img src="<?php echo esc_url($card['icon']); ?>" alt="<?php echo esc_attr($card['card_title']); ?>" class="how-it-works__card-icon-img">
+                                    <?php endif; ?>
                                 </div>
+
 
                                 <div class="how-it-works__card-inner">
                                     <?php if (!empty($card['card_title'])) : ?>

@@ -396,6 +396,22 @@ img {
         }
     }
 
+    &.green-hover {
+        @media (hover: hover) {
+            &:hover {
+                background-color: #4caf50 !important;
+            }
+
+            &:active {
+                background-color: #4caf50 !important;
+            }
+
+            &:after {
+                opacity: 0;
+            }
+        }
+    }
+
     * {
         pointer-events: none;
     }

@@ -138,6 +138,8 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 > - If `AGENTS_LOG.md` exists in the project root → write ALL entries there, keep this section empty
 > - If `AGENTS_LOG.md` does not exist → write entries here, max 25 records
 >
+> **Migrated to `AGENTS_LOG.md` on 2026-05-23. All future entries go there.**
+>
 > **How to log:**
 > - Add an entry after any significant change, decision, or discovery — no reminders needed
 > - Format: `[YYYY-MM-DD] Short note` — one or two lines max
@@ -159,3 +161,4 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 [2026-05-17] Created block-donat-subscription JS handler: donationFormSubmitHandler() extracted. Salesforce metadata (campaign_id, source_code_id, agent_id) sent via TipTopPay. Added onSuccess callback + donation success popup (social share: FB, X, WhatsApp, Telegram).
 [2026-05-17] About-us text toggle: added Details button text ACF field (collapsed/expanded), JS toggle, SCSS truncation at 1360px.
 [2026-05-17] FormValidator: added checkbox required validation (checked check instead of value length).
+[2026-05-22] CarAnimation: fixed icon positions on resize/orientation change — handleResize now restarts animation from idle state via requestAnimationFrame (waits for layout settle). Added `dataset.animationState = 'idle'` before restart to snap car to start position.

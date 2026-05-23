@@ -182,12 +182,12 @@ $form_text = [
 						</div>
 
 						<label class="donat-block__checkbox checkbox">
-							<input type="checkbox" name="offer" required>
+							<input checked type="checkbox" name="offer" required>
 							<span class="checkbox-box"></span>
 							<?php echo $form_text['checkbox_text']; ?>
 						</label>
 					</div>
-					<button id="payButton" type="submit" class="donat-block__submit-btn icon-slide-hover-btn green-bg">
+					<button id="payButton" type="submit" class="donat-block__submit-btn green-hover icon-slide-hover-btn green-bg">
 						<span class="btn-inner"></span>
 						<span class="btn-text"><?php echo $form_text['submit_text']; ?></span>
 						<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

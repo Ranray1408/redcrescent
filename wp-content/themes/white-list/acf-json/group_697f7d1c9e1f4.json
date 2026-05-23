@@ -8,6 +8,7 @@
             "name": "hide_primary_menu",
             "aria-label": "",
             "type": "true_false",
+            "instructions": "",
             "required": 0,
             "conditional_logic": 0,
             "wrapper": {
@@ -20,6 +21,150 @@
             "ui": 1,
             "ui_on_text": "Hide",
             "ui_off_text": "Show"
+        },
+        {
+            "key": "field_6a103e41cd71e",
+            "label": "Hide footer info",
+            "name": "hide_footer_info",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "translations": "copy_once",
+            "ui_on_text": "",
+            "ui_off_text": "",
+            "ui": 1
+        },
+        {
+            "key": "field_6a203e42cd72f",
+            "label": "Hide footer menu items",
+            "name": "hide_footer_menu_items",
+            "aria-label": "",
+            "type": "select",
+            "instructions": "Select which footer menu items to hide on this page",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "choices": {
+                "358": "Үй ( KK)",
+                "188": "Главная ( RU)",
+                "190": "Menu 1 ( RU)",
+                "191": "Menu 2 ( RU)",
+                "192": "Menu 3 ( RU)",
+                "193": "Menu 4 ( RU)",
+                "194": "Menu 4 ( RU)"
+            },
+            "default_value": [],
+            "allow_null": 0,
+            "multiple": 1,
+            "ui": 1,
+            "ajax": 0,
+            "return_format": "value",
+            "placeholder": ""
+        },
+        {
+            "key": "field_6a303e43cd730",
+            "label": "Show custom footer links",
+            "name": "show_custom_footer_links",
+            "aria-label": "",
+            "type": "true_false",
+            "instructions": "Enable to set custom footer links for this page instead of global defaults",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "message": "",
+            "default_value": 0,
+            "ui": 1,
+            "ui_on_text": "Custom",
+            "ui_off_text": "Global"
+        },
+        {
+            "key": "field_6a403e44cd740",
+            "label": "Footer link1",
+            "name": "footer_link1",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a303e43cd730",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_6a503e45cd750",
+            "label": "Footer link2",
+            "name": "footer_link2",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a303e43cd730",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
+        },
+        {
+            "key": "field_6a603e46cd760",
+            "label": "Footer link3",
+            "name": "footer_link3",
+            "aria-label": "",
+            "type": "link",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": [
+                [
+                    {
+                        "field": "field_6a303e43cd730",
+                        "operator": "==",
+                        "value": "1"
+                    }
+                ]
+            ],
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "return_format": "array"
         }
     ],
     "location": [
@@ -40,5 +185,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1779024041
+    "modified": 1779547833
 }

@@ -17,12 +17,16 @@ $ps_text = get_field_value($global_options, 'ps_text');
 $we_support = get_field_value($global_options, 'we_support');
 $payment_methods_icons = get_field_value($global_options, 'payment_methods_icons');
 
+$show_custom_links = get_field('show_custom_footer_links');
+$links_src = $show_custom_links ? get_fields() : $global_options;
 
-$footer_link1 = get_field_value($global_options, 'footer_link1');
-$footer_link2 = get_field_value($global_options, 'footer_link2');
-$footer_link3 = get_field_value($global_options, 'footer_link3');
+$footer_link1 = get_field_value($links_src, 'footer_link1');
+$footer_link2 = get_field_value($links_src, 'footer_link2');
+$footer_link3 = get_field_value($links_src, 'footer_link3');
 
 $contact_us_shortcode = get_field_value($global_options, 'contact_us_shortcode');
+
+$hide_footer_info = get_field('hide_footer_info', get_the_ID());
 
 $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <g clip-path="url(#clip0_86610_1022)">
@@ -48,7 +52,7 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                         </a>';
             }
 
-            if (!empty($footer_text_content)) {
+            if (!empty($footer_text_content) && !$hide_footer_info) {
                 echo '<div class="footer__text-content">
                             <p class="footer__upper-text">' . $footer_text_upper_content . '</p>
                             ' . do_shortcode($footer_text_content) . '
@@ -91,11 +95,11 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
                 echo '</div>';
             }
 
-            if (!empty($ps_text)) {
+            if (!empty($ps_text) && !$hide_footer_info) {
                 echo '<p class="footer__ps-text">' . $ps_text . '</p>';
             }
 
-            if (!empty($we_support) && !empty($payment_methods_icons)) {
+            if (!empty($we_support) && !empty($payment_methods_icons) && !$hide_footer_info) {
                 echo '<p class="footer__we-accept-title">' . $we_support . '</p>';
 
                 echo '<div class="footer__we-accept-icons">';
@@ -112,6 +116,19 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 
         <div class="footer__links-block">
             <?php
+             if (!empty($contacts_block['socials'])) {
+                echo '<div class="footer__socials mob">';
+
+                foreach ($contacts_block['socials'] as $item) {
+                    echo '<a href="' . $item['link'] . '" target="_black" class="footer__socials-item scale-hover-effect">
+                                <img src="' . $item['icon'] . '" alt="icon">
+                            </a>';
+                }
+
+                echo '</div>';
+            }
+
+            if(!empty($footer_link1) || !empty($footer_link1) || !empty($footer_link1)) :
 
             echo '<div class="footer__links-block-inner">';
 
@@ -148,8 +165,10 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 
             echo '</div>';
 
+            endif;
+
             wp_nav_menu([
-                'menu' => 'Footer ' . pll_current_language(),
+                'menu' => 'Footer menu' . pll_current_language(),
                 'echo' => true,
                 'container' => false,
                 'menu_class' => 'footer__menu',

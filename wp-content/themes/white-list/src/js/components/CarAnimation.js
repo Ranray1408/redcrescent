@@ -39,6 +39,9 @@ export class CarAnimation {
 		this.calcIconsDefaultPosition();
 		this.setupIconDelays();
 
+		this.handleResize = this.handleResize.bind(this);
+		window.addEventListener('resize', this.handleResize);
+
 		this.start();
 	}
 
@@ -185,6 +188,16 @@ export class CarAnimation {
 		this.icons.forEach(icon => {
 			const delay = Math.random() * 500;
 			icon.style.setProperty('--icon-delay', `${delay}ms`);
+		});
+	}
+
+	handleResize() {
+		cancelAnimationFrame(this._resizeRaf);
+		this._resizeRaf = requestAnimationFrame(() => {
+			this.reset();
+			this.rootElem.dataset.animationState = 'idle';
+			this.calcIconsDefaultPosition();
+			this.start();
 		});
 	}
 }

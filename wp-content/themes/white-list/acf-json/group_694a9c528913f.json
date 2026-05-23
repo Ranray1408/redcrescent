@@ -757,6 +757,65 @@
             "media_upload": 1,
             "delay": 0,
             "translations": "translate"
+        },
+        {
+            "key": "field_696f4a7c7d7f6",
+            "label": "Share popup",
+            "name": "",
+            "aria-label": "",
+            "type": "tab",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "placement": "top",
+            "endpoint": 0
+        },
+        {
+            "key": "field_696f4a8c7d7f7",
+            "label": "Share popup title",
+            "name": "donation_share_title",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "translate",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
+        },
+        {
+            "key": "field_696f4a9c7d7f8",
+            "label": "Share popup subtitle",
+            "name": "donation_share_subtitle",
+            "aria-label": "",
+            "type": "text",
+            "instructions": "",
+            "required": 0,
+            "conditional_logic": 0,
+            "wrapper": {
+                "width": "",
+                "class": "",
+                "id": ""
+            },
+            "default_value": "",
+            "translations": "translate",
+            "maxlength": "",
+            "placeholder": "",
+            "prepend": "",
+            "append": ""
         }
     ],
     "location": [
@@ -777,5 +836,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1779024041
+    "modified": 1779549888
 }

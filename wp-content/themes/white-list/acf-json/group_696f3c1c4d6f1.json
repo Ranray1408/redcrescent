@@ -96,7 +96,7 @@
                     "label": "Card text",
                     "name": "card_text",
                     "aria-label": "",
-                    "type": "wysiwyg",
+                    "type": "textarea",
                     "instructions": "",
                     "required": 0,
                     "conditional_logic": 0,
@@ -106,10 +106,11 @@
                         "id": ""
                     },
                     "default_value": "",
-                    "tabs": "all",
-                    "toolbar": "full",
-                    "media_upload": 1,
-                    "delay": 0,
+                    "translations": "translate",
+                    "maxlength": "",
+                    "rows": "",
+                    "placeholder": "",
+                    "new_lines": "",
                     "parent_repeater": "field_696f3a2c6d6f1"
                 }
             ]
@@ -133,5 +134,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1778948863
+    "modified": 1779446709
 }
