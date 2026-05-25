@@ -22,7 +22,7 @@ add_filter('acf/load_field/name=hide_footer_menu_items', function ($field) {
     $menus = wp_get_nav_menus();
 
     foreach ($menus as $menu) {
-        if (strpos($menu->name, 'Footer menu') !== 0) {
+        if (strpos($menu->name, 'Footer') !== 0) {
             continue;
         }
 
@@ -30,7 +30,7 @@ add_filter('acf/load_field/name=hide_footer_menu_items', function ($field) {
 
         if (!empty($items)) {
             foreach ($items as $item) {
-                $language_label = str_replace('Footer menu', '', $menu->name);
+                $language_label = str_replace('Footer ', '', $menu->name);
                 $choices[$item->ID] = $item->title . ' (' . strtoupper($language_label) . ')';
             }
         }

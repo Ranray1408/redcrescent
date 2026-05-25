@@ -76,6 +76,45 @@
 
 ---
 
+## [2026-05-23] Donat section: text/hover_text → Swiper text slider per icon
+
+### Task
+- Replace static `text` + `hover_text` fields (CSS hover-reveal) with a repeater of texts displayed as Swiper autoplay slider per icon card.
+- Each icon has its own set of texts (per-icon repeater `icon_texts`).
+
+### ACF JSON (`group_6909fa496434c.json`)
+- Removed sub_fields: `field_692aee07d87ee` (Text), `field_695162fb58e04` (Hover text).
+- Added sub_field `icon_texts` (repeater) with `text` (text) inside the "Icons" repeater.
+- Updated `modified` timestamp.
+
+### PHP (`block-donat-section.php`)
+- Guard changed from `empty($icon['text'])` to just `empty($icon['sum'])`.
+- Replaced `<p>text</p><p>hover_text</p>` with Swiper container `.swiper > .swiper-wrapper > .swiper-slide`.
+- Each slide renders `$slide['text']`.
+
+### SCSS (`_donat-section.scss`)
+- Removed `.donat-block__icon-item:hover` hover rules.
+- Removed `.donat-block__icon-item-hover-text` (deleted from template).
+- Simplified `.donat-block__icon-item-text` — removed position/transform/opacity/transition.
+- Simplified `.donat-block__icon-item-text-wrapper` — removed overflow:hidden (Swiper handles it).
+
+### JS (`helpers.js`)
+- Added `import Swiper from 'swiper/bundle'` + `import 'swiper/css/bundle'` at top.
+- Added `donationTextSlider()` function — initializes Swiper with slidesPerView:1, autoplay (4s delay, disableOnInteraction:false), horizontal direction, no loop.
+
+### JS (`frontend.js`)
+- Replaced `dynamicHight` import with `donationTextSlider`.
+- Replaced `dynamicHight('.js-icon-item-text-wrapper')` call with `donationTextSlider()`.
+- Build: `yarn dev` — OK (Swiper v12 bundled, CSS extracted).
+
+### Notes
+- Each icon card gets its own Swiper instance (currently 3, max 5-6).
+- No images in slides — only text, zero performance concern.
+- Pagination not included per user request.
+- After ACF Sync, admin must re-enter texts in the new `icon_texts` repeater per icon.
+
+---
+
 ## [2026-05-14 to 2026-05-22] Previous sessions
 
 ### Sessions (migrated from AGENTS.md [LOG])
@@ -93,9 +132,49 @@
 
 ---
 
+## [2026-05-24] Donat section Swiper fixes — overflow, CSS, height, staggering
+
+### Swiper CSS was missing
+- **Problem:** Slides stacked vertically, both visible at once, `swiper-wrapper` had no `display: flex`, `swiper` had no `overflow: hidden`.
+- **Root cause:** `import 'swiper/css'` was never added to `frontend.js`. Swiper JS was imported but its default CSS wasn't bundled.
+- **Fix:** Added `import 'swiper/css'` to `frontend.js` (not in helpers.js — entry point is the canonical place for global CSS deps).
+
+### 3.35544e+07px overflow bug
+- **Problem:** Swiper slides got enormous width (~33 million px) inside grid columns.
+- **Root cause:** Flex/grid items have `min-width: auto` by default — they can't shrink below their content size. Chain: `grid (1fr) → icon-item → sum-inner (flex-col) → swiper-wrapper (flex-row) → swiper-slide (flex-shrink:0, width:100%)`. Browser in intrinsic pass couldn't resolve the circular width dependency → slide got unbounded width.
+- **Fix:** `min-width: 0` on `.donat-block__icon-item`, `.donat-block__icon-item-sum-inner`, `.donat-block__icon-item-text-wrapper`.
+- **Gotcha:** Previously worked without `min-width:0` because Swiper CSS wasn't loaded — no `display:flex` on wrapper meant no flex context, no overflow. After adding `swiper/css`, the bug appeared.
+
+### Height jumping on autoplay
+- **Problem:** `autoHeight: true` caused Swiper to resize container on slide change (79px → 132px), breaking grid layout.
+- **Fix:** Removed `autoHeight: true`. Without it, Swiper keeps container height constant (tallest slide determines it).
+
+### Staggered autoplay delay
+- **Problem:** All sliders had same `delay: 3000` — transitioned simultaneously.
+- **Fix:** `delay: 3000 + i * 300` (300ms offset per slider index).
+
+### CSS cleanup for swiper slides
+- Added `p { margin: 0 }` inside `&__icon-item-text-wrapper .swiper-slide` to remove default `<p>` margins affecting height calculation.
+
+### Build
+- `yarn dev` — OK.
+- Files touched: `frontend.js`, `helpers.js`, `_donat-section.scss`.
+
+### Applied same changes to Block - Donat subscription
+- **ACF JSON** (`group_697f8d2c9e2f5.json`): Replaced old `text`/`hover_text` sub_fields with `icon_texts` repeater (same structure as donat-section). Updated `modified` timestamp.
+- **PHP template** (`block-donat-subscription.php`): Replaced static text/hover_text rendering with Swiper slider (`js-donation-text-slider`). Removed `js-icon-item-text-wrapper` and `js-icon-item-text-wrapper` class references.
+- **Build:** `yarn dev` — OK.
+- Uses same `js-donation-text-slider` class — no new JS needed, `donationTextSlider()` handles instances from both blocks automatically.
+- SCSS already shared via `_donat-section.scss` — no changes needed.
+
+---
+
 ## Important decisions & gotchas
 
 - `acf/load_field` hooks must not depend on `pll_get_post_language()` — causes WSOD in admin during ACF sync/AJAX. Use `wp_get_nav_menus()` + name filtering instead.
 - ACF JSON `modified` timestamp must be *newer* than DB value for sync to appear. Use `Get-Date -UFormat %s` to get current Unix time.
 - CarAnimation resize: must set `dataset.animationState='idle'` before restart — car's CSS `transition` would otherwise animate from old position instead of clean start from -100vw.
 - Menu item IDs are globally unique (`nav_menu_item` post IDs) — safe to use across different menus without collisions.
+- Swiper in flex/grid containers **requires** `min-width: 0` on every ancestor in the chain to prevent `3.35544e+07px` overflow bug — caused by `min-width: auto` intrinsic resolution cycle.
+- Swiper v12 CSS (`import 'swiper/css'`) must be imported separately from JS — without it, `.swiper-wrapper` lacks `display: flex` and `.swiper` lacks `overflow: hidden`.
+- `autoHeight: true` on Swiper with text sliders inside grid cards causes grid reflow on every slide change — use only when height stability isn't critical.

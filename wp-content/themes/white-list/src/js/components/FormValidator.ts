@@ -15,7 +15,7 @@ export class FormValidator {
 	private submitBtn: HTMLButtonElement | HTMLInputElement | null = null;
 
 	private validateRules: Record<string, RegExp> = {
-		'js-validate-phone': /^[0-9+]{6,13}$/,
+		'js-validate-phone': /^\+7 \(\d{3}\) \d{3}-\d{2}-\d{2}$/,
 		'js-validate-name': /^[a-zA-Z\u0400-\u04FF]{2,30}$/,
 		'js-validate-email': /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/,
 		'js-validate-min-sum-500': /^(?:[5-9]\d{2}|[1-9]\d{3,})$/

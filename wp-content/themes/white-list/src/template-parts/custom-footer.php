@@ -168,7 +168,7 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
             endif;
 
             wp_nav_menu([
-                'menu' => 'Footer menu' . pll_current_language(),
+                'menu' => 'Footer menu ' . pll_current_language(),
                 'echo' => true,
                 'container' => false,
                 'menu_class' => 'footer__menu',

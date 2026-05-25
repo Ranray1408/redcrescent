@@ -491,7 +491,8 @@ textarea {
 textarea,
 input[type="number"],
 input[type="date"],
-input[type="text"] {
+input[type="text"],
+input[type="tel"] {
     appearance: none;
     width: 100%;
     font-family: $second_font;
@@ -518,10 +519,9 @@ input[type="text"] {
     //     border-color: $red;
     // }
 
-    // &:focus {
-    //     border-color: $red;
-    //     outline: none;
-    // }
+    &:focus {
+        outline: none;
+    }
 
     &::placeholder {
         font-family: $second_font;

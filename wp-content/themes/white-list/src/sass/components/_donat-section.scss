@@ -169,22 +169,11 @@
 		flex-direction: column;
 		align-items: flex-start;
 		padding: 8px;
+		min-width: 0;
 
 		@media screen and (max-width: 1280px) {
 			flex-direction: row;
 			gap: 12px;
-		}
-
-		&:hover {
-			.donat-block__icon-item-text {
-				transform: translateY(-100%);
-				opacity: 0;
-			}
-
-			.donat-block__icon-item-hover-text {
-				transform: translateY(0);
-				opacity: 1;
-			}
 		}
 	}
 
@@ -222,6 +211,7 @@
 		gap: 8px;
 		overflow: hidden;
 		width: 100%;
+		min-width: 0;
 	}
 
 	&__icon-item-sum {
@@ -242,23 +232,26 @@
 
 	&__icon-item-text-wrapper {
 		position: relative;
+		width: 100%;
 		overflow: hidden;
+		min-width: 0;
+	}
+
+	&__icon-item-text-wrapper .swiper-slide {
+		height: auto;
+
+		p {
+			margin: 0;
+		}
 	}
 
 
-	&__icon-item-text,
-	&__icon-item-hover-text {
+	&__icon-item-text {
 		font-family: $primary-font;
 		font-size: 24px;
 		font-weight: 700;
 		line-height: 1.1;
 		color: $white;
-
-		transition:
-			transform 0.4s ease,
-			opacity 0.3s ease;
-
-		will-change: transform, opacity;
 
 		@media screen and (max-width: 1680px) {
 			font-size: 20px;
@@ -267,20 +260,6 @@
 		@media screen and (max-width: 1280px) {
 			font-size: 14px;
 		}
-	}
-
-	&__icon-item-text {
-		position: relative;
-		transform: translateY(0);
-		opacity: 1;
-	}
-
-	&__icon-item-hover-text {
-		position: absolute;
-		inset: 0;
-
-		transform: translateY(100%);
-		opacity: 0;
 	}
 
 	&__form {

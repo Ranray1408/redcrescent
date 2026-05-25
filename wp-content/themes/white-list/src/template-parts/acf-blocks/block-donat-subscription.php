@@ -67,7 +67,7 @@ $form_text = [
 				if (!empty($icons)) {
 					echo '<div class="donat-block__icons-wrapper">';
 					foreach ($icons as $icon) {
-						if (empty($icon['icon']) || empty($icon['sum']) || empty($icon['text'])) continue;
+						if (empty($icon['icon']) || empty($icon['sum'])) continue;
 
 						echo '<div class="donat-block__icon-item">
 								<div class="donat-block__icon-img">
@@ -75,13 +75,22 @@ $form_text = [
 								</div>
 								<div class="donat-block__icon-item-sum-inner">
 
-									<p class="donat-block__icon-item-sum">' . $icon['sum'] . '</p>
+									<p class="donat-block__icon-item-sum">' . $icon['sum'] . '</p>';
 
-									<div class="donat-block__icon-item-text-wrapper js-icon-item-text-wrapper">
-										<p class="donat-block__icon-item-text">' . $icon['text'] . '</p>
-										<p class="donat-block__icon-item-hover-text">' . $icon['hover_text'] . '</p>
-									</div>
-								</div>
+									if (!empty($icon['icon_texts'])) {
+										echo '<div class="donat-block__icon-item-text-wrapper swiper js-donation-text-slider">
+												<div class="swiper-wrapper">';
+
+										foreach ($icon['icon_texts'] as $slide) {
+											echo '<div class="swiper-slide">
+													<p class="donat-block__icon-item-text">' . $slide['text'] . '</p>
+												</div>';
+										}
+										echo '</div>
+											</div>';
+									}
+
+						echo '</div>
 							</div>';
 					}
 					echo '</div>';
@@ -142,21 +151,23 @@ $form_text = [
 								'required' => 'required'
 							],
 							[
-								'validate' => 'js-validate-phone',
+								'validate' => 'js-validate-phone js-phone-mask',
 								'placeholder' => $form_text['phone_text'],
 								'name' => 'phone',
-								'required' => 'required'
+								'required' => 'required',
+								'type' => 'tel'
 							],
 						];
 						?>
 						<div class="donat-block__form-personal-info">
 							<?php
 							foreach ($form_fields as $key => $field) {
+								$input_type = $field['type'] ?? 'text';
 								echo '<label class="donat-block__input-wrapper" for="id-' . $field['name'] . '">
 
 										<input class="' . $field['validate'] . '"
 											id="id-' . $field['name'] . '"
-											type="text"
+											type="' . $input_type . '"
 											name="' . $field['name'] . '"
 											placeholder="' . $field['placeholder'] . '" ' . $field['required'] . '>
 										</label>';

@@ -1,9 +1,10 @@
 import { CarAnimation } from "./components/CarAnimation";
 import { FormValidator } from "./components/FormValidator";
-import { arrowUpBtn, dynamicHight, primaryMenu } from "./utils/helpers";
+import { arrowUpBtn, donationTextSlider, initPhoneMask, primaryMenu } from "./utils/helpers";
 import { initFaqAccordion } from "./utils/faq-accordion";
 import { initAboutTextToggle } from "./utils/about-text-toggle";
 import Popup from "./utils/popup-window";
+import 'swiper/css';
 
 // Styles entry
 export { }
@@ -18,7 +19,8 @@ const onLoad = () => {
 	popup.init();
 
 	primaryMenu();
-	dynamicHight('.js-icon-item-text-wrapper');
+	donationTextSlider();
+	initPhoneMask();
 
 	const paymentWidget = new TipTopPaymentWidget();
 
@@ -71,7 +73,11 @@ const onLoad = () => {
 		});
 	}
 
-	donationFormSubmitHandler('.js-donation-form');
+	donationFormSubmitHandler('.js-donation-form', {
+		onSuccess: () => {
+			popup.openOnePopup('#popup-donation-success-modal');
+		},
+	});
 
 	const urlParams = new URLSearchParams(window.location.search);
 	const metadata = { campaign_id: 'main' };
@@ -89,11 +95,11 @@ const onLoad = () => {
 	new FormValidator('.js-donation-form');
 	new FormValidator('.js-donation-subscription-form');
 
-	document.addEventListener('wpcf7mailsent', function (event) {
-		setTimeout(() => {
-			window.location.href = php_vars.site_url + '/thank-you';
-		}, 2000)
-	}, false);
+	// document.addEventListener('wpcf7mailsent', function (event) {
+	// 	setTimeout(() => {
+	// 		window.location.href = php_vars.site_url + '/thank-you';
+	// 	}, 2000)
+	// }, false);
 
 
 	function togglePlaceholder() {
