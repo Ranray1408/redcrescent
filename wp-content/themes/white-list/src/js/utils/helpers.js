@@ -476,13 +476,14 @@ export const dynamicHight = (selector) => {
 };
 
 export const donationTextSlider = () => {
-    document.querySelectorAll('.js-donation-text-slider').forEach((el, i) => {
+    document.querySelectorAll('.js-donation-text-slider').forEach((el) => {
         new Swiper(el, {
             modules: [Autoplay],
+            spaceBetween: 10,
             slidesPerView: 1,
             direction: 'horizontal',
             autoplay: {
-                delay: 3000 + i * 300,
+                delay: 5000,
                 disableOnInteraction: false,
             },
         });

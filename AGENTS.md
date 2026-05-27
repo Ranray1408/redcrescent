@@ -142,7 +142,7 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 >
 > **How to log:**
 > - Add an entry after any significant change, decision, or discovery — no reminders needed
-> - Format: `[YYYY-MM-DD] Short note` — one or two lines max
+> - Format: `[YYYY-MM-DD HH:MM] Short note` — one or two lines max (e.g. `[2026-05-27 14:47]`)
 > - Include: what was done, what was decided, what to watch out for
 > - This is a memory tool, not a report — write what would be useful to know next session
 > - When limit of 25 is reached in this file — create `AGENTS_LOG.md` and move all entries there
