@@ -174,7 +174,7 @@ class TipTopPaymentWidget {
 			plugin_dir_url(dirname(__FILE__)) . 'scripts/TipTopPaymentWidget.js',
 			['tiptop-sdk'],
 			'1.0.0',
-			false
+			true
 		);
 
 		wp_localize_script('tiptop-payment-widget', 'tiptopSettings', [

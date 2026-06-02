@@ -48,7 +48,14 @@ $form_text = [
 ?>
 <section class="donat-section" id="donat-section">
 	<div class="container">
-		<div class="donat-block" style="background-image: url(<?php echo $block_bg; ?>);">
+		<div class="donat-block">
+			<?php if (!empty($block_bg)) : ?>
+			<img src="<?php echo $block_bg; ?>" alt=""
+				 class="donat-block__bg-img no-lazy skip-lazy"
+				 fetchpriority="high"
+				 loading="eager"
+				 decoding="async">
+			<?php endif; ?>
 
 			<div class="donat-block__left-wrapper white-text" style="background-image: url(<?php echo $block_bg; ?>);">
 				<?php
@@ -67,7 +74,7 @@ $form_text = [
 
 						echo '<div class="donat-block__icon-item">
 								<div class="donat-block__icon-img">
-									<img src="' . $icon['icon'] . '" alt="icon">
+									<img class="style-svg" src="' . $icon['icon'] . '" alt="icon">
 								</div>
 								<div class="donat-block__icon-item-sum-inner">
 

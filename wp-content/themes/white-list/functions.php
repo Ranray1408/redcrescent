@@ -12,6 +12,7 @@ require THEME_DIR . '/src/inc/custom-shortcodes.php';
 require THEME_DIR . '/src/inc/class-acf-blocks.php';
 require THEME_DIR . '/src/inc/initial-setup.php';
 require THEME_DIR . '/src/inc/enqueue-scripts.php';
+//require THEME_DIR . '/src/inc/performance-optimizations.php';
 
 
 /**
