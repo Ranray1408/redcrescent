@@ -27,9 +27,9 @@ if (!empty($hide_primary_menu)) {
 
             <?php
             if (!empty($logo)) {
-                echo '<a href="' . get_site_url() . '" class="header__logo">
-                        <img src="' . $logo . '" alt="logo">
-                    </a>';
+                echo '<a href="' . get_site_url() . '" class="header__logo">'
+                    . wp_get_attachment_image($logo, [298, 65], false, ['alt' => 'logo'])
+                    . '</a>';
             }
             ?>
 
@@ -39,9 +39,9 @@ if (!empty($hide_primary_menu)) {
                 echo '<div class="header__logo-wrapper">';
 
                 if (!empty($logo)) {
-                    echo '<a href="' . get_site_url() . '" class="header__logo mob">
-                                <img src="' . $logo . '" alt="logo">
-                            </a>';
+                    echo '<a href="' . get_site_url() . '" class="header__logo mob">'
+                        . wp_get_attachment_image($logo, [298, 65], false, ['alt' => 'logo'])
+                        . '</a>';
                 }
 
                 echo '<div class="header__lang-wrapper mob">

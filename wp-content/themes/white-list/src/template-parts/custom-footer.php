@@ -47,9 +47,9 @@ $arrow_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
         <div class="footer__logo-block">
             <?php
             if (!empty($white_logo)) {
-                echo '<a href="' . get_site_url() . '" class="footer__logo">
-                            <img class="style-svg" src="' . $white_logo . '" alt="logo">
-                        </a>';
+                echo '<a href="' . get_site_url() . '" class="footer__logo">'
+                    . wp_get_attachment_image($white_logo, [309, 56], false, ['class' => 'style-svg', 'alt' => 'logo'])
+                    . '</a>';
             }
 
             if (!empty($footer_text_content) && !$hide_footer_info) {

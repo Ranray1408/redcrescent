@@ -22,7 +22,16 @@ $phone_svg = '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns=
 ?>
 <section class="section-partnership" id="section-partnership">
 	<div class="container">
-		<div class="section-partnership__block" style="background-image: url(<?php echo $background_image; ?>);">
+		<div class="section-partnership__block">
+			<?php if (!empty($background_image)) :
+				echo wp_get_attachment_image($background_image, 'full', false, [
+					'class' => 'section-partnership__bg-img no-lazy skip-lazy',
+					'fetchpriority' => 'high',
+					'loading' => 'eager',
+					'decoding' => 'async',
+					'alt' => '',
+				]);
+			endif; ?>
 			<?php
 			if (!empty($content)) {
 				echo '<div class="section-partnership__content">' . $content . '</div>';
