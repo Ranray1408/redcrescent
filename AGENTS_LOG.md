@@ -242,3 +242,54 @@
 - Fix: removed async CSS loading from `performance-optimizations.php`, added `<link rel="preload" as="style">` to keep it fast but blocking.
 - Also added `width="1920" height="800"` to the bg `<img>` for CLS hygiene.
 - Build: `yarn dev` — OK.
+
+---
+
+## [2026-06-06] Two-stage (Dual) payment — research & test setup
+
+### What is a two-stage payment (DMS)
+- TipTopPay supports two schemes: **Single** (SMS) и **Dual** (DMS).
+- **Single** — one command: authorization + debit immediately, money leaves the card right away.
+- **Dual** — two separate commands: **authorization** (blocking) and **confirm** (capture/debit).
+  - After authorization, the amount is **blocked** on the donor's card (unavailable to them).
+  - Merchant has up to **7 days** to confirm (depends on card type).
+  - If not confirmed — auto-cancel, funds unblocked.
+  - Can confirm **full amount** or **partial amount**.
+- Use case: deposits (rental, hotels); for donations — useful when you want to verify the card first and debit later (e.g., after Salesforce confirms).
+
+### How to switch to Dual scheme
+- In widget params set `paymentSchema: 'Dual'` (was `'Single'`).
+
+### Confirm API
+- **Endpoint:** `POST https://api.tiptoppay.kz/payments/confirm`
+- **Auth:** HTTP Basic Auth — `Public ID` (login) + `API Secret` (password), different from Terminal ID (`pk_...`). Obtained from merchant cabinet.
+- **Parameters:**
+  - `TransactionId` (Long, required) — numeric transaction ID from TipTopPay.
+  - `Amount` (Number, required) — amount to confirm, dot separator, 2 decimal places.
+  - `JsonData` (JSON, optional) — extra data / online receipt instructions.
+- **Response:** `{"Success":true,"Message":null}` on success.
+- Can also confirm via merchant cabinet (manual).
+
+### Key data fields — don't confuse
+- **TransactionId** (numeric, e.g. `4673194557`) — TipTopPay internal transaction ID. Returned by widget in `result.data.transactionId`. Used for confirm.
+- **externalId** (string, e.g. `payment_dual@gmail.com_06062026`) — your own order ID passed to widget. **Not** usable for confirm.
+- **metadata** — optional JSON object passed to widget for Salesforce (campaign_id, source_code_id, agent_id, venue_id). Returned in notifications.
+
+### Confirm flow (test setup we made)
+1. `paymentSchema: 'Dual'` in `TipTopPaymentWidget.js`.
+2. Auto-capture `transactionId` from widget result via monkey-patch on `TipTopPaymentWidget.prototype.launch`.
+3. PHP AJAX proxy (`admin-ajax.php` action `tiptop_confirm_payment`) forwards request to TipTopPay API (avoids CORS). Accepts `transaction_id`, `amount`, `api_public_id`, `api_secret_key` from POST.
+4. Test button below donation form sends confirm. API keys hardcoded in template JS (test only).
+
+### Salesforce connection (from PDF docs)
+- Two integration shapes:
+  - **Face2Face** (2 calls): Step 1 — Salesforce OAuth → fetch active agents/venues → populate picklists. Step 2 — payment with `agent_id`, `venue_id`, `campaign_id`, `source_code_id` in metadata.
+  - **Standard** (1 call): payment only, no F2F lookups, `campaign_id` + optional `source_code_id` in metadata.
+- OAuth: Client Credentials flow, token server-side only (~2h validity). Cache responses 5–15 min.
+- Agent validation: free-text input, validated client-side against cached list.
+- Venues: picklist (name displayed, id as value).
+- Missing keys silently ignored, donation always goes through.
+- Salesforce reads metadata from TipTopPay webhook and links records.
+
+### CORS note
+- `api.tiptoppay.kz` does **not** allow browser-side requests (no CORS headers). All API calls must go through a server-side proxy (PHP `wp_remote_post`).
