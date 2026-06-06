@@ -47,3 +47,50 @@
   font-display: optional;
   unicode-range: U+0000-024F;
 }
+
+/* --- Fallback declarations (metric overrides for local Arial) --- */
+
+@font-face {
+  font-family: 'MullerFallback';
+  src: local('Arial');
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 95%;
+  ascent-override: 97%;
+}
+
+@font-face {
+  font-family: 'MullerFallback';
+  src: local('Arial');
+  font-weight: 500;
+  font-style: normal;
+  size-adjust: 96%;
+  ascent-override: 96%;
+}
+
+@font-face {
+  font-family: 'MullerFallback';
+  src: local('Arial Bold');
+  font-weight: 700;
+  font-style: normal;
+  size-adjust: 93%;
+  ascent-override: 95%;
+}
+
+@font-face {
+  font-family: 'GilroyFallback';
+  src: local('Arial');
+  font-weight: 400;
+  font-style: normal;
+  size-adjust: 94%;
+  ascent-override: 96%;
+}
+
+@font-face {
+  font-family: 'GilroyFallback';
+  src: local('Arial Bold');
+  font-weight: 700;
+  font-style: normal;
+  size-adjust: 91%;
+  ascent-override: 94%;
+}

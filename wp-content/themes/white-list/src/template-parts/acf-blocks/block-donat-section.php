@@ -54,7 +54,8 @@ $form_text = [
 				 class="donat-block__bg-img no-lazy skip-lazy"
 				 fetchpriority="high"
 				 loading="eager"
-				 decoding="async">
+				 decoding="async"
+				 width="1920" height="800">
 			<?php endif; ?>
 
 			<div class="donat-block__left-wrapper white-text" style="background-image: url(<?php echo $block_bg; ?>);">

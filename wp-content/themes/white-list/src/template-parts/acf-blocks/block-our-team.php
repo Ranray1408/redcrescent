@@ -28,9 +28,9 @@ $no_photo_svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"
                     ?>
                     <div class="our-team__card">
                         <div class="our-team__photo-wrapper">
-                            <?php if (!empty($photo)) : ?>
-                                <img class="our-team__photo" src="<?php echo esc_url($photo); ?>" alt="<?php echo esc_attr($name); ?>">
-                            <?php else : ?>
+							<?php if (!empty($photo)) :
+								echo wp_get_attachment_image($photo, 'full', false, ['class' => 'our-team__photo', 'alt' => esc_attr($name), 'decoding' => 'async']);
+							else : ?>
                                 <span class="our-team__photo-placeholder">
                                     <?php echo $no_photo_svg; ?>
                                 </span>

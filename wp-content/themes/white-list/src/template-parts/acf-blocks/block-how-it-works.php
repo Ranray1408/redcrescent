@@ -59,11 +59,11 @@ $block_image = get_field_value($fields, 'block_image');
                 </div>
             </div>
 
-            <div class="how-it-works__col-image">
-                <?php if (!empty($block_image)) : ?>
-                    <img class="how-it-works__img" src="<?php echo esc_url($block_image); ?>" alt="" loading="lazy">
-                <?php endif; ?>
-            </div>
+			<div class="how-it-works__col-image">
+				<?php if (!empty($block_image)) :
+					echo wp_get_attachment_image($block_image, 'full', false, ['class' => 'how-it-works__img', 'loading' => 'lazy', 'alt' => '', 'decoding' => 'async']);
+				endif; ?>
+			</div>
         </div>
     </div>
 </section>

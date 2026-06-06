@@ -178,3 +178,67 @@
 - Swiper in flex/grid containers **requires** `min-width: 0` on every ancestor in the chain to prevent `3.35544e+07px` overflow bug — caused by `min-width: auto` intrinsic resolution cycle.
 - Swiper v12 CSS (`import 'swiper/css'`) must be imported separately from JS — without it, `.swiper-wrapper` lacks `display: flex` and `.swiper` lacks `overflow: hidden`.
 - `autoHeight: true` on Swiper with text sliders inside grid cards causes grid reflow on every slide change — use only when height stability isn't critical.
+
+---
+
+## [2026-06-06 13:00] Performance: LCP, CLS, render-blocking + WebP
+
+### Font swap CLS (font-display: optional + preload)
+- **Problem:** `font-display: swap` caused 0.869 CLS — browser rendered fallback text, then swapped to Muller/Gilroy fonts after download.
+- **Fix:** Changed all 5 `@font-face` declarations in `_fonts.scss`: `font-display: swap → optional` (100ms block period, no swap).
+- **Added preload** in `performance-optimizations.php` for all 5 woff2 fonts (`<link rel="preload" as="font" ... crossorigin>`).
+- **Build:** `yarn dev` — OK.
+- **Note:** Preload gives CWV-eligible Chrome priority; `optional` eliminates CLS entirely.
+
+### Admin crash from frontend-only optimizations
+- **Problem:** `is_admin()` not guarded — jQuery footer move + `defer` on script tags broke admin panel (`Cannot read properties of undefined (reading 'setLocaleData')`).
+- **Fix:** Wrapped ALL hooks in `performance-optimizations.php` with `if (!is_admin()) : ... endif;`.
+
+### Partnership bg-img: CSS `background-image` → `<img>` tag
+- Converted `block-partnership.php` and `block-partnership-v2.php` from inline `style="background-image: url(...)"` to absolute-positioned `<img>` with `fetchpriority="high"` + `no-lazy skip-lazy`.
+- Added `&__bg-img` SCSS (absolute, object-fit: cover, z-index: 0) in both `_partnership.scss` and `_partnership-v2.scss`.
+- Removed mobile `display: none` on bg-img (no CSS fallback needed anymore).
+- Same conversion done for `block-donat-section.php` and `block-donat-subscription.php`, then **reverted** — mobile layout broke (image overlapped other blocks).
+
+### Light gray ::after overlay on partnership-v2
+- Added `&::after` on `section-direct-dialog__block` — `rgba(200, 200, 200, 0.5)` light gray overlay.
+
+### ACF image fields: `return_format` → `"id"` + `wp_get_attachment_image()`
+- **Goal:** Generate `srcset`/`sizes` + enable WordPress 6.9 native WebP delivery.
+- **Changed ACF JSON fields:**
+  - `group_694a9c528913f.json` — `logo`, `white_logo`, `photo` (team_members)
+  - `group_694d59c717fa5.json` — `background_image` (partnership)
+  - `group_694d59c717fa6.json` — `background_image` (partnership-v2)
+  - `group_694d25333faa0.json` — `image` (about-us block_repeater)
+  - `group_695f2a1c4d5e6.json` — `block_image` (how-it-works)
+- **Updated PHP templates to `wp_get_attachment_image()`:**
+  - `block-partnership.php` — class/skip-lazy/fetchpriority preserved via `$attr` array
+  - `block-partnership-v2.php` — same
+  - `block-about-us.php` — inside `<figure>`, alt + decoding preserved
+  - `block-how-it-works.php` — class/how-it-works__img + loading=lazy
+  - `block-our-team.php` — class/our-team__photo + alt from name
+  - `custom-header.php` — 2 logo outputs, `[298, 65]` size
+  - `custom-footer.php` — white logo, class style-svg preserved
+- **JSON corruption fix:** `group_694a9c528913f.json` had duplicate `ps_text` entry from wrong regex match — removed.
+
+### Lighthouse remaining issues (logged for next steps)
+- **Render-blocking (~3s):** jQuery (29 KiB), accessibility-onetap plugin (4 files), `white-list/style.css` (0.4 KiB empty), Google Fonts. No changes made.
+- **Image compression:** Partnership bg 52.1 KiB, logo 16.1 KiB (592×208 on 240×65 container). WebP Express `Limit: 60` not yet applied; logo needs smaller `srcset` size.
+- **WebP Express Alter HTML** — works with W3TC cache but only after page cache primed (first visit). `.htaccess` redirect is the reliable fallback.
+
+### Font fallback with metric overrides (CLS reduction)
+- Added `@font-face` declarations for `MullerFallback` and `GilroyFallback` in `_fonts.scss` — use `local('Arial')` with `size-adjust` / `ascent-override`.
+- Updated `$primary-font` and `$second-font` in `_global.scss` to include fallback names (`'Muller', 'MullerFallback', ...` / `'Gilroy', 'GilroyFallback', ...`).
+- Build: `yarn dev` — OK.
+
+### Font fallback — split by weight (CLS fix)
+- After deploy: CLS still 1.124. Cause: fallback had no `font-weight` (defaulted to 400). h1 (700) and `<p>` (500) didn't match → fell to Noto Sans → CLS persisted. Also `size-adjust` was changed to 104% making fallback LARGER.
+- Fixed: replaced 2 generic `@font-face` blocks with 5 weight-specific ones (MullerFallback 400/500/700, GilroyFallback 400/700), each with its own `size-adjust` and `ascent-override`.
+- `size-adjust` values need Chrome DevTools fine-tuning after deploy.
+
+### CLS root cause found — async CSS loading
+- Deployed fallback + `font-display: optional` didn't fix CLS (still 0.9+). Reason: **CSS loaded async** (`media="print"` onload swap).
+- First paint happens without frontend.css → `<img class="donat-block__bg-img">` not yet `position: absolute` → takes up intrinsic space → when CSS loads, img snaps to absolute, content jumps up → CLS.
+- Fix: removed async CSS loading from `performance-optimizations.php`, added `<link rel="preload" as="style">` to keep it fast but blocking.
+- Also added `width="1920" height="800"` to the bg `<img>` for CLS hygiene.
+- Build: `yarn dev` — OK.

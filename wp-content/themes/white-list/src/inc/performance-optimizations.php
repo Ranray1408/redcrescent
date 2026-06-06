@@ -11,30 +11,14 @@ if (!is_admin()) :
  * Move jQuery to footer to unblock render
  */
 add_action('wp_enqueue_scripts', function () {
-    if (!empty($GLOBALS['wp_scripts']->registered['jquery'])) {
-        $GLOBALS['wp_scripts']->add_data('jquery', 'group', 1);
-    }
-    if (!empty($GLOBALS['wp_scripts']->registered['jquery-core'])) {
-        $GLOBALS['wp_scripts']->add_data('jquery-core', 'group', 1);
-    }
-    if (!empty($GLOBALS['wp_scripts']->registered['jquery-migrate'])) {
-        $GLOBALS['wp_scripts']->add_data('jquery-migrate', 'group', 1);
-    }
-});
+    wp_deregister_script('jquery');
+    wp_register_script('jquery', includes_url('/js/jquery/jquery.min.js'), [], '3.7.1', true);
+    wp_enqueue_script('jquery');
+}, 100);
 
-/**
- * Load frontend.css asynchronously (preload + media="print" onload swap)
- */
-add_filter('style_loader_tag', function ($tag, $handle) {
-    if ('styles' === $handle) {
-        $tag = str_replace(
-            "media='all'",
-            "media='print' onload=\"this.media='all'\"",
-            $tag
-        );
-    }
-    return $tag;
-}, 10, 2);
+add_action('wp_enqueue_scripts', function () {
+    wp_dequeue_style('wp-rock-style');
+}, 100);
 
 /**
  * Defer non-critical scripts
@@ -60,6 +44,8 @@ add_action('wp_head', function () {
     echo '<link rel="preload" as="font" href="' . THEME_URI . '/src/fonts/Muller-Bold.woff2" crossorigin>' . "\n";
     echo '<link rel="preload" as="font" href="' . THEME_URI . '/src/fonts/Gilroy-Regular.woff2" crossorigin>' . "\n";
     echo '<link rel="preload" as="font" href="' . THEME_URI . '/src/fonts/Gilroy-Bold.woff2" crossorigin>' . "\n";
+
+    echo '<link rel="preload" as="style" href="' . get_template_directory_uri() . '/build/css/frontend.css">' . "\n";
 }, 1);
 
 endif;

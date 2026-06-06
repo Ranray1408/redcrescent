@@ -35,9 +35,9 @@ $btn_expanded_text = $btn_texts[1] ?? 'Закрыть';
 					echo '<div class="about-us__block ' . $revers_class . '">';
 
 					if (!empty($block['image'])) {
-						echo '<figure class="about-us__block-image">
-									<img src="' . $block['image'] . '" alt="block image">
-								</figure>';
+						echo '<figure class="about-us__block-image">'
+							. wp_get_attachment_image($block['image'], [784, 558], false, ['alt' => 'block image', 'decoding' => 'async'])
+							. '</figure>';
 					}
 
 					echo '<div class="about-us__block-inner">';
