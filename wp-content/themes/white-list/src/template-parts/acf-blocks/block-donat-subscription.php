@@ -190,7 +190,7 @@ $form_text = [
 											$member_name = get_field_value($member, 'name');
 											$member_id = get_field_value($member, 'team_id');
 											if (!empty($member_name) && !empty($member_id)) {
-												echo '<option value="' . esc_attr($member_id) . '">' . esc_html($member_name) . ' ID = '.$member_id.'</option>';
+												echo '<option value="' . esc_attr($member_id) . '">' . esc_html($member_name) . ' ID:  '.$member_id.'</option>';
 											}
 										}
 									}

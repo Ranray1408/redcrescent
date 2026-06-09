@@ -293,3 +293,40 @@
 
 ### CORS note
 - `api.tiptoppay.kz` does **not** allow browser-side requests (no CORS headers). All API calls must go through a server-side proxy (PHP `wp_remote_post`).
+
+---
+
+## [2026-06-09] AGENTS_TODO.md created — animation preservation
+
+- Created `AGENTS_TODO.md` with full GSAP scroll animation specs (blocked state).
+- Added `[HARD RULES]` section in `AGENTS.md` — "Animation recovery — vital" rule.
+- Animated blocks: `block-about-us.php` (data-anim), `block-donat-section.php` (data-anim-hero).
+- All pending blocks (9 more) documented in `AGENTS_TODO.md` for future restore.
+- User plans to revert animations now; restore when client approves.
+
+---
+
+## [2026-06-06] Scroll animations with GSAP + ScrollTrigger
+
+### What was done
+- Created `src/js/utils/scroll-animations.js` — GSAP + ScrollTrigger utility for scroll-triggered fade-in animations.
+- Imported & initialized in `src/js/frontend.js` (`initScrollAnimations()`).
+- Added `data-anim` attributes to `block-about-us.php`:
+  - Title: `fade-up`, Description: `fade-up` (delayed 0.1s).
+  - Each block: `fade-up`. Image slides from left (`fade-left`) or right (`fade-right`) based on `reverse-block` class; inner content slides opposite direction.
+
+### How it works
+- `scroll-animations.js` exports `initScrollAnimations()` which queries `[data-anim]` elements and creates `gsap.fromTo()` + `ScrollTrigger` for each.
+- Presets: `fade-up` (translateY 60px + opacity), `fade-left`, `fade-right`.
+- Adjustable via `data-anim-delay` (delay in seconds) and `data-anim-start` (ScrollTrigger start, default `"top 85%"`).
+- Animates only `transform` + `opacity` — no layout changes, no CLS impact.
+- Initializes lazily — if no `[data-anim]` elements exist on page, does nothing.
+
+### GSAP state in project
+- GSAP v3.14.2 was already in `package.json` as a dependency but was **completely unused** (dead dependency).
+- Now imported and used. Bundle size increase: ~30-40 KB (gzip ~10 KB).
+- ScrollTrigger is a bundled plugin, imported separately as `import { ScrollTrigger } from 'gsap/ScrollTrigger'`.
+- Built with `yarn dev` — OK.
+
+### Usage for other blocks
+Add `data-anim="fade-up"` (or `fade-left`/`fade-right`) to any element in any PHP template. Optionally add `data-anim-delay="0.2"`. That's it — no JS changes needed.

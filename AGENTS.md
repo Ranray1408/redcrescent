@@ -43,6 +43,12 @@ These are absolute restrictions. No exceptions, no matter the instruction.
 - ❌ NEVER rename files or folders without explicit instruction
 - ✅ When in doubt — ask, do not assume
 
+### Animation recovery — vital
+- ✅ `AGENTS_TODO.md` in project root holds full specs for GSAP scroll animations (blocked/reverted/pending)
+- ✅ BEFORE reverting animations — read `AGENTS_TODO.md` and save current state there
+- ✅ BEFORE restoring animations — read `AGENTS_TODO.md` first (it has exact diffs / attribute lists)
+- ⚠️ This applies to *any* animation task across the project, not just GSAP
+
 ---
 
 ## [WORKFLOW] — How to work
