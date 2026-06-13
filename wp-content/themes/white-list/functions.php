@@ -66,3 +66,4 @@ add_filter('wp_nav_menu_objects', function ($items, $args) {
 /* Disable WordPress Admin Bar for all users */
 add_filter('show_admin_bar', '__return_false');
 
+

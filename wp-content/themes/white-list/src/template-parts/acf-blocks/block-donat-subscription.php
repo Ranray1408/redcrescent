@@ -1,6 +1,4 @@
 <?php
-global $global_options;
-
 $fields = get_fields();
 $title = get_field_value($fields, 'title');
 $description = get_field_value($fields, 'description');
@@ -30,6 +28,7 @@ $checkbox_text = get_field_value($form_fields, 'checkbox_text');
 $submit_text = get_field_value($form_fields, 'submit_text');
 
 $team_member_select_label = get_field_value($form_fields, 'team_member_select_label');
+$venue_select_label = get_field_value($form_fields, 'venue_select_label');
 
 $form_text = [
 	'form_title' => $form_title ?? '',
@@ -47,6 +46,7 @@ $form_text = [
 	'checkbox_text' => $checkbox_text ?? '',
 	'submit_text' => $submit_text ?? '',
 	'team_member_select_label' => $team_member_select_label ?? '',
+	'venue_select_label' => $venue_select_label ?? '',
 ]
 
 ?>
@@ -140,10 +140,6 @@ $form_text = [
 						</div>
 
 						<?php
-						$team_members = get_field_value($global_options, 'team_members');
-						?>
-
-						<?php
 						$form_fields = [
 							[
 								'validate' => 'js-validate-name',
@@ -181,20 +177,15 @@ $form_text = [
 							}
 							?>
 
-							<label class="donat-block__input-wrapper donat-block__select-wrapper">
-								<select class="donat-block__select" name="team_member_id">
-									<option selected value=""><?php echo $form_text['team_member_select_label']; ?></option>
-									<?php
-									if (!empty($team_members)) {
-										foreach ($team_members as $member) {
-											$member_name = get_field_value($member, 'name');
-											$member_id = get_field_value($member, 'team_id');
-											if (!empty($member_name) && !empty($member_id)) {
-												echo '<option value="' . esc_attr($member_id) . '">' . esc_html($member_name) . ' ID:  '.$member_id.'</option>';
-											}
-										}
-									}
-									?>
+							<label class="donat-block__select-wrapper">
+								<select class="donat-block__select js-sf-agent-select" name="sf_agent_id">
+									<option value=""><?php echo esc_html($form_text['team_member_select_label'] ?? 'Select agent'); ?></option>
+								</select>
+							</label>
+
+							<label class="donat-block__select-wrapper">
+								<select class="donat-block__select js-sf-venue-select" name="sf_venue_id">
+									<option value=""><?php echo esc_html($form_text['venue_select_label'] ?: 'Select venue'); ?></option>
 								</select>
 							</label>
 						</div>

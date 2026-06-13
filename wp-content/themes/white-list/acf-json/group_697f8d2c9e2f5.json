@@ -432,6 +432,27 @@
                     "append": ""
                 },
                 {
+                    "key": "field_697f8ecc9e30e",
+                    "label": "Venue select label",
+                    "name": "venue_select_label",
+                    "aria-label": "",
+                    "type": "text",
+                    "instructions": "",
+                    "required": 0,
+                    "conditional_logic": 0,
+                    "wrapper": {
+                        "width": "",
+                        "class": "",
+                        "id": ""
+                    },
+                    "default_value": "",
+                    "translations": "translate",
+                    "maxlength": "",
+                    "placeholder": "",
+                    "prepend": "",
+                    "append": ""
+                },
+                {
                     "key": "field_697f8e8c9e30a",
                     "label": "Date text",
                     "name": "date_text",
@@ -515,5 +536,5 @@
     "active": true,
     "description": "",
     "show_in_rest": 0,
-    "modified": 1779653137
+    "modified": 1779656800
 }

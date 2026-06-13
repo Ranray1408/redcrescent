@@ -330,3 +330,84 @@
 
 ### Usage for other blocks
 Add `data-anim="fade-up"` (or `fade-left`/`fade-right`) to any element in any PHP template. Optionally add `data-anim-delay="0.2"`. That's it — no JS changes needed.
+
+---
+
+## [2026-06-11] TipTopPay widget metadata + Salesforce integration (plugin)
+
+### Architecture
+- TipTopPay `metadata` parameter passes `campaign_id`, `source_code_id`, `agent_id`, `venue_id`, and `recurrent` (for subscriptions) to Salesforce via TipTopPay webhook.
+- Salesforce OAuth (Client Credentials) is server-side only — never exposed to JS.
+- Plugin table `tiptop_payment_settings` extended with `instance_url`, `client_id`, `client_secret`.
+
+### Files created
+- `wp-content/plugins/tiptop-payment-widget/includes/class-tiptop-payment-salesforce.php` — OAuth token (transient 5400s), SOQL agents & venues (transient 900s), AJAX `sf_get_active_data` endpoint.
+
+### Files modified
+- `class-tiptop-payment-widget.php` — added Salesforce fields to admin form, save handler, DB table columns; added `campaignId` to `tiptopSettings` (page slug or `'main'`).
+- `TipTopPaymentWidget.js` — moved `recurrent` into `metadata` (was in body), removed `recurrent` from body, added ISO `startDate`.
+- `frontend.js` — SF AJAX fetches agents/venues on page load, populates `.sf-field` elements, agent ID real-time validation, `campaign_id` + `source_code_id` in metadata, old ACF select hidden when SF data available.
+- `block-donat-subscription.php` — added `.sf-field` (hidden by default) agent input + venue select, shown when SF data returns, ACF select hidden.
+- `functions.php` — removed test proxy + test button (was for SF QA debug).
+- `AGENTS.md` — added `[HARD RULES]` destructive actions forbidden, git restricted, animation recovery rules, log migration note.
+- `AGENTS_LOG.md` — regular entries since 2026-05-14 (now 330+ lines).
+
+### Build
+- `yarn dev` — OK.
+
+### Remaining / blocked
+- Salesforce QA sandbox (`redcrescentofkazakhstan--qa.sandbox.my.salesforce-sites.com`) returns "Down For Maintenance" — OAuth/SOQL untestable.
+- No Apex REST endpoint path from client yet — pending for data push to standard objects.
+
+---
+
+## [2026-06-11] Salesforce API confirmed working — simplified selects
+
+### Salesforce SOQL response format (verified live)
+```
+GET .../services/data/v61.0/query/?q=SELECT+Id,+Name,+core_Face2Face_AgentId__pc+FROM+Account+WHERE+IsPersonAccount=true+AND+core_Face2Face_Active_Agent__pc=true
+
+Response (200):
+{
+  "totalSize": 2,
+  "done": true,
+  "records": [
+    { "Id": "001...", "Name": "Aisha Bekova", "core_Face2Face_AgentId__pc": "AGENT-42" },
+    { "Id": "001...", "Name": "Marat Iskakov", "core_Face2Face_AgentId__pc": "AGENT-58" }
+  ]
+}
+```
+
+```
+GET .../services/data/v61.0/query/?q=SELECT+Id,+core_Face2Face_Venue_Id__c,+core_Face2Face_Venue_Name__c+FROM+Account+WHERE+IsPersonAccount=false+AND+core_Face2Face_Venue_Active__c=true
+
+Response (200):
+{
+  "totalSize": 2,
+  "done": true,
+  "records": [
+    { "Id": "001...", "core_Face2Face_Venue_Id__c": "VENUE-07", "core_Face2Face_Venue_Name__c": "Almaty Central Plaza" },
+    { "Id": "001...", "core_Face2Face_Venue_Id__c": "VENUE-12", "core_Face2Face_Venue_Name__c": "Astana Mega Mall" }
+  ]
+}
+```
+
+### Template simplified
+- Removed ACF `team_members` foreach loop (was populating `team_member_id` select)
+- Removed `.sf-field` hidden selects
+- Now two visible empty selects: `sf_agent_id` (`.js-sf-agent-select`) and `sf_venue_id` (`.js-sf-venue-select`)
+- Both populated by JS directly from Salesforce AJAX response
+
+### JS simplified
+- Removed agent input validation (text input → select, no validation needed)
+- Removed `.sf-field` show/hide + ACF select hide logic
+- Both selects populated on page load from `sf_get_active_data` AJAX
+- Metadata reads directly from `select.value`
+
+### Logs cleaned up
+- Removed verbose debug logs from `class-tiptop-payment-salesforce.php`
+- Only error_log calls remain (original OAuth error, agents error, venues error)
+- DB migration `maybe_upgrade_db()` added for existing installations
+
+### Build
+- `yarn dev` — OK.

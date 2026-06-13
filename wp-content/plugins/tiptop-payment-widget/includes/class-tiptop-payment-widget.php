@@ -23,6 +23,38 @@ class TipTopPaymentWidget {
 		add_action('admin_menu', [$this, 'register_admin_page']);
 		add_action('admin_post_tiptop_save_settings', [$this, 'save_settings']);
 		add_action('wp_enqueue_scripts', [$this, 'enqueue_scripts'], 5);
+
+		$this->maybe_upgrade_db();
+	}
+
+	// ---------------------------------------------------------
+	// DB UPGRADE (add new columns to existing table)
+	// ---------------------------------------------------------
+	public function maybe_upgrade_db(): void {
+		global $wpdb;
+
+		$current_version = get_option('tiptop_payment_db_version', '0');
+
+		if (version_compare($current_version, '1.1', '>=')) {
+			return;
+		}
+
+		$table_name = $this->table_name;
+		$columns = $wpdb->get_col("SHOW COLUMNS FROM {$table_name}");
+
+		if (!in_array('instance_url', $columns, true)) {
+			$wpdb->query("ALTER TABLE {$table_name} ADD COLUMN instance_url VARCHAR(255) DEFAULT '' AFTER description");
+		}
+
+		if (!in_array('client_id', $columns, true)) {
+			$wpdb->query("ALTER TABLE {$table_name} ADD COLUMN client_id VARCHAR(255) DEFAULT '' AFTER instance_url");
+		}
+
+		if (!in_array('client_secret', $columns, true)) {
+			$wpdb->query("ALTER TABLE {$table_name} ADD COLUMN client_secret VARCHAR(255) DEFAULT '' AFTER client_id");
+		}
+
+		update_option('tiptop_payment_db_version', '1.1');
 	}
 
 	// ---------------------------------------------------------
@@ -39,6 +71,9 @@ class TipTopPaymentWidget {
             success_redirect VARCHAR(255) NOT NULL,
             terminal_id VARCHAR(255) NOT NULL,
             description VARCHAR(255) DEFAULT '',
+            instance_url VARCHAR(255) DEFAULT '',
+            client_id VARCHAR(255) DEFAULT '',
+            client_secret VARCHAR(255) DEFAULT '',
             PRIMARY KEY  (id)
         ) $charset_collate;";
 
@@ -84,7 +119,10 @@ class TipTopPaymentWidget {
 				'currency' => '',
 				'success_redirect' => '',
 				'terminal_id' => '',
-				'description' => ''
+				'description' => '',
+				'instance_url' => '',
+				'client_id' => '',
+				'client_secret' => '',
 			];
 		}
 
@@ -121,6 +159,34 @@ class TipTopPaymentWidget {
 
 				</table>
 
+				<h2>Salesforce Integration</h2>
+
+				<table class="form-table">
+
+					<tr>
+						<th>Instance URL</th>
+						<td><input type="url" name="instance_url"
+								value="<?php echo esc_attr($settings->instance_url); ?>"
+								class="regular-text"
+								placeholder="https://your-org.sandbox.my.salesforce-sites.com"></td>
+					</tr>
+
+					<tr>
+						<th>Consumer Key (Client ID)</th>
+						<td><input type="text" name="client_id"
+								value="<?php echo esc_attr($settings->client_id); ?>"
+								class="regular-text"></td>
+					</tr>
+
+					<tr>
+						<th>Consumer Secret (Client Secret)</th>
+						<td><input type="text" name="client_secret"
+								value="<?php echo esc_attr($settings->client_secret); ?>"
+								class="regular-text"></td>
+					</tr>
+
+				</table>
+
 				<?php submit_button('Save Settings'); ?>
 			</form>
 		</div>
@@ -143,6 +209,9 @@ class TipTopPaymentWidget {
 				'success_redirect' => esc_url_raw($_POST['success_redirect']),
 				'terminal_id' => sanitize_text_field($_POST['terminal_id']),
 				'description' => sanitize_text_field($_POST['description']),
+				'instance_url' => esc_url_raw($_POST['instance_url']),
+				'client_id' => sanitize_text_field($_POST['client_id']),
+				'client_secret' => sanitize_text_field($_POST['client_secret']),
 			],
 			['id' => 1]
 		);
@@ -183,6 +252,7 @@ class TipTopPaymentWidget {
 			'terminalId' => $settings->terminal_id,
 			'description' => $settings->description,
 			'ajaxUrl' => admin_url('admin-ajax.php'),
+			'campaignId' => is_page() ? get_post_field('post_name', get_the_ID()) : 'donation.redcrescent.kz',
 		]);
 	}
 }

@@ -24,6 +24,40 @@ const onLoad = () => {
 
 	const paymentWidget = new TipTopPaymentWidget();
 
+	let sfAgents = [];
+	let sfVenues = [];
+
+	fetch(php_vars.ajax_url + '?action=sf_get_active_data')
+		.then(r => r.json())
+		.then(data => {
+			if (!data.success) return;
+			sfAgents = data.agents || [];
+			sfVenues = data.venues || [];
+
+			const agentSelect = document.querySelector('.js-sf-agent-select');
+			if (agentSelect && sfAgents.length) {
+				agentSelect.innerHTML = '<option value="">' + (agentSelect.options[0]?.text || 'Select agent') + '</option>';
+				sfAgents.forEach(a => {
+					const opt = document.createElement('option');
+					opt.value = a.id;
+					opt.textContent = `${a.name} ID: ${a.id}`;
+					agentSelect.appendChild(opt);
+				});
+			}
+
+			const venueSelect = document.querySelector('.js-sf-venue-select');
+			if (venueSelect && sfVenues.length) {
+				venueSelect.innerHTML = '<option value="">' + (venueSelect.options[0]?.text || 'Select venue') + '</option>';
+				sfVenues.forEach(v => {
+					const opt = document.createElement('option');
+					opt.value = v.id;
+					opt.textContent = v.name;
+					venueSelect.appendChild(opt);
+				});
+			}
+		})
+		.catch(e => console.error('SF fetch error:', e));
+
 	function donationFormSubmitHandler(formSelector, options = {}) {
 		const form = document.querySelector(formSelector);
 		if (!form) return;
@@ -56,11 +90,19 @@ const onLoad = () => {
 				}
 			};
 
-			if (options.metadata || fields.team_member_id) {
-				paymentData.metadata = { ...(options.metadata || {}) };
-				if (fields.team_member_id) {
-					paymentData.metadata.agent_id = fields.team_member_id;
-				}
+			// Build metadata: base from options + dynamic fields
+			paymentData.metadata = { ...(options.metadata || {}) };
+
+			// Agent ID
+			const agentSelect = form.querySelector('.js-sf-agent-select');
+			if (agentSelect && agentSelect.value) {
+				paymentData.metadata.agent_id = agentSelect.value;
+			}
+
+			// Venue ID
+			const venueSelect = form.querySelector('.js-sf-venue-select');
+			if (venueSelect && venueSelect.value) {
+				paymentData.metadata.venue_id = venueSelect.value;
 			}
 
 			console.log('paymentData', paymentData);
@@ -73,17 +115,22 @@ const onLoad = () => {
 		});
 	}
 
+	const urlParams = new URLSearchParams(window.location.search);
+	const metadata = {
+		campaign_id: tiptopSettings.campaignId || 'donation.redcrescent.kz'
+	};
+
+	if (urlParams.get('source_code_id')) {
+		metadata.source_code_id = urlParams.get('source_code_id');
+	}
+
 	donationFormSubmitHandler('.js-donation-form', {
+		metadata: metadata,
 		onSuccess: () => {
 			popup.openOnePopup('#popup-donation-success-modal');
 		},
 	});
 
-	const urlParams = new URLSearchParams(window.location.search);
-	const metadata = { campaign_id: 'main' };
-	if (urlParams.get('source_code_id')) {
-		metadata.source_code_id = urlParams.get('source_code_id');
-	}
 	donationFormSubmitHandler('.js-donation-subscription-form', {
 		isSubscription: true,
 		metadata: metadata,

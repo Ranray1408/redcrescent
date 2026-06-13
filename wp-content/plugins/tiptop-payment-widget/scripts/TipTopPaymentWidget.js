@@ -42,18 +42,21 @@ window.TipTopPaymentWidget = class {
 			intentParams.metadata = paymentData.metadata;
 		}
 
-		// Add recurrent only for subscription
-		if (isSubscription) {
-			const startDate = new Date();
-			startDate.setMonth(startDate.getMonth() + 1);
+		// For Salesforce-managed subscription: recurrent goes INSIDE metadata, not in body
+		if (isSubscription && intentParams.metadata) {
+			const now = new Date();
+			const yyyy = now.getFullYear();
+			const mm = String(now.getMonth() + 1).padStart(2, '0');
+			const dd = String(now.getDate()).padStart(2, '0');
 
-			intentParams.recurrent = {
-				period: 1,
+			intentParams.metadata.recurrent = {
 				interval: 'Month',
-				maxPeriods: 12,
+				period: 1,
+				amount: paymentData.amount,
+				startDate: `${yyyy}-${mm}-${dd}T00:00:00.0000000Z`,
 			};
 		}
-		console.log('intentParams', intentParams);
+
 		this.widget
 			.start(intentParams)
 			.then(result => {
