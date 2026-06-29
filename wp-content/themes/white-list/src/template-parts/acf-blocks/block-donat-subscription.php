@@ -148,6 +148,12 @@ $form_text = [
 								'required' => 'required'
 							],
 							[
+								'validate' => 'js-validate-name',
+								'placeholder' => $form_text['second_name_text'],
+								'name' => 'last-name',
+								'required' => 'required'
+							],
+							[
 								'validate' => 'js-validate-email',
 								'placeholder' => $form_text['email_text'],
 								'name' => 'email',

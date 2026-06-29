@@ -84,14 +84,19 @@ const onLoad = () => {
 				userInfo: {
 					accountId: fields.email,
 					firstName: fields['first-name'] || '',
-					birth: fields['birth-date'] || '',
 					email: fields.email || '',
-					fullName: `${fields['first-name'] || ''}`,
+					lastName: `${fields['first-name'] || ''}`,
+					phone: fields.phone || '',
 				}
 			};
 
 			// Build metadata: base from options + dynamic fields
 			paymentData.metadata = { ...(options.metadata || {}) };
+
+			// Donor personal data for Salesforce
+			if (fields['first-name']) paymentData.metadata.firstName = fields['first-name'];
+			if (fields['last-name'])  paymentData.metadata.lastName  = fields['last-name'];
+			if (fields.phone)         paymentData.metadata.phone      = fields.phone;
 
 			// Agent ID
 			const agentSelect = form.querySelector('.js-sf-agent-select');
@@ -104,8 +109,6 @@ const onLoad = () => {
 			if (venueSelect && venueSelect.value) {
 				paymentData.metadata.venue_id = venueSelect.value;
 			}
-
-			console.log('paymentData', paymentData);
 
 			paymentWidget.launch(paymentData, paymentData.isSubscription, (result) => {
 				if (typeof options.onSuccess === 'function') {
@@ -126,7 +129,7 @@ const onLoad = () => {
 
 	donationFormSubmitHandler('.js-donation-form', {
 		metadata: metadata,
-		onSuccess: () => {
+		onSuccess: (res) => {
 			popup.openOnePopup('#popup-donation-success-modal');
 		},
 	});

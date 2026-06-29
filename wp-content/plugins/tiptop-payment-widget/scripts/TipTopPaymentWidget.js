@@ -30,11 +30,11 @@ window.TipTopPaymentWidget = class {
 			description: paymentData.description || tiptopSettings.description,
 			currency: tiptopSettings.currency || 'KZT',
 			amount: paymentData.amount,
+			accountId: paymentData.userInfo.email,
 			externalId: paymentData.externalId || `payment_${paymentData.userInfo.email}_${formattedDate}`,
 			paymentSchema: 'Single',
 			userInfo: paymentData.userInfo,
 			receiptEmail: paymentData.userInfo.email,
-			tokenize: true,
 		};
 
 		// Pass metadata for Salesforce
@@ -42,8 +42,9 @@ window.TipTopPaymentWidget = class {
 			intentParams.metadata = paymentData.metadata;
 		}
 
-		// For Salesforce-managed subscription: recurrent goes INSIDE metadata, not in body
+		// For Salesforce-managed subscription: recurrent goes INSIDE metadata, tokenize in body
 		if (isSubscription && intentParams.metadata) {
+			intentParams.tokenize = true;
 			const now = new Date();
 			const yyyy = now.getFullYear();
 			const mm = String(now.getMonth() + 1).padStart(2, '0');
@@ -56,6 +57,9 @@ window.TipTopPaymentWidget = class {
 				startDate: `${yyyy}-${mm}-${dd}T00:00:00.0000000Z`,
 			};
 		}
+
+		// console.log('intentParams', intentParams);
+
 
 		this.widget
 			.start(intentParams)
@@ -83,7 +87,7 @@ window.TipTopPaymentWidget = class {
 			description: intentParams.description,
 			externalId: intentParams.externalId,
 			birth: intentParams.userInfo.birth || '',
-			recurrent: intentParams.recurrent || false
+			recurrent: intentParams.metadata?.recurrent || false
 		};
 	}
 

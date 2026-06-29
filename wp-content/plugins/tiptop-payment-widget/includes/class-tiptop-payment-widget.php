@@ -242,7 +242,7 @@ class TipTopPaymentWidget {
 			'tiptop-payment-widget',
 			plugin_dir_url(dirname(__FILE__)) . 'scripts/TipTopPaymentWidget.js',
 			['tiptop-sdk'],
-			'1.0.0',
+			'1.1.0',
 			true
 		);
 

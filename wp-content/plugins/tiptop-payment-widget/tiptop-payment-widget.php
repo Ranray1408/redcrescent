@@ -2,7 +2,7 @@
 /**
  * Plugin Name: TipTop Payment Widget
  * Description: Payment widget integration for TipTopPay with admin options.
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: DioZX
  */
 

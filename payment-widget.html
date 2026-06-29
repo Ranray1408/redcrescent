@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Widget</title>
+
+    <script src="https://widget.tiptoppay.kz/bundles/widget.js"></script>
+    <style>
+        :root {
+            color-scheme: light;
+            --bg: #f6efe5;
+            --bg-accent: #efe2d1;
+            --surface: rgba(255, 252, 247, 0.92);
+            --surface-strong: #fff9f2;
+            --text: #1f1a17;
+            --muted: #64574d;
+            --line: rgba(64, 43, 28, 0.12);
+            --primary: #b84a2f;
+            --primary-hover: #963821;
+            --success: #1f7a4c;
+            --error: #b42318;
+            --shadow: 0 24px 70px rgba(83, 47, 25, 0.15);
+            --radius: 24px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Avenir Next", "Segoe UI", sans-serif;
+            color: var(--text);
+            background:
+                radial-gradient(circle at top left, rgba(255, 255, 255, 0.7), transparent 35%),
+                radial-gradient(circle at bottom right, rgba(184, 74, 47, 0.16), transparent 28%),
+                linear-gradient(160deg, var(--bg) 0%, var(--bg-accent) 100%);
+        }
+
+        .page {
+            width: min(1120px, calc(100% - 32px));
+            margin: 0 auto;
+            padding: 48px 0;
+        }
+
+        .hero {
+            display: grid;
+            grid-template-columns: 1.1fr 0.9fr;
+            gap: 24px;
+            align-items: start;
+        }
+
+        .panel {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(12px);
+        }
+
+        .intro {
+            padding: 32px;
+        }
+
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(184, 74, 47, 0.1);
+            color: var(--primary);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            margin: 18px 0 14px;
+            font-size: clamp(2.2rem, 3.6vw, 4.25rem);
+            line-height: 0.96;
+            letter-spacing: -0.05em;
+        }
+
+        .lead {
+            margin: 0;
+            max-width: 34rem;
+            color: var(--muted);
+            font-size: 1.02rem;
+            line-height: 1.6;
+        }
+
+        .meta-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+            margin-top: 28px;
+        }
+
+        .meta-card {
+            padding: 16px;
+            border-radius: 18px;
+            background: var(--surface-strong);
+            border: 1px solid var(--line);
+        }
+
+        .meta-card strong,
+        .meta-card span {
+            display: block;
+        }
+
+        .meta-card strong {
+            font-size: 0.86rem;
+            margin-bottom: 4px;
+        }
+
+        .meta-card span {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.45;
+        }
+
+        .form-panel {
+            padding: 28px;
+        }
+
+        .form-panel h2,
+        .result-panel h2 {
+            margin: 0 0 8px;
+            font-size: 1.35rem;
+        }
+
+        .section-copy {
+            margin: 0 0 24px;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+
+        form {
+            display: grid;
+            gap: 16px;
+        }
+
+        .field-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        label {
+            display: grid;
+            gap: 8px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 14px 16px;
+            font: inherit;
+            color: var(--text);
+            background: var(--surface-strong);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+        }
+
+        textarea {
+            min-height: 108px;
+            resize: vertical;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: rgba(184, 74, 47, 0.45);
+            box-shadow: 0 0 0 4px rgba(184, 74, 47, 0.12);
+            transform: translateY(-1px);
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+            margin-top: 4px;
+        }
+
+        button {
+            border: 0;
+            border-radius: 999px;
+            padding: 15px 22px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+        }
+
+        .pay-button {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .pay-button:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .secondary-button {
+            background: rgba(184, 74, 47, 0.08);
+            color: var(--primary);
+        }
+
+        .secondary-button:hover {
+            opacity: 0.88;
+            transform: translateY(-1px);
+        }
+
+        .hint {
+            color: var(--muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .result-panel {
+            margin-top: 24px;
+            padding: 28px;
+        }
+
+        .status {
+            margin-bottom: 16px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            font-weight: 600;
+            background: rgba(100, 87, 77, 0.08);
+            color: var(--muted);
+        }
+
+        .status.success {
+            background: rgba(31, 122, 76, 0.1);
+            color: var(--success);
+        }
+
+        .status.error {
+            background: rgba(180, 35, 24, 0.1);
+            color: var(--error);
+        }
+
+        pre {
+            margin: 0;
+            padding: 18px;
+            overflow: auto;
+            border-radius: 18px;
+            border: 1px solid var(--line);
+            background: #201815;
+            color: #fff4ea;
+            font-family: "SFMono-Regular", Consolas, monospace;
+            font-size: 0.89rem;
+            line-height: 1.55;
+        }
+
+        .toggle-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 16px;
+            border-radius: 16px;
+            background: var(--surface-strong);
+            border: 1px solid var(--line);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .toggle-row:hover {
+            background: rgba(184, 74, 47, 0.06);
+        }
+
+        .toggle-row input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--primary);
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .toggle-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .toggle-desc {
+            color: var(--muted);
+            font-size: 0.88rem;
+            margin-left: auto;
+        }
+
+        .recurring-fields {
+            display: grid;
+            gap: 16px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.35s ease, opacity 0.25s ease, margin 0.3s ease;
+            margin-top: 0;
+        }
+
+        .recurring-fields.open {
+            max-height: 500px;
+            opacity: 1;
+            margin-top: 16px;
+        }
+
+        .recurring-fields .section-label {
+            font-size: 0.82rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+            color: var(--muted);
+            padding-bottom: 4px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        @media (max-width: 900px) {
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .meta-grid,
+            .field-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main class="page">
+        <section class="hero">
+            <article class="panel intro">
+                <div class="eyebrow">TipTop Pay widget</div>
+                <h1>Payment demo</h1>
+                <p class="lead">
+                    This page launches the TipTop Pay checkout widget using the current widget API.
+                    It supports both one-time and recurring payments in KZT. Toggle the recurring
+                    option to configure automatic billing with a custom interval.
+                </p>
+
+                <div class="meta-grid">
+                    <div class="meta-card">
+                        <strong>Payment types</strong>
+                        <span>One-time &amp; recurring</span>
+                    </div>
+                    <div class="meta-card">
+                        <strong>Currency</strong>
+                        <span>KZT only on this sample page</span>
+                    </div>
+                    <div class="meta-card">
+                        <strong>Terminal</strong>
+                        <span>Uses the test public terminal from the docs by default</span>
+                    </div>
+                </div>
+            </article>
+
+            <section class="panel form-panel">
+                <h2>Launch payment widget</h2>
+                <p class="section-copy">
+                    The fields below map directly to the
+                    widget intent parameters from the TipTop Pay documentation.
+                </p>
+
+                <form id="payment-form">
+                    <div class="field-grid">
+                        <label>
+                            Public terminal ID
+                            <input id="publicTerminalId" name="publicTerminalId" type="text" value="pk_d91999b4803243f3a1ed3b15854ad" required>
+                        </label>
+
+                        <label>
+                            Amount
+                            <input id="amount" name="amount" type="number" value="5000" min="0.01" step="0.01" required>
+                        </label>
+                    </div>
+
+                    <div class="field-grid">
+                        <label>
+                            Donor name
+                            <input id="fullName" name="fullName" type="text" value="Red Crescent Supporter">
+                        </label>
+
+                        <label>
+                            Email
+                            <input id="email" name="email" type="email" value="demo-donor@example.com">
+                        </label>
+                    </div>
+
+                    <div class="field-grid">
+                        <label>
+                            Phone
+                            <input id="phone" name="phone" type="tel" value="+77010000000">
+                        </label>
+
+                        <label>
+                            Language
+                            <select id="culture" name="culture">
+                                <option value="ru-RU" selected>Russian</option>
+                                <option value="kk-KZ" >Kazakh</option>
+                                <option value="en-US">English</option>
+                            </select>
+                        </label>
+                    </div>
+
+                    <label>
+                        External payment ID
+                        <input id="externalId" name="externalId" type="text" value="donation-demo-1001">
+                    </label>
+
+                    <label>
+                        Payment description
+                        <textarea id="description" name="description">Donation to the Red Crescent of Kazakhstan</textarea>
+                    </label>
+
+                    <div class="section-label" style="font-size: 0.82rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); padding-bottom: 4px; border-bottom: 1px solid var(--line);">Campaign attribution (metadata)</div>
+
+                    <div class="field-grid">
+                        <label>
+                            campaign_id (landing-page slug)
+                            <input id="campaignId" name="campaignId" type="text" placeholder="e.g. main-page-test">
+                        </label>
+
+                        <label>
+                            agent_id (agentId)
+                            <input id="agentId" name="agentId" type="text" placeholder="e.g. AGENT-42">
+                        </label>
+                    </div>
+
+                    <div class="field-grid">
+                        <label>
+                            venue_id (venueId)
+                            <input id="venueId" name="venueId" type="text" placeholder="e.g. VENUE-08">
+                        </label>
+
+                        <label>
+                            source_code_id (Salesforce 18-char Id of an OutreachSourceCode)
+                            <input id="sourceCodeId" name="sourceCodeId" type="text" placeholder="e.g. a0xAB0000004XYZ">
+                        </label>
+                    </div>
+
+                    <label class="toggle-row">
+                        <input type="checkbox" id="enableRecurring">
+                        <span class="toggle-label">Enable recurring payments</span>
+                        <span class="toggle-desc">Auto-charge on a schedule</span>
+                    </label>
+
+                    <label class="toggle-row">
+                        <input type="checkbox" id="enableDualSchema">
+                        <span class="toggle-label">Use dual-stage payment schema</span>
+                        <span class="toggle-desc">Authorize first; requires manual Confirm to capture funds (triggers Confirm/Cancel notifications)</span>
+                    </label>
+
+                    <div class="recurring-fields" id="recurring-fields">
+                        <div class="section-label">Recurring schedule</div>
+
+                        <div class="field-grid">
+                            <label>
+                                Interval
+                                <select id="recInterval" name="recInterval">
+                                    <option value="Day">Day</option>
+                                    <option value="Week">Week</option>
+                                    <option value="Month" selected>Month</option>
+                                </select>
+                            </label>
+
+                            <label>
+                                Every N intervals
+                                <input id="recPeriod" name="recPeriod" type="number" value="1" min="1" step="1">
+                            </label>
+                        </div>
+
+                        <div class="field-grid">
+                            <label>
+                                Recurring amount (leave empty to use main amount)
+                                <input id="recAmount" name="recAmount" type="number" min="0.01" step="0.01" placeholder="Same as above">
+                            </label>
+
+                            <label>
+                                Max periods (0 = unlimited)
+                                <input id="recMaxPeriods" name="recMaxPeriods" type="number" value="0" min="0" step="1">
+                            </label>
+                        </div>
+
+                        <label>
+                            First charge date (leave empty for default)
+                            <input id="recStartDate" name="recStartDate" type="datetime-local">
+                        </label>
+                    </div>
+
+                    <div class="actions">
+                        <button class="pay-button" id="pay-button" type="submit">Open payment widget</button>
+                        <button class="secondary-button" id="reset-button" type="button">Reset sample values</button>
+                    </div>
+
+                    <div class="hint">
+                        Test cards from TipTop Pay docs can be used in the widget. This page only opens the hosted payment form;
+                        actual payment registration and webhook handling still belong on the server side.
+                    </div>
+                </form>
+            </section>
+        </section>
+
+        <section class="panel result-panel">
+            <h2>Request sent</h2>
+            <p class="section-copy">
+                The <code>intentParams</code> object passed to <code>widget.start()</code>.
+            </p>
+            <pre id="request">No request sent yet.</pre>
+        </section>
+
+        <section class="panel result-panel">
+            <h2>Widget result</h2>
+            <p class="section-copy">
+                The response from the widget <code>oncomplete</code> callback. Persists until you launch a new payment.
+            </p>
+            <div class="status" id="status">Ready to launch the payment widget.</div>
+            <pre id="result">No widget response yet.</pre>
+        </section>
+    </main>
+
+    <script>
+        const form = document.getElementById("payment-form");
+        const statusNode = document.getElementById("status");
+        const resultNode = document.getElementById("result");
+        const requestNode = document.getElementById("request");
+        const resetButton = document.getElementById("reset-button");
+
+        const recurringToggle = document.getElementById("enableRecurring");
+        const recurringFields = document.getElementById("recurring-fields");
+        const dualSchemaToggle = document.getElementById("enableDualSchema");
+
+        recurringToggle.addEventListener("change", function() {
+            recurringFields.classList.toggle("open", recurringToggle.checked);
+        });
+
+        const defaultValues = {
+            publicTerminalId: "pk_d91999b4803243f3a1ed3b15854ad",
+            amount: "5000",
+            fullName: "Red Crescent Supporter",
+            email: "demo-donor@example.com",
+            phone: "+77010000000",
+            culture: "kk-KZ",
+            externalId: "donation-demo-1001",
+            description: "Donation to the Red Crescent of Kazakhstan",
+            campaignId: "",
+            campaignName: "",
+            campaignType: "",
+            sourceCodeId: ""
+        };
+
+        const defaultRecurring = {
+            recInterval: "Month",
+            recPeriod: "1",
+            recAmount: "",
+            recMaxPeriods: "0",
+            recStartDate: ""
+        };
+
+        function setStatus(message, type) {
+            statusNode.textContent = message;
+            statusNode.className = "status" + (type ? " " + type : "");
+        }
+
+        function setResult(payload) {
+            if (typeof payload === "string") {
+                resultNode.textContent = payload;
+                return;
+            }
+
+            resultNode.textContent = JSON.stringify(payload, null, 2);
+        }
+
+        function setRequest(payload) {
+            if (typeof payload === "string") {
+                requestNode.textContent = payload;
+                return;
+            }
+
+            requestNode.textContent = JSON.stringify(payload, null, 2);
+        }
+
+        function readValue(id) {
+            return document.getElementById(id).value.trim();
+        }
+
+        function buildIntentParams() {
+            const amount = Number.parseFloat(readValue("amount"));
+
+            if (!Number.isFinite(amount) || amount <= 0) {
+                throw new Error("Amount must be greater than 0.");
+            }
+
+            const email = readValue("email");
+            const fullName = readValue("fullName");
+            const phone = readValue("phone");
+
+            var isRecurring = recurringToggle.checked;
+
+            var metadata = {
+                source: "payment-widgets/one-time.html",
+                paymentType: isRecurring ? "recurring" : "one-time",
+                campaign_id: "main-page-test",
+                recurrent: {
+                    interval: "Month",
+                    period: 1,
+                    amount: 5000,
+                    startDate: "2026-05-19T00:00:00.0000000Z"
+                }
+            };
+            var campaignId = readValue("campaignId");
+            var sourceCodeId = readValue("sourceCodeId");
+            var agentId = readValue("agentId");
+            var venueId = readValue("venueId");
+            if (campaignId) { metadata.campaign_id = campaignId; }
+            if (sourceCodeId) { metadata.source_code_id = sourceCodeId; }
+            if (agentId) { metadata.agent_id = agentId; }
+            if (venueId) { metadata.venue_id = venueId; }
+            
+
+            var params = {
+                publicTerminalId: readValue("publicTerminalId"),
+                paymentSchema: dualSchemaToggle.checked ? "Dual" : "Single",
+                currency: "KZT",
+                amount,
+                tokenize: true,
+                accountId: 'demo-donor@example.com',
+                culture: readValue("culture"),
+                description: readValue("description"),
+                externalId: readValue("externalId"),
+                receiptEmail: email || undefined,
+                emailBehavior: email ? "Required" : "Optional",
+                metadata: metadata,
+                userInfo: {
+                    fullName: fullName || undefined,
+                    email: email || undefined,
+                    phone: phone || undefined,
+                    accountId: email || undefined
+                }
+            };
+
+            if (isRecurring) {
+                if (!email) {
+                    throw new Error("Email is required for recurring payments (used as accountId).");
+                }
+
+                var period = parseInt(readValue("recPeriod"), 10);
+                if (!Number.isFinite(period) || period < 1) {
+                    throw new Error("Recurring period must be at least 1.");
+                }
+
+                var recurrent = {
+                    interval: readValue("recInterval"),
+                    period: period
+                };
+
+                var recAmountStr = readValue("recAmount");
+                if (recAmountStr) {
+                    var recAmount = Number.parseFloat(recAmountStr);
+                    if (!Number.isFinite(recAmount) || recAmount <= 0) {
+                        throw new Error("Recurring amount must be greater than 0.");
+                    }
+                    recurrent.amount = recAmount;
+                }
+
+                var maxPeriods = parseInt(readValue("recMaxPeriods"), 10);
+                if (maxPeriods > 0) {
+                    recurrent.maxPeriods = maxPeriods;
+                }
+
+                var startDateStr = readValue("recStartDate");
+                if (startDateStr) {
+                    recurrent.startDate = new Date(startDateStr).toISOString();
+                }
+
+                params.recurrent = recurrent;
+                params.userInfo.accountId = email;
+            }
+
+            return params;
+        }
+
+        async function launchPayment(event) {
+            event.preventDefault();
+
+            if (!window.tiptop || typeof window.tiptop.Widget !== "function") {
+                setStatus("TipTop Pay widget script did not load.", "error");
+                setResult("window.tiptop.Widget is unavailable.");
+                return;
+            }
+
+            let intentParams;
+
+            try {
+                intentParams = buildIntentParams();
+            } catch (error) {
+                setStatus(error.message, "error");
+                setResult(error.message);
+                return;
+            }
+
+            const widget = new window.tiptop.Widget();
+
+            widget.oncomplete = function(widgetResult) {
+                var type = widgetResult && widgetResult.type;
+                var status = widgetResult && widgetResult.status;
+
+                if (type === "cancel") {
+                    setStatus("Widget closed without payment.", "");
+                    return;
+                }
+
+                var statusType = status === "success" ? "success" : "error";
+                setStatus("Widget completed: " + (status || type || "unknown"), statusType);
+                setResult(widgetResult);
+            };
+
+            setStatus("Opening payment widget...", "");
+            setRequest(intentParams);
+            setResult("Waiting for widget response...");
+
+            try {
+                var widgetResult = await widget.start(intentParams);
+
+                if (widgetResult && widgetResult.type === "cancel") {
+                    setStatus("Widget closed without payment.", "");
+                    return;
+                }
+
+                var statusType = widgetResult && widgetResult.status === "success" ? "success" : "";
+                setStatus("Widget promise resolved.", statusType);
+                setResult(widgetResult);
+            } catch (error) {
+                setStatus("Widget launch failed.", "error");
+                setResult({
+                    message: error && error.message ? error.message : "Unknown widget error",
+                    error: error
+                });
+            }
+        }
+
+        function resetForm() {
+            Object.entries(defaultValues).forEach(function(entry) {
+                const id = entry[0];
+                const value = entry[1];
+                document.getElementById(id).value = value;
+            });
+
+            Object.entries(defaultRecurring).forEach(function(entry) {
+                const id = entry[0];
+                const value = entry[1];
+                document.getElementById(id).value = value;
+            });
+
+            recurringToggle.checked = false;
+            dualSchemaToggle.checked = false;
+            recurringFields.classList.remove("open");
+
+            setStatus("Sample values restored.", "");
+            setRequest("No request sent yet.");
+            setResult("No widget response yet.");
+        }
+
+        form.addEventListener("submit", launchPayment);
+        resetButton.addEventListener("click", resetForm);
+    </script>
+</body>
+</html>
